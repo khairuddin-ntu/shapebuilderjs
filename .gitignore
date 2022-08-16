@@ -1,6 +1,4 @@
 # Folders
 /.vs
-/bin
-/dist
+/build
 /node_modules
-/obj
