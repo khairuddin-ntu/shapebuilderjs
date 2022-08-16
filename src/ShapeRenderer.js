@@ -15,10 +15,13 @@ export default class ShapeRenderer {
 
         // Create lighting, material & shape
         const geometry = new THREE.BoxGeometry(1, 1, 1);
-        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
         const cube = new THREE.Mesh(geometry, material);
+        const light = new THREE.DirectionalLight();
+        light.position.set(-1, 2, 4);
 
         // Add lighting & shape to scene
+        scene.add(light);
         scene.add(cube);
 
         // Adjust camera position
