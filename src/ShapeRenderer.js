@@ -25,6 +25,7 @@ export default class ShapeRenderer {
         scene.add(cube);
 
         // Adjust camera position
+        cube.rotateX(Math.PI / 8);
         cube.rotateY(Math.PI / 4);
         camera.position.z = 2;
 
