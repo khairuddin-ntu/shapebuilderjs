@@ -11,7 +11,7 @@ export default class Scene extends React.Component {
     componentDidMount() {
         // Create renderer
         this.renderer = new ShapeRenderer(this.canvasRef.current);
-        this.renderer.renderShape(
+        this.renderer.render2dShape(
             function (t) {
                 const a = 0.5; // radius
                 return a * Math.sin(t);

@@ -12,7 +12,7 @@ export default class ShapeRenderer {
         this.#render();
     }
 
-    renderShape(xEquation, yEquation, zEquation, tRange, tStep) {
+    render2dShape(xEquation, yEquation, zEquation, tRange, tStep) {
         let xPrev, yPrev, zPrev;
         let x, y, z;
         let points, geometry, line;
