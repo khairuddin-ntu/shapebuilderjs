@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 
+const SHAPE_NAME = "user_shape";
 const SHAPE_2D_MATERIAL = new THREE.LineBasicMaterial({ color: 0x00ff00 });
 
 export default class ShapeRenderer {
@@ -15,6 +16,13 @@ export default class ShapeRenderer {
     }
 
     render2dShape(xEquation, yEquation, zEquation, tRange, tStep) {
+        // Remove existing shape, if any
+        const prevShape = this.#group.getObjectByName(SHAPE_NAME);
+        if (prevShape != null) {
+            console.log("Previous shape exists");
+            prevShape.removeFromParent();
+        }
+
         let xPrev, yPrev, zPrev;
         let x, y, z;
         let points, geometry, line;
@@ -28,6 +36,7 @@ export default class ShapeRenderer {
                 points = [new THREE.Vector3(xPrev, yPrev, zPrev), new THREE.Vector3(x, y, z)];
                 geometry = new THREE.BufferGeometry().setFromPoints(points);
                 line = new THREE.Line(geometry, SHAPE_2D_MATERIAL);
+                line.name = SHAPE_NAME;
                 this.#group.add(line);
             }
 
