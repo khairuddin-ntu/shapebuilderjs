@@ -15,7 +15,7 @@ export default class ShapeRenderer {
         this.#render();
     }
 
-    render2dShape(xEquation, yEquation, zEquation, tRange, tStep) {
+    render2dShape(xEquation, yEquation, zEquation, uParameter, resolution) {
         // Remove existing shape, if any
         const prevShape = this.#group.getObjectByName(SHAPE_NAME);
         if (prevShape != null) {
@@ -23,26 +23,28 @@ export default class ShapeRenderer {
             prevShape.removeFromParent();
         }
 
-        let xPrev, yPrev, zPrev;
-        let x, y, z;
+        let prevVector, currentVector;
         let points, geometry, line;
 
-        for (let t = tRange.start; t <= tRange.end; t += tStep) {
-            x = xEquation(t);
-            y = yEquation(t);
-            z = zEquation(t);
+        console.log(uParameter.range);
 
-            if (xPrev !== null) {
-                points = [new THREE.Vector3(xPrev, yPrev, zPrev), new THREE.Vector3(x, y, z)];
+        for (let u = uParameter.start; u <= uParameter.end; u += uParameter.range / resolution) {
+            currentVector = new THREE.Vector3(
+                xEquation(u),
+                yEquation(u),
+                zEquation(u)
+            );
+
+            if (prevVector != null) {
+                // Generate line segment from previous point to current point
+                points = [prevVector, currentVector];
                 geometry = new THREE.BufferGeometry().setFromPoints(points);
                 line = new THREE.Line(geometry, SHAPE_2D_MATERIAL);
                 line.name = SHAPE_NAME;
                 this.#group.add(line);
             }
 
-            xPrev = x;
-            yPrev = y;
-            zPrev = z;
+            prevVector = currentVector;
         }
 
         this.#render();

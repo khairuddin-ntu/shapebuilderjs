@@ -12,20 +12,13 @@ export default class Scene extends React.Component {
         // Create renderer
         this.renderer = new ShapeRenderer(this.canvasRef.current);
         this.renderer.render2dShape(
-            function (t) {
-                const a = 0.5; // radius
-                return a * Math.sin(t);
+            (u) => 10 * u * Math.cos(22 * Math.PI * u),
+            (u) => 10 * u * Math.sin(22 * Math.PI * u),
+            (u) => (10 * u) - 5,
+            {
+                start: 0, end: 1, get range() { return this.end - this.start }
             },
-            function (t) {
-                const b = 0.05; // height per revolution = 2pi * b
-                return b * t;
-            },
-            function (t) {
-                const a = 0.5; // radius
-                return a * Math.cos(t);
-            },
-            { start: -10 * Math.PI, end: 10 * Math.PI },
-            Math.PI / 128
+            200
         );
     }
 
