@@ -53,7 +53,7 @@ export default class ShapeRenderer {
             canvas: canvasRef,
             antialias: true,
         });
-        this.#renderer.setSize(window.innerWidth, window.innerHeight);
+        this.#renderer.setSize(canvasRef.offsetWidth, canvasRef.offsetHeight);
 
         this.#scene = new THREE.Scene();
         this.#scene.background = new THREE.Color(0xffffff);

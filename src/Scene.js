@@ -1,6 +1,8 @@
 import React from 'react';
 import ShapeRenderer from './ShapeRenderer';
 
+import './Scene.css';
+
 export default class Scene extends React.Component {
     constructor(props) {
         super(props);
@@ -23,10 +25,6 @@ export default class Scene extends React.Component {
     }
 
     render() {
-        return (
-            <div style={{ backgroundColor: "lightblue" }}>
-                <canvas ref={this.canvasRef} />
-            </div >
-        );
+        return (<canvas id="scene-canvas" ref={this.canvasRef} />);
     }
 }
