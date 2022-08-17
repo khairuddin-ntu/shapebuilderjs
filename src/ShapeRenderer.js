@@ -11,7 +11,7 @@ export default class ShapeRenderer {
 
     constructor(canvasRef) {
         this.#setUpScene(canvasRef);
-        this.#drawGrid();
+        //this.#drawGrid();
         this.#render();
     }
 
