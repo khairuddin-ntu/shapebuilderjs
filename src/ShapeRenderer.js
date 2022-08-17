@@ -1,7 +1,9 @@
 import * as THREE from 'three';
+import ParametricGeometry from './ParametricGeometry';
 
 const SHAPE_NAME = "user_shape";
 const SHAPE_2D_MATERIAL = new THREE.LineBasicMaterial({ color: 0x00ff00 });
+const SHAPE_3D_MATERIAL = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
 
 export default class ShapeRenderer {
     #renderer;
@@ -16,12 +18,7 @@ export default class ShapeRenderer {
     }
 
     render2dShape(xEquation, yEquation, zEquation, uParameter, resolution) {
-        // Remove existing shape, if any
-        const prevShape = this.#group.getObjectByName(SHAPE_NAME);
-        if (prevShape != null) {
-            console.log("Previous shape exists");
-            prevShape.removeFromParent();
-        }
+        this.#removeExistingShape();
 
         let prevVector, currentVector;
         let points, geometry, line;
@@ -44,6 +41,29 @@ export default class ShapeRenderer {
 
             prevVector = currentVector;
         }
+
+        this.#render();
+    }
+
+    render3dShape(xEquation, yEquation, zEquation, uParameter, vParameter, resolution) {
+        this.#removeExistingShape();
+
+        const geometry = new ParametricGeometry(
+            (u, v, target) => {
+                u = uParameter.start + (uParameter.range * u);
+                v = vParameter.start + (vParameter.range * v);
+
+                target.set(
+                    xEquation(u, v),
+                    yEquation(u, v),
+                    zEquation(u, v)
+                );
+            },
+            resolution
+        );
+        const shape = new THREE.Mesh(geometry, SHAPE_3D_MATERIAL);
+        shape.name = SHAPE_NAME;
+        this.#group.add(shape);
 
         this.#render();
     }
@@ -95,6 +115,14 @@ export default class ShapeRenderer {
                     this.#group.add(line);
                 }
             }
+        }
+    }
+
+    #removeExistingShape() {
+        const prevShape = this.#group.getObjectByName(SHAPE_NAME);
+        if (prevShape != null) {
+            console.log("Previous shape exists");
+            prevShape.removeFromParent();
         }
     }
 
