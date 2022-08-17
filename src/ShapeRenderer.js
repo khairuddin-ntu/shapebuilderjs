@@ -26,8 +26,6 @@ export default class ShapeRenderer {
         let prevVector, currentVector;
         let points, geometry, line;
 
-        console.log(uParameter.range);
-
         for (let u = uParameter.start; u <= uParameter.end; u += uParameter.range / resolution) {
             currentVector = new THREE.Vector3(
                 xEquation(u),
