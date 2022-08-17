@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 
+const SHAPE_2D_MATERIAL = new THREE.LineBasicMaterial({ color: 0x00ff00 });
+
 export default class ShapeRenderer {
     #renderer;
     #scene;
@@ -16,7 +18,6 @@ export default class ShapeRenderer {
         let xPrev, yPrev, zPrev;
         let x, y, z;
         let points, geometry, line;
-        const plotlinematerial = new THREE.LineBasicMaterial({ color: 0x00ff00 });
 
         for (let t = tRange.start; t <= tRange.end; t += tStep) {
             x = xEquation(t);
@@ -26,7 +27,7 @@ export default class ShapeRenderer {
             if (xPrev !== null) {
                 points = [new THREE.Vector3(xPrev, yPrev, zPrev), new THREE.Vector3(x, y, z)];
                 geometry = new THREE.BufferGeometry().setFromPoints(points);
-                line = new THREE.Line(geometry, plotlinematerial);
+                line = new THREE.Line(geometry, SHAPE_2D_MATERIAL);
                 this.#group.add(line);
             }
 
