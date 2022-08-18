@@ -4,8 +4,6 @@ import ShapeRenderer from './ShapeRenderer';
 import './Scene.css';
 
 export default class Scene extends React.Component {
-    #shouldStartDrag = false;
-
     constructor(props) {
         super(props);
         this.canvasRef = React.createRef();
@@ -37,30 +35,35 @@ export default class Scene extends React.Component {
             },
             100
         );
+
+        this.canvasRef.current.addEventListener('mousedown', this.#onStartDrag);
+    }
+
+    componentWillUnmount() {
+        this.canvasRef.current.removeEventListener('mousedown', this.#onStartDrag);
     }
 
     #onStartDrag = (event) => {
         console.log("#onStartDrag: mouseX = " + event.clientX + ", mouseY = " + event.clientY);
-        this.#shouldStartDrag = true;
+
+        this.canvasRef.current.removeEventListener('mousedown', this.#onStartDrag);
+        this.canvasRef.current.addEventListener('mousemove', this.#onDrag);
+        this.canvasRef.current.addEventListener('mouseup', this.#onEndDrag);
+        this.canvasRef.current.addEventListener('mouseout', this.#onEndDrag);
     }
 
     #onDrag = (event) => {
-        if (!this.#shouldStartDrag) return;
         console.log("#onDrag: mouseX = " + event.clientX + ", mouseY = " + event.clientY);
     }
 
-    #onEndDrag = () => this.#shouldStartDrag = false;
+    #onEndDrag = () => {
+        this.canvasRef.current.removeEventListener('mousemove', this.#onDrag);
+        this.canvasRef.current.removeEventListener('mouseup', this.#onEndDrag);
+        this.canvasRef.current.removeEventListener('mouseout', this.#onEndDrag);
+        this.canvasRef.current.addEventListener('mousedown', this.#onStartDrag);
+    }
 
     render() {
-        return (
-            <canvas
-                id="scene-canvas"
-                ref={this.canvasRef}
-                onMouseDown={this.#onStartDrag}
-                onMouseUp={this.#onEndDrag}
-                onMouseOut={this.#onEndDrag}
-                onMouseMove={this.#onDrag}
-            />
-        );
+        return (<canvas id="scene-canvas" ref={this.canvasRef} />);
     }
 }
