@@ -4,12 +4,14 @@ import ShapeRenderer from './ShapeRenderer';
 import './Scene.css';
 
 export default class Scene extends React.Component {
+    #shouldStartDrag = false;
+
     constructor(props) {
         super(props);
         this.canvasRef = React.createRef();
     }
 
-    // ******************* COMPONENT LIFECYCLE ******************* //
+    // ******************* COMP`ONENT LIFECYCLE ******************* //
     componentDidMount() {
         // Create renderer
         this.renderer = new ShapeRenderer(this.canvasRef.current);
@@ -37,7 +39,28 @@ export default class Scene extends React.Component {
         );
     }
 
+    #onStartDrag = (event) => {
+        console.log("#onStartDrag: mouseX = " + event.clientX + ", mouseY = " + event.clientY);
+        this.#shouldStartDrag = true;
+    }
+
+    #onDrag = (event) => {
+        if (!this.#shouldStartDrag) return;
+        console.log("#onDrag: mouseX = " + event.clientX + ", mouseY = " + event.clientY);
+    }
+
+    #onEndDrag = () => this.#shouldStartDrag = false;
+
     render() {
-        return (<canvas id="scene-canvas" ref={this.canvasRef} />);
+        return (
+            <canvas
+                id="scene-canvas"
+                ref={this.canvasRef}
+                onMouseDown={this.#onStartDrag}
+                onMouseUp={this.#onEndDrag}
+                onMouseOut={this.#onEndDrag}
+                onMouseMove={this.#onDrag}
+            />
+        );
     }
 }
