@@ -20,7 +20,7 @@ export default class Scene extends React.Component {
         //    {
         //        start: 0, end: 1, get range() { return this.end - this.start }
         //    },
-        //    200
+        //    600
         //);
 
         this.renderer.render3dShape(

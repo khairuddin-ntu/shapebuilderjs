@@ -9,7 +9,6 @@ export default class ShapeRenderer {
     #renderer;
     #scene;
     #camera;
-    #group;
 
     constructor(canvasRef) {
         this.#setUpScene(canvasRef);
@@ -19,6 +18,9 @@ export default class ShapeRenderer {
 
     render2dShape(xEquation, yEquation, zEquation, uParameter, resolution) {
         this.#removeExistingShape();
+
+        const shapeGroup = new THREE.Group();
+        shapeGroup.name = SHAPE_NAME;
 
         let prevVector, currentVector;
         let points, geometry, line;
@@ -35,13 +37,13 @@ export default class ShapeRenderer {
                 points = [prevVector, currentVector];
                 geometry = new THREE.BufferGeometry().setFromPoints(points);
                 line = new THREE.Line(geometry, SHAPE_2D_MATERIAL);
-                line.name = SHAPE_NAME;
-                this.#group.add(line);
+                shapeGroup.add(line);
             }
 
             prevVector = currentVector;
         }
 
+        this.#scene.add(shapeGroup);
         this.#render();
     }
 
@@ -63,7 +65,7 @@ export default class ShapeRenderer {
         );
         const shape = new THREE.Mesh(geometry, SHAPE_3D_MATERIAL);
         shape.name = SHAPE_NAME;
-        this.#group.add(shape);
+        this.#scene.add(shape);
 
         this.#render();
     }
@@ -84,13 +86,11 @@ export default class ShapeRenderer {
         const light = new THREE.DirectionalLight();
         light.position.set(-1, 2, 4);
         this.#scene.add(light);
-
-        this.#group = new THREE.Group();
-        this.#scene.add(this.#group);
     }
 
     #drawGrid() {
         const gridMaterial = new THREE.LineBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.1 });
+        const gridGroup = new THREE.Group();
 
         let points;
         let geometry;
@@ -102,24 +102,26 @@ export default class ShapeRenderer {
                     points = [new THREE.Vector3(x, y, z), new THREE.Vector3(x, y, -z)];
                     geometry = new THREE.BufferGeometry().setFromPoints(points);
                     line = new THREE.Line(geometry, gridMaterial);
-                    this.#group.add(line);
+                    gridGroup.add(line);
 
                     points = [new THREE.Vector3(x, y, z), new THREE.Vector3(x, -y, z)];
                     geometry = new THREE.BufferGeometry().setFromPoints(points);
                     line = new THREE.Line(geometry, gridMaterial);
-                    this.#group.add(line);
+                    gridGroup.add(line);
 
                     points = [new THREE.Vector3(x, y, z), new THREE.Vector3(-x, y, z)];
                     geometry = new THREE.BufferGeometry().setFromPoints(points);
                     line = new THREE.Line(geometry, gridMaterial);
-                    this.#group.add(line);
+                    gridGroup.add(line);
                 }
             }
         }
+
+        this.#scene.add(gridGroup);
     }
 
     #removeExistingShape() {
-        const prevShape = this.#group.getObjectByName(SHAPE_NAME);
+        const prevShape = this.#scene.getObjectByName(SHAPE_NAME);
         if (prevShape != null) {
             console.log("Previous shape exists");
             prevShape.removeFromParent();
