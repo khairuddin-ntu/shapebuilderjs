@@ -13,7 +13,7 @@ export default class ShapeRenderer {
     constructor(canvasRef) {
         this.#setUpScene(canvasRef);
         //this.#drawGrid();
-        this.#render();
+        this.update();
     }
 
     render2dShape(xEquation, yEquation, zEquation, uParameter, resolution) {
@@ -44,7 +44,6 @@ export default class ShapeRenderer {
         }
 
         this.#scene.add(shapeGroup);
-        this.#render();
     }
 
     render3dShape(xEquation, yEquation, zEquation, uParameter, vParameter, resolution) {
@@ -66,8 +65,11 @@ export default class ShapeRenderer {
         const shape = new THREE.Mesh(geometry, SHAPE_3D_MATERIAL);
         shape.name = SHAPE_NAME;
         this.#scene.add(shape);
+    }
 
-        this.#render();
+    update = () => {
+        this.#renderer.render(this.#scene, this.#camera);
+        requestAnimationFrame(this.update);
     }
 
     #setUpScene(canvasRef) {
@@ -126,9 +128,5 @@ export default class ShapeRenderer {
             console.log("Previous shape exists");
             prevShape.removeFromParent();
         }
-    }
-
-    #render() {
-        this.#renderer.render(this.#scene, this.#camera);
     }
 }
