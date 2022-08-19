@@ -4,6 +4,7 @@ import ParametricGeometry from './ParametricGeometry';
 const SHAPE_NAME = "user_shape";
 const SHAPE_2D_MATERIAL = new THREE.LineBasicMaterial({ color: 0x00ff00 });
 const SHAPE_3D_MATERIAL = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
+const ROTATION_SPEED = Math.PI / 256;
 
 export default class ShapeRenderer {
     #renderer;
@@ -72,8 +73,9 @@ export default class ShapeRenderer {
         requestAnimationFrame(this.update);
     }
 
-    rotateShape(xRotation, yRotation) {
-
+    rotateShape(x, y) {
+        this.#scene.rotateX(y * ROTATION_SPEED);
+        this.#scene.rotateY(-x * ROTATION_SPEED);
     }
 
     #setUpScene(canvasRef) {

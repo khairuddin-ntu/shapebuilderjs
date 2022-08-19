@@ -62,8 +62,7 @@ export default class Scene extends React.Component {
 
         const rotationX = mouseX - this.#currentMouseX;
         const rotationY = mouseY - this.#currentMouseY;
-
-        console.log("#onDrag: rotationX = " + rotationX + ", mouseY = " + rotationY);
+        this.renderer.rotateShape(rotationX, rotationY);
 
         this.#currentMouseX = mouseX;
         this.#currentMouseY = mouseY;
