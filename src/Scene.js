@@ -4,6 +4,9 @@ import ShapeRenderer from './ShapeRenderer';
 import './Scene.css';
 
 export default class Scene extends React.Component {
+    #currentMouseX = -1;
+    #currentMouseY = -1;
+
     constructor(props) {
         super(props);
         this.canvasRef = React.createRef();
@@ -44,7 +47,8 @@ export default class Scene extends React.Component {
     }
 
     #onStartDrag = (event) => {
-        console.log("#onStartDrag: mouseX = " + event.clientX + ", mouseY = " + event.clientY);
+        this.#currentMouseX = event.clientX;
+        this.#currentMouseY = event.clientY;
 
         this.canvasRef.current.removeEventListener('mousedown', this.#onStartDrag);
         this.canvasRef.current.addEventListener('mousemove', this.#onDrag);
@@ -53,7 +57,16 @@ export default class Scene extends React.Component {
     }
 
     #onDrag = (event) => {
-        console.log("#onDrag: mouseX = " + event.clientX + ", mouseY = " + event.clientY);
+        const mouseX = event.clientX;
+        const mouseY = event.clientY;
+
+        const rotationX = mouseX - this.#currentMouseX;
+        const rotationY = mouseY - this.#currentMouseY;
+
+        console.log("#onDrag: rotationX = " + rotationX + ", mouseY = " + rotationY);
+
+        this.#currentMouseX = mouseX;
+        this.#currentMouseY = mouseY;
     }
 
     #onEndDrag = () => {

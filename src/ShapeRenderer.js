@@ -72,6 +72,10 @@ export default class ShapeRenderer {
         requestAnimationFrame(this.update);
     }
 
+    rotateShape(xRotation, yRotation) {
+
+    }
+
     #setUpScene(canvasRef) {
         this.#renderer = new THREE.WebGLRenderer({
             canvas: canvasRef,
