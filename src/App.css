@@ -1,3 +1,24 @@
-#App {
+#app {
+    display: grid;
     height: 100vh;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+
+#canvas {
+    grid-column: span 3;
+    grid-row: span 2;
+}
+
+#operators {
+    grid-row: span 3;
+}
+
+#fields {
+    grid-column: span 3;
+}
+
+.sample-box {
+    width: 100%;
+    height: 100%;
 }

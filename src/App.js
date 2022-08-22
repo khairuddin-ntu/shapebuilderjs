@@ -5,32 +5,17 @@ import './App.css';
 
 export default function App() {
     return (
-        <Box
-            id="App"
-            sx={{
-                display: "grid",
-                gridTemplateColumns: "repeat(4, 1fr)",
-                gridTemplateRows: "repeat(3, 1fr)"
-            }}
-        >
-            <Box gridColumn="span 3" gridRow="span 2">
+        <Box id="app">
+            <Box id="canvas">
                 <Scene />
             </Box>
-            <Box gridColumn="span 1" gridRow="span 3">
+            <Box id="operators">
                 {/* TODO: Replace with operators layout */}
-                <Box sx={{
-                    width: 1,
-                    height: 1,
-                    backgroundColor: "lightblue"
-                }} />
+                <Box className="sample-box" backgroundColor="lightblue"/>
             </Box>
-            <Box gridColumn="span 3">
+            <Box id="fields">
                 {/* TODO: Replace with text fields layout */}
-                <Box sx={{
-                    width: 1,
-                    height: 1,
-                    backgroundColor: "lightgreen"
-                }} />
+                <Box className="sample-box" backgroundColor="lightgreen" />
             </Box>
         </Box>
     );
