@@ -1,26 +1,25 @@
 import * as THREE from 'three';
 import ParametricGeometry from './ParametricGeometry';
 
-const SHAPE_NAME = "user_shape";
 const SHAPE_2D_MATERIAL = new THREE.LineBasicMaterial({ color: 0x00ff00 });
 const SHAPE_3D_MATERIAL = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
 
 export default class ShapeRenderer {
     #renderer;
     #scene;
+    #shape;
     #camera;
 
     constructor(canvasRef) {
         this.#setUpScene(canvasRef);
         //this.#drawGrid();
-        this.#render();
+        this.update();
     }
 
     render2dShape(xEquation, yEquation, zEquation, uParameter, resolution) {
         this.#removeExistingShape();
 
-        const shapeGroup = new THREE.Group();
-        shapeGroup.name = SHAPE_NAME;
+        this.#shape = new THREE.Group();
 
         let prevVector, currentVector;
         let points, geometry, line;
@@ -37,14 +36,13 @@ export default class ShapeRenderer {
                 points = [prevVector, currentVector];
                 geometry = new THREE.BufferGeometry().setFromPoints(points);
                 line = new THREE.Line(geometry, SHAPE_2D_MATERIAL);
-                shapeGroup.add(line);
+                this.#shape.add(line);
             }
 
             prevVector = currentVector;
         }
 
-        this.#scene.add(shapeGroup);
-        this.#render();
+        this.#scene.add(this.#shape);
     }
 
     render3dShape(xEquation, yEquation, zEquation, uParameter, vParameter, resolution) {
@@ -63,11 +61,19 @@ export default class ShapeRenderer {
             },
             resolution
         );
-        const shape = new THREE.Mesh(geometry, SHAPE_3D_MATERIAL);
-        shape.name = SHAPE_NAME;
-        this.#scene.add(shape);
+        this.#shape = new THREE.Mesh(geometry, SHAPE_3D_MATERIAL);
+        this.#scene.add(this.#shape);
+    }
 
-        this.#render();
+    update = () => {
+        this.#renderer.render(this.#scene, this.#camera);
+        requestAnimationFrame(this.update);
+    }
+
+    rotateShape(x, y) {
+        // rotateX() & rotateY() are not meant to be used for animation
+        this.#scene.rotation.x += y / 100;
+        this.#scene.rotation.y += x / 100;
     }
 
     #setUpScene(canvasRef) {
@@ -121,14 +127,8 @@ export default class ShapeRenderer {
     }
 
     #removeExistingShape() {
-        const prevShape = this.#scene.getObjectByName(SHAPE_NAME);
-        if (prevShape != null) {
-            console.log("Previous shape exists");
-            prevShape.removeFromParent();
+        if (this.#shape != null) {
+            this.#shape.removeFromParent();
         }
-    }
-
-    #render() {
-        this.#renderer.render(this.#scene, this.#camera);
     }
 }

@@ -4,12 +4,15 @@ import ShapeRenderer from './ShapeRenderer';
 import './Scene.css';
 
 export default class Scene extends React.Component {
+    #currentMouseX = -1;
+    #currentMouseY = -1;
+
     constructor(props) {
         super(props);
         this.canvasRef = React.createRef();
     }
 
-    // ******************* COMPONENT LIFECYCLE ******************* //
+    // ******************* COMP`ONENT LIFECYCLE ******************* //
     componentDidMount() {
         // Create renderer
         this.renderer = new ShapeRenderer(this.canvasRef.current);
@@ -35,6 +38,41 @@ export default class Scene extends React.Component {
             },
             100
         );
+
+        this.canvasRef.current.addEventListener('mousedown', this.#onStartDrag);
+    }
+
+    componentWillUnmount() {
+        this.canvasRef.current.removeEventListener('mousedown', this.#onStartDrag);
+    }
+
+    #onStartDrag = (event) => {
+        this.#currentMouseX = event.clientX;
+        this.#currentMouseY = event.clientY;
+
+        this.canvasRef.current.removeEventListener('mousedown', this.#onStartDrag);
+        this.canvasRef.current.addEventListener('mousemove', this.#onDrag);
+        this.canvasRef.current.addEventListener('mouseup', this.#onEndDrag);
+        this.canvasRef.current.addEventListener('mouseout', this.#onEndDrag);
+    }
+
+    #onDrag = (event) => {
+        const mouseX = event.clientX;
+        const mouseY = event.clientY;
+
+        const rotationX = mouseX - this.#currentMouseX;
+        const rotationY = mouseY - this.#currentMouseY;
+        this.renderer.rotateShape(rotationX, rotationY);
+
+        this.#currentMouseX = mouseX;
+        this.#currentMouseY = mouseY;
+    }
+
+    #onEndDrag = () => {
+        this.canvasRef.current.removeEventListener('mousemove', this.#onDrag);
+        this.canvasRef.current.removeEventListener('mouseup', this.#onEndDrag);
+        this.canvasRef.current.removeEventListener('mouseout', this.#onEndDrag);
+        this.canvasRef.current.addEventListener('mousedown', this.#onStartDrag);
     }
 
     render() {
