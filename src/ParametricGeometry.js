@@ -67,6 +67,10 @@ export default class ParametricGeometry extends BufferGeometry {
                 uvs.push(u, v);
 
                 // generate indices
+                if (i === resolution || j === resolution) {
+                    continue
+                }
+
                 a = i * sliceCount + j;
                 b = i * sliceCount + j + 1;
                 c = (i + 1) * sliceCount + j + 1;
