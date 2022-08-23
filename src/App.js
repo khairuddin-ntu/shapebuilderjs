@@ -1,5 +1,7 @@
 import Box from '@mui/material/Box';
-import Scene from './Scene.js'
+import Scene from './Scene';
+import Fields from './Fields';
+import Operators from './Operators';
 
 import './App.css';
 
@@ -10,12 +12,10 @@ export default function App() {
                 <Scene />
             </Box>
             <Box id="operators">
-                {/* TODO: Replace with operators layout */}
-                <Box className="sample-box" backgroundColor="lightblue"/>
+                <Operators />
             </Box>
             <Box id="fields">
-                {/* TODO: Replace with text fields layout */}
-                <Box className="sample-box" backgroundColor="lightgreen" />
+                <Fields />
             </Box>
         </Box>
     );
