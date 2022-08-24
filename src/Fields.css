@@ -1,0 +1,28 @@
+#fields-section {
+    display: inline-grid;
+    width: 100%;
+    grid-template-columns: 2;
+    grid-template-rows: 4;
+    grid-template-areas: 
+    "functions parameters"
+    "functions parameters"
+    "functions resolution"
+    "actions actions";
+}
+
+#functions-section {
+    grid-area: functions;
+}
+
+#parameters-section {
+    grid-area: parameters;
+}
+
+#resolution-section {
+    grid-area: resolution;
+}
+
+#actions-section {
+    grid-area: actions;
+    align-self: end;
+}

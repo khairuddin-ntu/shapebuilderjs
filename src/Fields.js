@@ -1,32 +1,27 @@
 import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
-import FunctionField from './FunctionField';
+import Functions from './Functions';
+
+import './Fields.css';
 
 export default function Fields() {
     return (
-        <Box sx={{ borderTop: 1 }}>
-            <Container>
-                <Grid container>
-                    <FunctionField functionName="x"/>
-                    <Grid item xs={1}></Grid>
-                    <Grid item xs={4}></Grid>
-                    <FunctionField functionName="y"/>
-                    <Grid item xs={1}></Grid>
-                    <Grid item xs={4}></Grid>
-                    <FunctionField functionName="z"/>
-                    <Grid item xs={1}>
-                        <p>Resolution =</p>
-                    </Grid>
-                    <Grid item xs={4}>
-                        <TextField
-                            variant="outlined"
-                            type="number"
-                        />
-                    </Grid>
-                </Grid>
-            </Container>
+        <Box
+            id="fields-section"
+            sx={{ borderTop: 1 }}
+        >
+            <Box id="functions-section">
+                <Functions />
+            </Box>
+            <Box id="parameters-section"></Box>
+            <Box id="resolution-section">
+                <p>Resolution =</p>
+                <TextField
+                    variant="outlined"
+                    type="number"
+                />
+            </Box>
+            <Box id="actions-section"></Box>
         </Box>
     );
 }
