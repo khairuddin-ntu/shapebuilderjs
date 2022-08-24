@@ -13,7 +13,6 @@ export default function Fields() {
                     </Grid>
                     <Grid item xs={5}>
                         <TextField
-                            id="resolutionInput"
                             variant="outlined"
                             type="number"
                         />
