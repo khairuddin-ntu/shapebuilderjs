@@ -1,22 +1,14 @@
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
+import ParameterInput from './ParameterInput';
 
 export default function ParameterField(props) {
     return (
         <Stack direction="row" alignItems="center">
             <Typography>{props.parameterName} = [</Typography>
-            <TextField
-                className="parameter-input"
-                variant="outlined"
-                type="number"
-            />
+            <ParameterInput />
             <Typography>,</Typography>
-            <TextField
-                className="parameter-input"
-                variant="outlined"
-                type="number"
-            />
+            <ParameterInput />
             <Typography>]</Typography>
         </Stack>
     );
