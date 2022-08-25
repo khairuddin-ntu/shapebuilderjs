@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 import FunctionsSection from './FunctionsSection';
 import ParametersSection from './ParametersSection';
 
@@ -27,7 +28,9 @@ export default function Fields() {
                     />
                 </Stack>
             </Box>
-            <Box id="actions-section"></Box>
+            <Box id="actions-section">
+                <Button variant="contained">Generate shape</Button>
+            </Box>
         </Box>
     );
 }
