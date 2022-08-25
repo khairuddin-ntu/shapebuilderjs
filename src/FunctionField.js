@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 
 export default function FunctionField(props) {
     return (
-        <Stack>
+        <Stack direction="row">
             <p>{props.functionName} =</p>
             <TextField
                 class="function-input"

@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 
 export default function ParameterField(props) {
     return (
-        <Stack>
+        <Stack direction="row">
             <p>{props.parameterName} = [</p>
             <TextField
                 class="parameter-input"
