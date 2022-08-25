@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
 import FunctionsSection from './FunctionsSection';
 import ParametersSection from './ParametersSection';
 
@@ -18,11 +19,13 @@ export default function Fields() {
                 <ParametersSection />
             </Box>
             <Box id="resolution-section">
-                <p>Resolution =</p>
-                <TextField
-                    variant="outlined"
-                    type="number"
-                />
+                <Stack direction="row">
+                    <p>Resolution =</p>
+                    <TextField
+                        variant="outlined"
+                        type="number"
+                    />
+                </Stack>
             </Box>
             <Box id="actions-section"></Box>
         </Box>
