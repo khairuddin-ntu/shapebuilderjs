@@ -9,7 +9,7 @@ export default function FunctionField(props) {
             <TextField
                 class="function-input"
                 variant="outlined"
-                type="number"
+                inputProps={{ size: 40 }}
             />
         </Stack>
     );
