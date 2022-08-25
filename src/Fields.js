@@ -1,4 +1,5 @@
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -20,8 +21,8 @@ export default function Fields() {
                 <ParametersSection />
             </Box>
             <Box id="resolution-section">
-                <Stack direction="row">
-                    <p>Resolution =</p>
+                <Stack direction="row" alignItems="center">
+                    <Typography>Resolution =</Typography>
                     <TextField
                         variant="outlined"
                         type="number"
