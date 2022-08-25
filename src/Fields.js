@@ -1,10 +1,8 @@
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import FunctionsSection from './FunctionsSection';
 import ParametersSection from './ParametersSection';
+import ResolutionSection from './ResolutionSection'
 
 import './Fields.css';
 
@@ -21,18 +19,7 @@ export default function Fields() {
                 <ParametersSection />
             </Box>
             <Box id="resolution-section">
-                <Stack direction="row" alignItems="center">
-                    <Typography>Resolution =</Typography>
-                    <TextField
-                        variant="outlined"
-                        type="number"
-                        inputProps={{
-                            min: 0,
-                            max: 999,
-                            step: 1
-                        }}
-                    />
-                </Stack>
+                <ResolutionSection />
             </Box>
             <Box id="actions-section">
                 <Button variant="contained">Generate shape</Button>
