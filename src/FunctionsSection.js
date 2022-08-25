@@ -1,7 +1,7 @@
 import Stack from '@mui/material/Stack';
 import FunctionField from './FunctionField';
 
-export default function Functions() {
+export default function FunctionsSection() {
     return (
         <Stack direction="column">
             <FunctionField functionName="x" />

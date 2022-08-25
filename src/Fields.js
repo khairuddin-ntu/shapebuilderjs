@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import Functions from './Functions';
+import FunctionsSection from './FunctionsSection';
 
 import './Fields.css';
 
@@ -11,7 +11,7 @@ export default function Fields() {
             sx={{ borderTop: 1 }}
         >
             <Box id="functions-section">
-                <Functions />
+                <FunctionsSection />
             </Box>
             <Box id="parameters-section"></Box>
             <Box id="resolution-section">
