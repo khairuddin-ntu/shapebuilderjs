@@ -26,6 +26,11 @@ export default function Fields() {
                     <TextField
                         variant="outlined"
                         type="number"
+                        inputProps={{
+                            min: 0,
+                            max: 999,
+                            step: 1
+                        }}
                     />
                 </Stack>
             </Box>
