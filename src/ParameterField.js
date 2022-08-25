@@ -7,13 +7,13 @@ export default function ParameterField(props) {
         <Stack direction="row" alignItems="center">
             <Typography>{props.parameterName} = [</Typography>
             <TextField
-                class="parameter-input"
+                className="parameter-input"
                 variant="outlined"
                 type="number"
             />
             <Typography>,</Typography>
             <TextField
-                class="parameter-input"
+                className="parameter-input"
                 variant="outlined"
                 type="number"
             />
