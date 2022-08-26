@@ -2,9 +2,9 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 
-export default function ResolutionSection() {
+export default function ResolutionSection(props) {
     return (
-        <Stack direction="row" alignItems="center">
+        <Stack {...props} direction="row" alignItems="center">
             <Typography>Resolution =</Typography>
             <TextField
                 variant="outlined"

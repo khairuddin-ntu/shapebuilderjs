@@ -1,9 +1,9 @@
 import Stack from '@mui/material/Stack';
 import ParameterField from './ParameterField';
 
-export default function ParametersSection() {
+export default function ParametersSection(props) {
     return (
-        <Stack direction="column">
+        <Stack {...props} direction="column">
             <ParameterField parameterName="u" />
             <ParameterField parameterName="v" />
             <ParameterField parameterName="w" />

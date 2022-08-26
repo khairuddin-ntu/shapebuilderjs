@@ -12,15 +12,9 @@ export default function Fields(props) {
             {...props}
             sx={{ borderTop: 1 }}
         >
-            <Box id="functions-section">
-                <FunctionsSection />
-            </Box>
-            <Box id="parameters-section">
-                <ParametersSection />
-            </Box>
-            <Box id="resolution-section">
-                <ResolutionSection />
-            </Box>
+            <FunctionsSection id="functions-section" />
+            <ParametersSection id="parameters-section" />
+            <ResolutionSection id="resolution-section" />
             <Box id="actions-section">
                 <Button variant="contained">Generate shape</Button>
             </Box>
