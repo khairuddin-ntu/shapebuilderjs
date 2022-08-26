@@ -1,20 +1,11 @@
 #app {
     display: grid;
     height: 100vh;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: 80% 20%;
+    grid-template-rows: 60% 40%;
     place-items: stretch;
 }
 
-#canvas {
-    grid-column: span 3;
-    grid-row: span 2;
-}
-
 #operators {
-    grid-row: span 3;
-}
-
-#fields {
-    grid-column: span 3;
+    grid-row: span 2;
 }
