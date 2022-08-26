@@ -18,6 +18,8 @@ export default function ParametersSection(props) {
                 setParameters([...parameters, new Parameter("w")]);
                 setCanAddParam(false);
                 break;
+            default:
+                break;
         }
     };
 
@@ -27,7 +29,12 @@ export default function ParametersSection(props) {
             direction="column"
             spacing={2}
         >
-            {parameters.map((parameter) => <ParameterField parameterName={parameter.name} />)}
+            {parameters.map((parameter) =>
+                <ParameterField
+                    parameterName={parameter.name}
+                    deletable={parameter.name !== "u"}
+                />
+            )}
             {canAddParam ? <Button startIcon={<AddRounded />} onClick={addParameter}>Add parameter</Button> : null}
         </Stack>
     );
