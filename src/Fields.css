@@ -2,7 +2,7 @@
     display: inline-grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(4, 1fr);
-    place-items: center;
+    place-items: center start;
     grid-template-areas:
         "functions parameters"
         "functions parameters"
@@ -12,14 +12,17 @@
 
 #functions-section {
     grid-area: functions;
+    justify-self: end;
 }
 
 #parameters-section {
     grid-area: parameters;
+    place-self: center start;
 }
 
 #resolution-section {
     grid-area: resolution;
+    place-self: center start;
 }
 
 #actions-section {
