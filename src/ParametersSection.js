@@ -7,6 +7,19 @@ import Parameter from './Parameter';
 
 export default function ParametersSection(props) {
     const [parameters, setParameters] = useState([new Parameter("u")]);
+    const [canAddParam, setCanAddParam] = useState(true);
+
+    const addParameter = () => {
+        switch (parameters.length) {
+            case 1:
+                setParameters([...parameters, new Parameter("v")]);
+                break;
+            case 2:
+                setParameters([...parameters, new Parameter("w")]);
+                setCanAddParam(false);
+                break;
+        }
+    };
 
     return (
         <Stack
@@ -15,7 +28,7 @@ export default function ParametersSection(props) {
             spacing={2}
         >
             {parameters.map((parameter) => <ParameterField parameterName={parameter.name} />)}
-            <Button startIcon={<AddRounded />}>Add parameter</Button>
+            {canAddParam ? <Button startIcon={<AddRounded />} onClick={addParameter}>Add parameter</Button> : null}
         </Stack>
     );
 }
