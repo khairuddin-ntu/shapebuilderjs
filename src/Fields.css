@@ -1,17 +1,20 @@
 #fields {
+    padding-top: 2vh;
     display: inline-grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(4, 1fr);
     place-items: center start;
+    column-gap: 5vw;
     grid-template-areas:
         "functions parameters"
         "functions parameters"
-        ". resolution"
+        "functions resolution"
         ". actions";
 }
 
 #functions-section {
     grid-area: functions;
+    align-self: start;
     justify-self: end;
 }
 
@@ -28,4 +31,9 @@
 #actions-section {
     grid-area: actions;
     justify-self: end;
+    margin-right: 1vw;
+}
+
+.input-label {
+    padding: 0 0.3vw 0 0.3vw;
 }

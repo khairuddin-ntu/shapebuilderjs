@@ -5,8 +5,9 @@ import TextField from '@mui/material/TextField';
 export default function ResolutionSection(props) {
     return (
         <Stack {...props} direction="row" alignItems="center">
-            <Typography>Resolution =</Typography>
+            <Typography className="input-label">Resolution =</Typography>
             <TextField
+                size="small"
                 variant="outlined"
                 type="number"
                 inputProps={{

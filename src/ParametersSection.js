@@ -3,7 +3,11 @@ import ParameterField from './ParameterField';
 
 export default function ParametersSection(props) {
     return (
-        <Stack {...props} direction="column">
+        <Stack
+        {...props}
+        direction="column"
+        spacing={2}
+        >
             <ParameterField parameterName="u" />
             <ParameterField parameterName="v" />
             <ParameterField parameterName="w" />
