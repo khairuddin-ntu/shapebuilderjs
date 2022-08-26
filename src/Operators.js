@@ -3,9 +3,9 @@ import Box from '@mui/material/Box';
 
 import './Operators.css';
 
-export default function Operators() {
+export default function Operators(props) {
     return (
-        <Box id="operators-container" sx={{ borderLeft: 1 }}>
+        <Box {...props} sx={{ borderLeft: 1 }}>
             <Typography variant="h4">Operators</Typography>
         </Box>
     );

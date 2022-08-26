@@ -6,10 +6,10 @@ import ResolutionSection from './ResolutionSection'
 
 import './Fields.css';
 
-export default function Fields() {
+export default function Fields(props) {
     return (
         <Box
-            id="fields-section"
+            {...props}
             sx={{ borderTop: 1 }}
         >
             <Box id="functions-section">

@@ -76,6 +76,6 @@ export default class Scene extends React.Component {
     }
 
     render() {
-        return (<canvas id="scene-canvas" ref={this.canvasRef} />);
+        return (<canvas {...this.props} ref={this.canvasRef} />);
     }
 }

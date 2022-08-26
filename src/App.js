@@ -8,15 +8,9 @@ import './App.css';
 export default function App() {
     return (
         <Box id="app">
-            <Box id="canvas">
-                <Scene />
-            </Box>
-            <Box id="operators">
-                <Operators />
-            </Box>
-            <Box id="fields">
-                <Fields />
-            </Box>
+            <Scene id="canvas" />
+            <Operators id="operators" />
+            <Fields id="fields" />
         </Box>
     );
 }
