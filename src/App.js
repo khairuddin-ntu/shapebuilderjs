@@ -8,9 +8,9 @@ import './App.css';
 export default function App() {
     return (
         <Box id="app">
-            <Scene id="canvas" />
+            <Scene />
             <Operators id="operators" />
-            <Fields id="fields" />
+            <Fields />
         </Box>
     );
 }
