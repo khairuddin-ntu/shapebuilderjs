@@ -10,6 +10,7 @@ export default function ResolutionSection(props) {
                 size="small"
                 variant="outlined"
                 type="number"
+                defaultValue="100"
                 inputProps={{
                     min: 0,
                     max: 999,
