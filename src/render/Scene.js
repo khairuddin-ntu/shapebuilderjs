@@ -16,7 +16,7 @@ export default class Scene extends React.Component {
     componentDidMount() {
         // Create renderer
         this.renderer = new ShapeRenderer(this.canvasRef.current);
-        //this.renderer.render2dShape(
+        // this.renderer.render2dShape(
         //    (u) => 10 * u * Math.cos(22 * Math.PI * u),
         //    (u) => 10 * u * Math.sin(22 * Math.PI * u),
         //    (u) => (10 * u) - 5,
@@ -24,7 +24,7 @@ export default class Scene extends React.Component {
         //        start: 0, end: 1, get range() { return this.end - this.start }
         //    },
         //    600
-        //);
+        // );
 
         this.renderer.render3dShape(
             (u, v) => 5 * Math.cos(2 * Math.PI * u),

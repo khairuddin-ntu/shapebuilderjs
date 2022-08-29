@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
-import Scene from './Scene';
-import Fields from './Fields';
-import Operators from './Operators';
+import Scene from './render/Scene';
+import Fields from './fields/Fields';
+import Operators from './operators/Operators';
 
 import './App.css';
 
