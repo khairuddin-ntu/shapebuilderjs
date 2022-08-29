@@ -3,7 +3,7 @@
     display: inline-grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(4, 1fr);
-    column-gap: 5vw;
+    gap: 3vh 5vw;
     grid-template-areas:
         "functions parameters"
         "functions parameters"
@@ -23,7 +23,7 @@
 
 #resolution-section {
     grid-area: resolution;
-    place-self: end start;
+    place-self: start;
 }
 
 #actions-section {
