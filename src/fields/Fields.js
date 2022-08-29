@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import FunctionsSection from './FunctionsSection';
-import ParametersSection from './ParametersSection';
+import FunctionsSection from './functions/FunctionsSection';
+import ParametersSection from './parameters/ParametersSection';
 import ResolutionSection from './ResolutionSection'
 
 import './Fields.css';
