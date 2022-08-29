@@ -1,0 +1,11 @@
+#app {
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 80% 20%;
+    grid-template-rows: 60% 40%;
+    place-items: stretch;
+}
+
+#operators {
+    grid-row: span 2;
+}

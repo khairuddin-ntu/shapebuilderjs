@@ -1,13 +1,17 @@
-import Scene from './Scene.js'
+import Box from '@mui/material/Box';
+import Scene from './Scene';
+import Fields from './Fields';
+import Operators from './Operators';
 
 import './App.css';
 
-function App() {
+export default function App() {
     return (
-        <div className="App">
-            <Scene/>
-        </div>
+        <Box id="app">
+            <Scene />
+            <Operators id="operators" />
+            <Fields />
+        </Box>
     );
 }
 
-export default App;
