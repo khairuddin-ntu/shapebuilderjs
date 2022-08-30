@@ -25,7 +25,8 @@ export default function ParametersSection(props) {
 
     return (
         <Stack
-            {...props}
+            id={props.id}
+            className={props.className}
             direction="column"
             spacing={2}
         >
