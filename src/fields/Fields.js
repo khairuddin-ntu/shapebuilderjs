@@ -7,6 +7,8 @@ import ResolutionSection from './ResolutionSection'
 
 import './Fields.css';
 
+const MAX_RESOLUTION = 2048;
+
 export default function Fields(props) {
     const resolutionInput = useRef("100");
 
@@ -18,7 +20,7 @@ export default function Fields(props) {
 
         const resolution = +strResolution;
         // Check if resolution is more than 999
-        return resolution > 999 ? NaN : resolution;
+        return resolution > MAX_RESOLUTION ? NaN : resolution;
     };
 
     const generateShape = () => {
