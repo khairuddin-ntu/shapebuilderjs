@@ -8,7 +8,7 @@ import ResolutionSection from './ResolutionSection'
 import './Fields.css';
 
 export default function Fields(props) {
-    const resolution = useRef(100);
+    const resolution = useRef("100");
 
     const generateShape = () => {
         console.log("generateShape: Value of resolution field = ", resolution.current);
