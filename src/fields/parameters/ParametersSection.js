@@ -32,6 +32,7 @@ export default function ParametersSection(props) {
         >
             {parameters.map((parameter) =>
                 <ParameterField
+                    key={parameter.name}
                     parameterName={parameter.name}
                     deletable={parameter.name !== "u"}
                 />
