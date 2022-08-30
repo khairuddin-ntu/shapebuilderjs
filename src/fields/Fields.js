@@ -10,7 +10,6 @@ export default function Fields(props) {
     return (
         <Box
             id="fields"
-            {...props}
             sx={{ borderTop: 1 }}
         >
             <FunctionsSection id="functions-section" className="field__section" sectionName="Functions" />

@@ -63,7 +63,6 @@ export default function Scene(props) {
     return (
         <canvas
             id="canvas"
-            {...props}
             ref={canvasRef}
         />
     );

@@ -4,7 +4,11 @@ import TextField from '@mui/material/TextField';
 
 export default function ResolutionSection(props) {
     return (
-        <Stack {...props} direction="row" alignItems="center">
+        <Stack
+            id={props.id}
+            direction="row"
+            alignItems="center"
+        >
             <Typography className="input-label">Resolution =</Typography>
             <TextField
                 size="small"

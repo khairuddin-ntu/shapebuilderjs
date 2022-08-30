@@ -4,7 +4,8 @@ import FunctionField from './FunctionField';
 export default function FunctionsSection(props) {
     return (
         <Stack
-            {...props}
+            id={props.id}
+            className={props.className}
             direction="column"
             spacing={2}
         >
