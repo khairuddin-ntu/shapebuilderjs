@@ -7,7 +7,7 @@ export default function FunctionField(props) {
         <Stack direction="row" alignItems="center">
             <Typography className="input-label">{props.functionName} =</Typography>
             <TextField
-                class="function-input"
+                className="function-input"
                 variant="outlined"
                 inputProps={{ size: 40 }}
             />
