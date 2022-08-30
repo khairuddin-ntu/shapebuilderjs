@@ -7,6 +7,10 @@ import ResolutionSection from './ResolutionSection'
 import './Fields.css';
 
 export default function Fields(props) {
+    const generateShape = () => {
+        console.log("Generate Shape button clicked");
+    };
+
     return (
         <Box
             id="fields"
@@ -16,7 +20,12 @@ export default function Fields(props) {
             <ParametersSection id="parameters-section" className="field__section" sectionName="Parameters" />
             <ResolutionSection id="resolution-section" />
             <Box id="actions-section">
-                <Button variant="contained">Generate shape</Button>
+                <Button
+                    variant="contained"
+                    onClick={generateShape}
+                >
+                    Generate shape
+                </Button>
             </Box>
         </Box>
     );
