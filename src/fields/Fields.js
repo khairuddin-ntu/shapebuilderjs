@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import FunctionsSection from './functions/FunctionsSection';
@@ -7,8 +8,10 @@ import ResolutionSection from './ResolutionSection'
 import './Fields.css';
 
 export default function Fields(props) {
+    const resolution = useRef(100);
+
     const generateShape = () => {
-        console.log("Generate Shape button clicked");
+        console.log("generateShape: Value of resolution field = ", resolution.current);
     };
 
     return (
@@ -18,7 +21,7 @@ export default function Fields(props) {
         >
             <FunctionsSection id="functions-section" className="field__section" sectionName="Functions" />
             <ParametersSection id="parameters-section" className="field__section" sectionName="Parameters" />
-            <ResolutionSection id="resolution-section" />
+            <ResolutionSection id="resolution-section" resolutionRef={resolution} />
             <Box id="actions-section">
                 <Button
                     variant="contained"
