@@ -19,8 +19,8 @@ export default function Fields(props) {
         }
 
         const resolution = +strResolution;
-        // Check if resolution is more than 999
-        return resolution > MAX_RESOLUTION ? NaN : resolution;
+        // Check if resolution is more than maximum resolution
+        return resolution === 0 || resolution > MAX_RESOLUTION ? NaN : resolution;
     };
 
     const generateShape = () => {
