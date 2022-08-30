@@ -10,8 +10,20 @@ import './Fields.css';
 export default function Fields(props) {
     const resolutionInput = useRef("100");
 
+    const parseResolution = (strResolution) => {
+        // Check if resolution only contains digits
+        if (!/^\d+$/.test(strResolution)) {
+            return NaN;
+        }
+
+        const resolution = +strResolution;
+        // Check if resolution is more than 999
+        return resolution > 999 ? NaN : resolution;
+    };
+
     const generateShape = () => {
-        console.log("generateShape: Value of resolution field = ", resolutionInput.current);
+        const resolution = parseResolution(resolutionInput.current);
+        console.log("generateShape: Parsed value of resolution field = ", resolution);
     };
 
     return (
