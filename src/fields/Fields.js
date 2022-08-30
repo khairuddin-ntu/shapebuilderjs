@@ -8,10 +8,10 @@ import ResolutionSection from './ResolutionSection'
 import './Fields.css';
 
 export default function Fields(props) {
-    const resolution = useRef("100");
+    const resolutionInput = useRef("100");
 
     const generateShape = () => {
-        console.log("generateShape: Value of resolution field = ", resolution.current);
+        console.log("generateShape: Value of resolution field = ", resolutionInput.current);
     };
 
     return (
@@ -21,7 +21,7 @@ export default function Fields(props) {
         >
             <FunctionsSection id="functions-section" className="field__section" sectionName="Functions" />
             <ParametersSection id="parameters-section" className="field__section" sectionName="Parameters" />
-            <ResolutionSection id="resolution-section" resolutionRef={resolution} />
+            <ResolutionSection id="resolution-section" resolutionRef={resolutionInput} />
             <Box id="actions-section">
                 <Button
                     variant="contained"
