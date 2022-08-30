@@ -16,7 +16,7 @@ export default function ResolutionSection(props) {
                 size="small"
                 variant="outlined"
                 type="number"
-                defaultValue="100"
+                defaultValue={props.resolutionRef.current}
                 inputProps={{
                     min: 0,
                     max: 999,
