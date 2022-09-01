@@ -8,13 +8,14 @@ import ResolutionSection from './ResolutionSection'
 import './Fields.css';
 
 const MAX_RESOLUTION = 2048;
+const REGEX_RESOLUTION = /^\d+$/;
 
 export default function Fields(props) {
     const resolutionInput = useRef("100");
 
     const parseResolution = (strResolution) => {
         // Check if resolution only contains digits
-        if (!/^\d+$/.test(strResolution)) {
+        if (!REGEX_RESOLUTION.test(strResolution)) {
             return NaN;
         }
 
