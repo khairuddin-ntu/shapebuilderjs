@@ -21,11 +21,16 @@ export default function Fields(props) {
 
         const resolution = +strResolution;
         // Check if resolution is more than maximum resolution
-        return resolution === 0 || resolution > MAX_RESOLUTION ? NaN : resolution;
+        return resolution === 0 || resolution > MAX_RESOLUTION ? null : resolution;
     };
 
     const generateShape = () => {
         const resolution = parseResolution(resolutionInput.current);
+        if (resolution === null) {
+            // TODO: Display error on resolution field
+            return;
+        }
+
         console.log("generateShape: Parsed value of resolution field = ", resolution);
     };
 
