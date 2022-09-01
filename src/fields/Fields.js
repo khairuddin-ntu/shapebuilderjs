@@ -54,6 +54,7 @@ export default function Fields(props) {
         }
 
         console.log("generateShape: Parsed value of resolution field = ", resolution);
+        props.setRenderParams({ resolution: resolution });
     };
 
     return (

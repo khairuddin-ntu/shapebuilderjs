@@ -13,7 +13,7 @@ export default function App() {
         <Box id="app">
             <Scene renderParams={renderParams} />
             <Operators id="operators" />
-            <Fields />
+            <Fields setRenderParams={setRenderParams} />
         </Box>
     );
 }
