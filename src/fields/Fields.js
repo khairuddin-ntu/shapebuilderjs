@@ -16,7 +16,7 @@ export default function Fields(props) {
     const parseResolution = (strResolution) => {
         // Check if resolution only contains digits
         if (!REGEX_RESOLUTION.test(strResolution)) {
-            return NaN;
+            return null;
         }
 
         const resolution = +strResolution;
