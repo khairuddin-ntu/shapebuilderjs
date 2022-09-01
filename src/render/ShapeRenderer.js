@@ -16,53 +16,19 @@ export default class ShapeRenderer {
         this.update();
     }
 
-    render2dShape(xEquation, yEquation, zEquation, uParameter, resolution) {
-        this.#removeExistingShape();
+    renderShape(xEquation, yEquation, zEquation, parameters, resolution) {
+        switch (parameters.length) {
+            case 1:
+                this.#render2dShape(xEquation, yEquation, zEquation, parameters[0], resolution);
+                return;
+            case 2:
+                this.#render3dShape(xEquation, yEquation, zEquation, parameters[0], parameters[1], resolution);
+                return;
+            default:
+                console.log("renderShape: Invalid parameter count [" + parameters.length + "]. Not rendering shape");
+                return;
 
-        this.#shape = new THREE.Group();
-
-        let prevVector, currentVector;
-        let points, geometry, line;
-
-        for (let u = uParameter.start; u <= uParameter.end; u += uParameter.range / resolution) {
-            currentVector = new THREE.Vector3(
-                xEquation(u),
-                yEquation(u),
-                zEquation(u)
-            );
-
-            if (prevVector != null) {
-                // Generate line segment from previous point to current point
-                points = [prevVector, currentVector];
-                geometry = new THREE.BufferGeometry().setFromPoints(points);
-                line = new THREE.Line(geometry, SHAPE_2D_MATERIAL);
-                this.#shape.add(line);
-            }
-
-            prevVector = currentVector;
         }
-
-        this.#scene.add(this.#shape);
-    }
-
-    render3dShape(xEquation, yEquation, zEquation, uParameter, vParameter, resolution) {
-        this.#removeExistingShape();
-
-        const geometry = new ParametricGeometry(
-            (u, v, target) => {
-                u = uParameter.start + (uParameter.range * u);
-                v = vParameter.start + (vParameter.range * v);
-
-                target.set(
-                    xEquation(u, v),
-                    yEquation(u, v),
-                    zEquation(u, v)
-                );
-            },
-            resolution
-        );
-        this.#shape = new THREE.Mesh(geometry, SHAPE_3D_MATERIAL);
-        this.#scene.add(this.#shape);
     }
 
     update = () => {
@@ -124,6 +90,55 @@ export default class ShapeRenderer {
         }
 
         this.#scene.add(gridGroup);
+    }
+
+    #render2dShape(xEquation, yEquation, zEquation, uParameter, resolution) {
+        this.#removeExistingShape();
+
+        this.#shape = new THREE.Group();
+
+        let prevVector, currentVector;
+        let points, geometry, line;
+
+        for (let u = uParameter.start; u <= uParameter.end; u += uParameter.range / resolution) {
+            currentVector = new THREE.Vector3(
+                xEquation(u),
+                yEquation(u),
+                zEquation(u)
+            );
+
+            if (prevVector != null) {
+                // Generate line segment from previous point to current point
+                points = [prevVector, currentVector];
+                geometry = new THREE.BufferGeometry().setFromPoints(points);
+                line = new THREE.Line(geometry, SHAPE_2D_MATERIAL);
+                this.#shape.add(line);
+            }
+
+            prevVector = currentVector;
+        }
+
+        this.#scene.add(this.#shape);
+    }
+
+    #render3dShape(xEquation, yEquation, zEquation, uParameter, vParameter, resolution) {
+        this.#removeExistingShape();
+
+        const geometry = new ParametricGeometry(
+            (u, v, target) => {
+                u = uParameter.start + (uParameter.range * u);
+                v = vParameter.start + (vParameter.range * v);
+
+                target.set(
+                    xEquation(u, v),
+                    yEquation(u, v),
+                    zEquation(u, v)
+                );
+            },
+            resolution
+        );
+        this.#shape = new THREE.Mesh(geometry, SHAPE_3D_MATERIAL);
+        this.#scene.add(this.#shape);
     }
 
     #removeExistingShape() {

@@ -31,7 +31,7 @@ export default function Scene(props) {
         currentMouseX = mouseX;
         currentMouseY = mouseY;
     };
-    
+
     const onEndDrag = () => {
         canvasRef.current.removeEventListener('mousemove', onDrag);
         canvasRef.current.removeEventListener('mouseup', onEndDrag);
@@ -43,16 +43,18 @@ export default function Scene(props) {
         const canvas = canvasRef.current;
 
         renderer.current = new ShapeRenderer(canvas);
-        renderer.current.render3dShape(
+        renderer.current.renderShape(
             (u, v) => 5 * Math.cos(2 * Math.PI * u),
             (u, v) => 5 * Math.sin(2 * Math.PI * u),
             (u, v) => (11 * v) - 5,
-            {
-                start: 0, end: 1, get range() { return this.end - this.start }
-            },
-            {
-                start: 0, end: 1, get range() { return this.end - this.start }
-            },
+            [
+                {
+                    start: 0, end: 1, get range() { return this.end - this.start }
+                },
+                {
+                    start: 0, end: 1, get range() { return this.end - this.start }
+                }
+            ],
             100
         );
 
