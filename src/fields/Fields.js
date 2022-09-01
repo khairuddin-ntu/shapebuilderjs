@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import FunctionsSection from './functions/FunctionsSection';
@@ -12,22 +12,37 @@ const REGEX_RESOLUTION = /^\d+$/;
 
 export default function Fields(props) {
     const resolutionInput = useRef("100");
+    const [resolutionError, setResolutionError] = useState(false);
 
     const parseResolution = (strResolution) => {
         // Check if resolution only contains digits
         if (!REGEX_RESOLUTION.test(strResolution)) {
+            console.log("parseResolution: Must only contain digits");
+            setResolutionError(true);
             return null;
         }
 
         const resolution = +strResolution;
-        // Check if resolution is more than maximum resolution
-        return resolution === 0 || resolution > MAX_RESOLUTION ? null : resolution;
+        // Check if resolution is 0
+        if (resolution === 0) {
+            console.log("parseResolution: Cannot be 0");
+            setResolutionError(true);
+            return null;
+        }
+
+        // Check if resolution is more than maximum allowed resolution
+        if (resolution > MAX_RESOLUTION) {
+            console.log("parseResolution: Cannot be more than " + MAX_RESOLUTION);
+            setResolutionError(true);
+            return null;
+        }
+
+        return resolution;
     };
 
     const generateShape = () => {
         const resolution = parseResolution(resolutionInput.current);
         if (resolution === null) {
-            // TODO: Display error on resolution field
             return;
         }
 
@@ -41,7 +56,11 @@ export default function Fields(props) {
         >
             <FunctionsSection id="functions-section" className="field__section" sectionName="Functions" />
             <ParametersSection id="parameters-section" className="field__section" sectionName="Parameters" />
-            <ResolutionSection id="resolution-section" resolutionRef={resolutionInput} />
+            <ResolutionSection
+                id="resolution-section"
+                resolutionRef={resolutionInput}
+                resolutionError={resolutionError}
+            />
             <Box id="actions-section">
                 <Button
                     variant="contained"

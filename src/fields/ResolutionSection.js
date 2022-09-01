@@ -17,6 +17,7 @@ export default function ResolutionSection(props) {
                 variant="outlined"
                 type="number"
                 defaultValue={props.resolutionRef.current}
+                error={props.resolutionError}
                 inputProps={{
                     min: 0,
                     max: 999,
