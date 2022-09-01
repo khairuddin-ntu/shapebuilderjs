@@ -14,6 +14,11 @@ export default function Fields(props) {
     const resolutionInput = useRef("100");
     const [resolutionError, setResolutionError] = useState(false);
 
+    const onResolutionChange = (resolution) => {
+        setResolutionError(false);
+        resolutionInput.current = resolution;
+    };
+
     const parseResolution = (strResolution) => {
         // Check if resolution only contains digits
         if (!REGEX_RESOLUTION.test(strResolution)) {
@@ -41,6 +46,7 @@ export default function Fields(props) {
     };
 
     const generateShape = () => {
+        console.log("generateShape: Recorded resolution input = ", resolutionInput.current);
         const resolution = parseResolution(resolutionInput.current);
         if (resolution === null) {
             return;
@@ -58,7 +64,7 @@ export default function Fields(props) {
             <ParametersSection id="parameters-section" className="field__section" sectionName="Parameters" />
             <ResolutionSection
                 id="resolution-section"
-                resolutionRef={resolutionInput}
+                onResolutionChange={onResolutionChange}
                 resolutionError={resolutionError}
             />
             <Box id="actions-section">

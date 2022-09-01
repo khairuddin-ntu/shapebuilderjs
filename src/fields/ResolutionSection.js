@@ -3,8 +3,6 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 
 export default function ResolutionSection(props) {
-    const onResolutionChange = (event) => props.resolutionRef.current = event.target.value;
-
     return (
         <Stack
             id={props.id}
@@ -16,14 +14,14 @@ export default function ResolutionSection(props) {
                 size="small"
                 variant="outlined"
                 type="number"
-                defaultValue={props.resolutionRef.current}
+                defaultValue="100"
                 error={props.resolutionError}
                 inputProps={{
                     min: 0,
                     max: 999,
                     step: 1
                 }}
-                onChange={onResolutionChange}
+                onChange={(event) => props.onResolutionChange(event.target.value)}
             />
         </Stack>
     );
