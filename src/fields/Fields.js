@@ -7,11 +7,12 @@ import ResolutionSection from './ResolutionSection'
 
 import './Fields.css';
 
+export const DEFAULT_RESOLUTION = "100";
 const MAX_RESOLUTION = 2048;
 const REGEX_RESOLUTION = /^\d+$/;
 
 export default function Fields(props) {
-    const resolutionInput = useRef("100");
+    const resolutionInput = useRef(DEFAULT_RESOLUTION);
     const [resolutionError, setResolutionError] = useState(false);
 
     const onResolutionChange = (resolution) => {

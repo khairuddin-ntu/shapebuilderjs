@@ -1,6 +1,7 @@
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
+import { DEFAULT_RESOLUTION } from './Fields';
 
 export default function ResolutionSection(props) {
     return (
@@ -14,7 +15,7 @@ export default function ResolutionSection(props) {
                 size="small"
                 variant="outlined"
                 type="number"
-                defaultValue="100"
+                defaultValue={DEFAULT_RESOLUTION}
                 error={props.resolutionError}
                 inputProps={{
                     min: 0,
