@@ -6,38 +6,9 @@ import './Scene.css';
 export default function Scene(props) {
     let currentMouseX;
     let currentMouseY;
+    let isDragging = false;
     const renderer = useRef();
-
     const canvasRef = useRef();
-
-    const onStartDrag = (event) => {
-        currentMouseX = event.clientX;
-        currentMouseY = event.clientY;
-
-        canvasRef.current.removeEventListener('mousedown', onStartDrag);
-        canvasRef.current.addEventListener('mousemove', onDrag);
-        canvasRef.current.addEventListener('mouseup', onEndDrag);
-        canvasRef.current.addEventListener('mouseout', onEndDrag);
-    };
-
-    const onDrag = (event) => {
-        const mouseX = event.clientX;
-        const mouseY = event.clientY;
-
-        const rotationX = mouseX - currentMouseX;
-        const rotationY = mouseY - currentMouseY;
-        renderer.current.rotateShape(rotationX, rotationY);
-
-        currentMouseX = mouseX;
-        currentMouseY = mouseY;
-    };
-
-    const onEndDrag = () => {
-        canvasRef.current.removeEventListener('mousemove', onDrag);
-        canvasRef.current.removeEventListener('mouseup', onEndDrag);
-        canvasRef.current.removeEventListener('mouseout', onEndDrag);
-        canvasRef.current.addEventListener('mousedown', onStartDrag);
-    };
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -57,9 +28,6 @@ export default function Scene(props) {
             ],
             100
         );
-
-        canvas.addEventListener('mousedown', onStartDrag);
-        return () => canvas.removeEventListener('mousedown', onStartDrag);
     }, []);
 
     useEffect(() => {
@@ -84,10 +52,39 @@ export default function Scene(props) {
         );
     }, [props.renderParams]);
 
+    const startDrag = (event) => {
+        currentMouseX = event.clientX;
+        currentMouseY = event.clientY;
+
+        isDragging = true;
+    };
+
+    const onDrag = (event) => {
+        if (!isDragging) {
+            return;
+        }
+
+        const mouseX = event.clientX;
+        const mouseY = event.clientY;
+
+        const rotationX = mouseX - currentMouseX;
+        const rotationY = mouseY - currentMouseY;
+        renderer.current.rotateShape(rotationX, rotationY);
+
+        currentMouseX = mouseX;
+        currentMouseY = mouseY;
+    };
+
+    const endDrag = () => isDragging = false;
+
     return (
         <canvas
             id="canvas"
             ref={canvasRef}
+            onMouseDown={startDrag}
+            onMouseMove={onDrag}
+            onMouseUp={endDrag}
+            onMouseOut={endDrag}
         />
     );
 }
