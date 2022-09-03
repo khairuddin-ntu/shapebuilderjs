@@ -78,7 +78,9 @@ export default class ParametricGeometry extends BufferGeometry {
 
                 // faces one and two
                 indices.push(a, b, d);
+                indices.push(d, b, a);
                 indices.push(b, c, d);
+                indices.push(d, c, b);
             }
         }
 
