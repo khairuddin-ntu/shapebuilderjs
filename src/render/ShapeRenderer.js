@@ -53,7 +53,7 @@ export default class ShapeRenderer {
         this.#scene.background = new THREE.Color(0xffffff);
 
         this.#camera = new THREE.PerspectiveCamera(75, canvasRef.offsetWidth / canvasRef.offsetHeight, 0.1, 1000);
-        this.#camera.translateZ(10);
+        this.#camera.translateZ(14);
 
         const light = new THREE.DirectionalLight();
         light.position.set(-1, 2, 4);
