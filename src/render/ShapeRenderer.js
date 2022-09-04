@@ -13,7 +13,7 @@ export default class ShapeRenderer {
     #scene;
     #shape;
     #camera;
-    #font;
+    #fontData;
 
     constructor(canvasRef) {
         this.#setUpScene(canvasRef);
@@ -71,8 +71,8 @@ export default class ShapeRenderer {
         const loader = new FontLoader();
         loader.load(
             "./fonts/nunito_regular.json",
-            (font) => {
-                this.#font = font;
+            (fontData) => {
+                this.#fontData = fontData;
                 onComplete();
             }
         );
@@ -126,9 +126,9 @@ export default class ShapeRenderer {
 
         // Create text
         geometry = new TextGeometry(axesType, {
-            font: this.#font,
+            fontData: this.#fontData,
             size: 0.5,
-            height: 0.1
+            depth: 0.1
         });
         mesh = new THREE.Mesh(geometry, TEXT_MATERIAL);
         switch (axesType) {
