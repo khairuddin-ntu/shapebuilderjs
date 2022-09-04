@@ -3,6 +3,7 @@ import ParametricGeometry from './ParametricGeometry';
 
 const SHAPE_2D_MATERIAL = new THREE.LineBasicMaterial({ color: 0x00ff00 });
 const SHAPE_3D_MATERIAL = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
+const AXES_MATERIAL = new THREE.MeshStandardMaterial({ color: 0xffff00 });
 
 export default class ShapeRenderer {
     #renderer;
@@ -12,7 +13,7 @@ export default class ShapeRenderer {
 
     constructor(canvasRef) {
         this.#setUpScene(canvasRef);
-        //this.#drawGrid();
+        this.#drawAxes();
         this.update();
     }
 
@@ -60,36 +61,20 @@ export default class ShapeRenderer {
         this.#scene.add(light);
     }
 
-    #drawGrid() {
-        const gridMaterial = new THREE.LineBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.1 });
-        const gridGroup = new THREE.Group();
+    #drawAxes() {
+        const axesGroup = new THREE.Group();
 
-        let points;
-        let geometry;
-        let line;
+        // y-axis
+        let geometry = new THREE.CylinderGeometry(0.2, 0.2, 10, 20);
+        let mesh = new THREE.Mesh(geometry, AXES_MATERIAL);
+        axesGroup.add(mesh);
 
-        for (let x = -10; x <= 10; x++) {
-            for (let y = -10; y <= 10; y++) {
-                for (let z = -1; z <= 1; z++) {
-                    points = [new THREE.Vector3(x, y, z), new THREE.Vector3(x, y, -z)];
-                    geometry = new THREE.BufferGeometry().setFromPoints(points);
-                    line = new THREE.Line(geometry, gridMaterial);
-                    gridGroup.add(line);
+        geometry = new THREE.ConeGeometry(0.5, 1, 20);
+        mesh = new THREE.Mesh(geometry, AXES_MATERIAL);
+        mesh.translateY(5);
+        axesGroup.add(mesh);
 
-                    points = [new THREE.Vector3(x, y, z), new THREE.Vector3(x, -y, z)];
-                    geometry = new THREE.BufferGeometry().setFromPoints(points);
-                    line = new THREE.Line(geometry, gridMaterial);
-                    gridGroup.add(line);
-
-                    points = [new THREE.Vector3(x, y, z), new THREE.Vector3(-x, y, z)];
-                    geometry = new THREE.BufferGeometry().setFromPoints(points);
-                    line = new THREE.Line(geometry, gridMaterial);
-                    gridGroup.add(line);
-                }
-            }
-        }
-
-        this.#scene.add(gridGroup);
+        this.#scene.add(axesGroup);
     }
 
     #render2dShape(xEquation, yEquation, zEquation, uParameter, resolution) {
