@@ -10,7 +10,7 @@ export default function Scene(props) {
     const renderer = useRef();
     const canvasRef = useRef();
 
-    useEffect(() => renderer.current = new ShapeRenderer(canvasRef.current), []);
+    useEffect(() => { renderer.current = new ShapeRenderer(canvasRef.current); }, []);
 
     useEffect(() => {
         const currentRenderer = renderer.current;
