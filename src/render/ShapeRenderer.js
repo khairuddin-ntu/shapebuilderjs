@@ -64,8 +64,9 @@ export default class ShapeRenderer {
     #drawAxes() {
         const axesGroup = new THREE.Group();
 
-        this.#drawAxis(axesGroup, "y");
         this.#drawAxis(axesGroup, "x");
+        this.#drawAxis(axesGroup, "y");
+        this.#drawAxis(axesGroup, "z");
         this.#scene.add(axesGroup);
     }
 
@@ -76,6 +77,8 @@ export default class ShapeRenderer {
             case "x":
                 mesh.rotateZ(Math.PI / 2);
                 break;
+            case "z":
+                mesh.rotateX(Math.PI / 2);
             default:
                 break;
         }
@@ -90,6 +93,10 @@ export default class ShapeRenderer {
                 break;
             case "y":
                 mesh.translateY(5);
+                break;
+            case "z":
+                mesh.translateZ(-5);
+                mesh.rotateX(Math.PI * 3 / 2);
                 break;
             default:
                 break;
