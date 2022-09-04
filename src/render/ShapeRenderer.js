@@ -64,17 +64,30 @@ export default class ShapeRenderer {
     #drawAxes() {
         const axesGroup = new THREE.Group();
 
-        // y-axis
+        this.#drawAxis(axesGroup, "y");
+        this.#scene.add(axesGroup);
+    }
+
+    #drawAxis(axesGroup, axesType) {
         let geometry = new THREE.CylinderGeometry(0.2, 0.2, 10, 20);
         let mesh = new THREE.Mesh(geometry, AXES_MATERIAL);
+        switch (axesType) {
+            default:
+                break;
+        }
         axesGroup.add(mesh);
 
         geometry = new THREE.ConeGeometry(0.5, 1, 20);
         mesh = new THREE.Mesh(geometry, AXES_MATERIAL);
-        mesh.translateY(5);
-        axesGroup.add(mesh);
+        switch (axesType) {
+            case "y":
+                mesh.translateY(5);
+                break;
+            default:
+                break;
+        }
 
-        this.#scene.add(axesGroup);
+        axesGroup.add(mesh);
     }
 
     #render2dShape(xEquation, yEquation, zEquation, uParameter, resolution) {
