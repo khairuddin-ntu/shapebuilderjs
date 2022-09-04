@@ -65,6 +65,7 @@ export default class ShapeRenderer {
         const axesGroup = new THREE.Group();
 
         this.#drawAxis(axesGroup, "y");
+        this.#drawAxis(axesGroup, "x");
         this.#scene.add(axesGroup);
     }
 
@@ -72,6 +73,9 @@ export default class ShapeRenderer {
         let geometry = new THREE.CylinderGeometry(0.2, 0.2, 10, 20);
         let mesh = new THREE.Mesh(geometry, AXES_MATERIAL);
         switch (axesType) {
+            case "x":
+                mesh.rotateZ(Math.PI / 2);
+                break;
             default:
                 break;
         }
@@ -80,6 +84,10 @@ export default class ShapeRenderer {
         geometry = new THREE.ConeGeometry(0.5, 1, 20);
         mesh = new THREE.Mesh(geometry, AXES_MATERIAL);
         switch (axesType) {
+            case "x":
+                mesh.translateX(5);
+                mesh.rotateZ(Math.PI * 3 / 2);
+                break;
             case "y":
                 mesh.translateY(5);
                 break;
