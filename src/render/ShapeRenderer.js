@@ -1,20 +1,26 @@
 import * as THREE from 'three';
 import ParametricGeometry from './ParametricGeometry';
+import FontLoader from './text/FontLoader';
+import TextGeometry from './text/TextGeometry';
 
 const SHAPE_2D_MATERIAL = new THREE.LineBasicMaterial({ color: 0x00ff00 });
 const SHAPE_3D_MATERIAL = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
 const AXES_MATERIAL = new THREE.MeshStandardMaterial({ color: 0xffff00 });
+const TEXT_MATERIAL = new THREE.MeshBasicMaterial({ color: 0x000000 });
 
 export default class ShapeRenderer {
     #renderer;
     #scene;
     #shape;
     #camera;
+    #font;
 
     constructor(canvasRef) {
         this.#setUpScene(canvasRef);
-        this.#drawAxes();
-        this.update();
+        this.#loadFont(() => {
+            this.#drawAxes();
+            this.update();
+        });
     }
 
     renderShape(xEquation, yEquation, zEquation, parameters, resolution) {
@@ -61,6 +67,17 @@ export default class ShapeRenderer {
         this.#scene.add(light);
     }
 
+    #loadFont(onComplete) {
+        const loader = new FontLoader();
+        loader.load(
+            "./fonts/nunito_regular.json",
+            (font) => {
+                this.#font = font;
+                onComplete();
+            }
+        );
+    }
+
     #drawAxes() {
         const axesGroup = new THREE.Group();
 
@@ -71,6 +88,7 @@ export default class ShapeRenderer {
     }
 
     #drawAxis(axesGroup, axesType) {
+        // Create line
         let geometry = new THREE.CylinderGeometry(0.2, 0.2, 10, 20);
         let mesh = new THREE.Mesh(geometry, AXES_MATERIAL);
         switch (axesType) {
@@ -79,11 +97,13 @@ export default class ShapeRenderer {
                 break;
             case "z":
                 mesh.rotateX(Math.PI / 2);
+                break;
             default:
                 break;
         }
         axesGroup.add(mesh);
 
+        // Create arrow head
         geometry = new THREE.ConeGeometry(0.5, 1, 20);
         mesh = new THREE.Mesh(geometry, AXES_MATERIAL);
         switch (axesType) {
@@ -102,6 +122,30 @@ export default class ShapeRenderer {
                 break;
         }
 
+        axesGroup.add(mesh);
+
+        // Create text
+        geometry = new TextGeometry(axesType, {
+            font: this.#font,
+            size: 0.5,
+            height: 0.1
+        });
+        mesh = new THREE.Mesh(geometry, TEXT_MATERIAL);
+        switch (axesType) {
+            case "x":
+                mesh.translateX(6);
+                mesh.translateY(-0.15);
+                break;
+            case "y":
+                mesh.translateX(-0.15);
+                mesh.translateY(6);
+                break;
+            case "z":
+                mesh.translateZ(-6);
+                break;
+            default:
+                break;
+        }
         axesGroup.add(mesh);
     }
 
