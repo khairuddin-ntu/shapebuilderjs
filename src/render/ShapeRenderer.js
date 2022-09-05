@@ -144,6 +144,7 @@ export default class ShapeRenderer {
                 mesh.translateY(6);
                 break;
             case "z":
+                mesh.translateY(-0.15);
                 mesh.translateZ(-6);
                 break;
             default:
