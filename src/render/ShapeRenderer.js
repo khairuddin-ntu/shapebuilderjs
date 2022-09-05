@@ -1,6 +1,6 @@
 import * as THREE from 'three';
+import { FileLoader } from 'three';
 import ParametricGeometry from './ParametricGeometry';
-import FontLoader from './text/FontLoader';
 import TextGeometry from './text/TextGeometry';
 
 const SHAPE_2D_MATERIAL = new THREE.LineBasicMaterial({ color: 0x00ff00 });
@@ -68,11 +68,10 @@ export default class ShapeRenderer {
     }
 
     #loadFont(onComplete) {
-        const loader = new FontLoader();
-        loader.load(
+        new FileLoader().load(
             "./fonts/nunito_regular.json",
-            (fontData) => {
-                this.#fontData = fontData;
+            (fileData) => {
+                this.#fontData = JSON.parse(fileData);
                 onComplete();
             }
         );
