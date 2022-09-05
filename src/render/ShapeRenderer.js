@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { FileLoader } from 'three';
-import ParametricGeometry from './ParametricGeometry';
-import TextGeometry from './text/TextGeometry';
+import ParametricGeometry from './geometries/ParametricGeometry';
+import TextGeometry from './geometries/TextGeometry';
 
 const SHAPE_2D_MATERIAL = new THREE.LineBasicMaterial({ color: 0x00ff00 });
 const SHAPE_3D_MATERIAL = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
