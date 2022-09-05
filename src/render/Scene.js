@@ -59,6 +59,8 @@ export default function Scene(props) {
 
     const endDrag = () => isDragging = false;
 
+    const changeShapeZoom = (event) => renderer.current.zoomBy(event.deltaY);
+
     return (
         <canvas
             id="canvas"
@@ -67,6 +69,7 @@ export default function Scene(props) {
             onMouseMove={onDrag}
             onMouseUp={endDrag}
             onMouseOut={endDrag}
+            onWheel={changeShapeZoom}
         />
     );
 }

@@ -1,19 +1,26 @@
 import * as THREE from 'three';
-import ParametricGeometry from './ParametricGeometry';
+import { FileLoader } from 'three';
+import ParametricGeometry from './geometries/ParametricGeometry';
+import TextGeometry from './geometries/TextGeometry';
 
 const SHAPE_2D_MATERIAL = new THREE.LineBasicMaterial({ color: 0x00ff00 });
 const SHAPE_3D_MATERIAL = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
+const AXES_MATERIAL = new THREE.MeshStandardMaterial({ color: 0xffff00 });
+const TEXT_MATERIAL = new THREE.MeshBasicMaterial({ color: 0x000000 });
 
 export default class ShapeRenderer {
     #renderer;
     #scene;
     #shape;
     #camera;
+    #fontData;
 
     constructor(canvasRef) {
         this.#setUpScene(canvasRef);
-        //this.#drawGrid();
-        this.update();
+        this.#loadFont(() => {
+            this.#drawAxes();
+            this.update();
+        });
     }
 
     renderShape(xEquation, yEquation, zEquation, parameters, resolution) {
@@ -29,6 +36,10 @@ export default class ShapeRenderer {
                 return;
 
         }
+    }
+
+    zoomBy(zoomAmount) {
+        this.#camera.position.z += zoomAmount * 0.1;
     }
 
     update = () => {
@@ -60,36 +71,85 @@ export default class ShapeRenderer {
         this.#scene.add(light);
     }
 
-    #drawGrid() {
-        const gridMaterial = new THREE.LineBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.1 });
-        const gridGroup = new THREE.Group();
-
-        let points;
-        let geometry;
-        let line;
-
-        for (let x = -10; x <= 10; x++) {
-            for (let y = -10; y <= 10; y++) {
-                for (let z = -1; z <= 1; z++) {
-                    points = [new THREE.Vector3(x, y, z), new THREE.Vector3(x, y, -z)];
-                    geometry = new THREE.BufferGeometry().setFromPoints(points);
-                    line = new THREE.Line(geometry, gridMaterial);
-                    gridGroup.add(line);
-
-                    points = [new THREE.Vector3(x, y, z), new THREE.Vector3(x, -y, z)];
-                    geometry = new THREE.BufferGeometry().setFromPoints(points);
-                    line = new THREE.Line(geometry, gridMaterial);
-                    gridGroup.add(line);
-
-                    points = [new THREE.Vector3(x, y, z), new THREE.Vector3(-x, y, z)];
-                    geometry = new THREE.BufferGeometry().setFromPoints(points);
-                    line = new THREE.Line(geometry, gridMaterial);
-                    gridGroup.add(line);
-                }
+    #loadFont(onComplete) {
+        new FileLoader().load(
+            "./fonts/nunito_regular.json",
+            (fileData) => {
+                this.#fontData = JSON.parse(fileData);
+                onComplete();
             }
+        );
+    }
+
+    #drawAxes() {
+        const axesGroup = new THREE.Group();
+
+        this.#drawAxis(axesGroup, "x");
+        this.#drawAxis(axesGroup, "y");
+        this.#drawAxis(axesGroup, "z");
+        this.#scene.add(axesGroup);
+    }
+
+    #drawAxis(axesGroup, axesType) {
+        // Create line
+        let geometry = new THREE.CylinderGeometry(0.2, 0.2, 10, 20);
+        let mesh = new THREE.Mesh(geometry, AXES_MATERIAL);
+        switch (axesType) {
+            case "x":
+                mesh.rotateZ(Math.PI / 2);
+                break;
+            case "z":
+                mesh.rotateX(Math.PI / 2);
+                break;
+            default:
+                break;
+        }
+        axesGroup.add(mesh);
+
+        // Create arrow head
+        geometry = new THREE.ConeGeometry(0.5, 1, 20);
+        mesh = new THREE.Mesh(geometry, AXES_MATERIAL);
+        switch (axesType) {
+            case "x":
+                mesh.translateX(5);
+                mesh.rotateZ(Math.PI * 3 / 2);
+                break;
+            case "y":
+                mesh.translateY(5);
+                break;
+            case "z":
+                mesh.translateZ(-5);
+                mesh.rotateX(Math.PI * 3 / 2);
+                break;
+            default:
+                break;
         }
 
-        this.#scene.add(gridGroup);
+        axesGroup.add(mesh);
+
+        // Create text
+        geometry = new TextGeometry(axesType, {
+            fontData: this.#fontData,
+            size: 0.5,
+            depth: 0.1
+        });
+        mesh = new THREE.Mesh(geometry, TEXT_MATERIAL);
+        switch (axesType) {
+            case "x":
+                mesh.translateX(6);
+                mesh.translateY(-0.15);
+                break;
+            case "y":
+                mesh.translateX(-0.15);
+                mesh.translateY(6);
+                break;
+            case "z":
+                mesh.translateZ(-6);
+                break;
+            default:
+                break;
+        }
+        axesGroup.add(mesh);
     }
 
     #render2dShape(xEquation, yEquation, zEquation, uParameter, resolution) {
