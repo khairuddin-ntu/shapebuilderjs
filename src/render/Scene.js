@@ -59,9 +59,7 @@ export default function Scene(props) {
 
     const endDrag = () => isDragging = false;
 
-    const changeShapeZoom = (event) => {
-        console.log("Scroll amount = ", event.deltaY);
-    };
+    const changeShapeZoom = (event) => renderer.current.zoomBy(event.deltaY);
 
     return (
         <canvas

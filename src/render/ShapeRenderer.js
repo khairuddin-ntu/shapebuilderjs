@@ -38,6 +38,10 @@ export default class ShapeRenderer {
         }
     }
 
+    zoomBy(zoomAmount) {
+        this.#camera.position.z += zoomAmount * 0.1;
+    }
+
     update = () => {
         this.#renderer.render(this.#scene, this.#camera);
         requestAnimationFrame(this.update);
