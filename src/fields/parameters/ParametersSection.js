@@ -30,11 +30,12 @@ export default function ParametersSection(props) {
             direction="column"
             spacing={2}
         >
-            {parameters.map((parameter) =>
+            {parameters.map((parameter, i) =>
                 <ParameterField
-                    key={parameter.name}
+                    key={i}
+                    index={i}
                     parameterName={parameter.name}
-                    deletable={parameter.name !== "u"}
+                    deletable={i !== 0}
                 />
             )}
             {canAddParam ? <Button startIcon={<AddRounded />} onClick={addParameter}>Add parameter</Button> : null}
