@@ -76,10 +76,11 @@ export default class ParametricGeometry extends BufferGeometry {
                 c = (i + 1) * sliceCount + j + 1;
                 d = (i + 1) * sliceCount + j;
 
-                // faces one and two
+                // Inner face
                 indices.push(a, b, d);
-                indices.push(d, b, a);
                 indices.push(b, c, d);
+                // Outer face
+                indices.push(d, b, a);
                 indices.push(d, c, b);
             }
         }
