@@ -10,16 +10,29 @@ export default function ParametersSection(props) {
     const [canAddParam, setCanAddParam] = useState(true);
 
     const addParameter = () => {
-        switch (parameters.length) {
-            case 1:
-                setParameters([...parameters, new Parameter("v")]);
-                break;
-            case 2:
-                setParameters([...parameters, new Parameter("w")]);
-                setCanAddParam(false);
-                break;
-            default:
-                break;
+        const paramNames = parameters.map((param) => param.name);
+        if (!paramNames.includes("v")) {
+            setParameters(
+                [...parameters, new Parameter("v")].sort(
+                    (paramA, paramB) => {
+                        if (paramA.name < paramB.name) {
+                            return -1;
+                        }
+
+                        if (paramA.name > paramB.name) {
+                            return 1;
+                        }
+
+                        return 0;
+                    }
+                )
+            );
+        } else {
+            setParameters([...parameters, new Parameter("w")]);
+        }
+
+        if (paramNames.length === 2) {
+            setCanAddParam(false);
         }
     };
 
@@ -29,7 +42,7 @@ export default function ParametersSection(props) {
         params.splice(key, 1);
         setParameters(params);
         setCanAddParam(true);
-    }; 
+    };
 
     return (
         <Stack
