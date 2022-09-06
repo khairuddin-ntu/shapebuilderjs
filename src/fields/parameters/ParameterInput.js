@@ -1,8 +1,9 @@
 import TextField from '@mui/material/TextField';
 
-export default function ParameterInput() {
+export default function ParameterInput(props) {
     return (
         <TextField
+            defaultValue={props.defaultValue}
             size="small"
             variant="outlined"
             inputProps={{

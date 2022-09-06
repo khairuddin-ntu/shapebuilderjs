@@ -8,9 +8,9 @@ export default function ParameterField(props) {
     return (
         <Stack direction="row" alignItems="center">
             <Typography className="input-label">{props.parameterName} = [</Typography>
-            <ParameterInput />
+            <ParameterInput defaultValue={0} />
             <Typography className="input-label">,</Typography>
-            <ParameterInput />
+            <ParameterInput defaultValue={1} />
             <Typography className="input-label">]</Typography>
             {props.deletable ?
                 <IconButton color="error" onClick={() => props.deleteParameter(props.index)}>
