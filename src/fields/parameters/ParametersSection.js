@@ -23,6 +23,13 @@ export default function ParametersSection(props) {
         }
     };
 
+    const deleteParameter = (key) => {
+        console.log("Deleting parameter at index", key);
+        const params = [...parameters];
+        params.splice(key, 1);
+        setParameters(params);
+    }; 
+
     return (
         <Stack
             id={props.id}
@@ -36,6 +43,7 @@ export default function ParametersSection(props) {
                     index={i}
                     parameterName={parameter.name}
                     deletable={i !== 0}
+                    deleteParameter={deleteParameter}
                 />
             )}
             {canAddParam ? <Button startIcon={<AddRounded />} onClick={addParameter}>Add parameter</Button> : null}

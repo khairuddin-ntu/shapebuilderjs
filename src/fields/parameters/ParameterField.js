@@ -13,7 +13,7 @@ export default function ParameterField(props) {
             <ParameterInput />
             <Typography className="input-label">]</Typography>
             {props.deletable ?
-                <IconButton color="error">
+                <IconButton color="error" onClick={() => props.deleteParameter(props.index)}>
                     <CloseRounded />
                 </IconButton>
                 : null
