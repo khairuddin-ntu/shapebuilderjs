@@ -28,6 +28,7 @@ export default function ParametersSection(props) {
         const params = [...parameters];
         params.splice(key, 1);
         setParameters(params);
+        setCanAddParam(true);
     }; 
 
     return (
