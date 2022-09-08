@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import MuiAlert from '@mui/material/Alert';
@@ -16,11 +16,12 @@ export default function Fields(props) {
     const [snackbarMessage, setSnackbarMessage] = useState();
     const [resolution, setResolution] = useState(DEFAULT_RESOLUTION);
     const [parameters, setParameters] = useState([new Parameter("u"), new Parameter("v")]);
-    const [parametersError, setParametersError] = useState();
+    const parameterErrors = useRef([null, null, null]);
 
     const generateShape = () => {
-        if (parametersError) {
-            setSnackbarMessage(parametersError);
+        for (const paramError of parameterErrors.current) {
+            if (!paramError) continue;
+            setSnackbarMessage(paramError);
             return;
         }
 
@@ -44,7 +45,7 @@ export default function Fields(props) {
                 sectionName="Parameters"
                 parameters={parameters}
                 setParameters={setParameters}
-                setParametersError={setParametersError}
+                parameterErrors={parameterErrors}
             />
             <ResolutionSection
                 id="resolution-section"

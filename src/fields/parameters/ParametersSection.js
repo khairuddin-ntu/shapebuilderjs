@@ -60,7 +60,7 @@ export default function ParametersSection(props) {
                     parameter={parameter}
                     deletable={i !== 0}
                     deleteParameter={deleteParameter}
-                    setParametersError={props.setParametersError}
+                    parameterErrors={props.parameterErrors}
                 />
             )}
             {canAddParam ? <Button startIcon={<AddRounded />} onClick={addParameter}>Add parameter</Button> : null}

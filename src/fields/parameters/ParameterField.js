@@ -15,22 +15,23 @@ export default function ParameterField(props) {
 
     const updateMin = (strMin) => {
         if (!REGEX_PARAMETER.test(strMin)) {
-            props.setParametersError(new SnackbarError("Minimum value for parameter " + parameter.name + " contains invalid characters"));
+            props.parameterErrors.current[props.index] = new SnackbarError("Minimum value for parameter " + parameter.name + " contains invalid characters");
             setMinHasError(true);
             return;
         }
 
+        props.parameterErrors.current[props.index] = null;
         setMinHasError(false);
     };
 
     const updateMax = (strMax) => {
         if (!REGEX_PARAMETER.test(strMax)) {
-            props.setParametersError(new SnackbarError("Maximum value for parameter " + parameter.name + " contains invalid characters"));
+            props.parameterErrors.current[props.index] = new SnackbarError("Maximum value for parameter " + parameter.name + " contains invalid characters");
             setMaxHasError(true);
             return;
         }
 
-        console.log("updateMax: max value changed to", strMax);
+        props.parameterErrors.current[props.index] = null;
         setMaxHasError(false);
     };
 
