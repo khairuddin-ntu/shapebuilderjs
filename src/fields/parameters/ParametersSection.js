@@ -6,21 +6,44 @@ import AddRounded from '@mui/icons-material/AddRounded';
 import Parameter from './Parameter';
 
 export default function ParametersSection(props) {
-    const [parameters, setParameters] = useState([new Parameter("u")]);
     const [canAddParam, setCanAddParam] = useState(true);
 
+    const parameters = props.parameters;
+    const setParameters = props.setParameters;
+
     const addParameter = () => {
-        switch (parameters.length) {
-            case 1:
-                setParameters([...parameters, new Parameter("v")]);
-                break;
-            case 2:
-                setParameters([...parameters, new Parameter("w")]);
-                setCanAddParam(false);
-                break;
-            default:
-                break;
+        const paramNames = parameters.map((param) => param.name);
+        if (!paramNames.includes("v")) {
+            setParameters(
+                [...parameters, new Parameter("v")].sort(
+                    (paramA, paramB) => {
+                        if (paramA.name < paramB.name) {
+                            return -1;
+                        }
+
+                        if (paramA.name > paramB.name) {
+                            return 1;
+                        }
+
+                        return 0;
+                    }
+                )
+            );
+        } else {
+            setParameters([...parameters, new Parameter("w")]);
         }
+
+        if (paramNames.length === 2) {
+            setCanAddParam(false);
+        }
+    };
+
+    const deleteParameter = (key) => {
+        console.log("Deleting parameter at index", key);
+        const params = [...parameters];
+        params.splice(key, 1);
+        setParameters(params);
+        setCanAddParam(true);
     };
 
     return (
@@ -30,11 +53,14 @@ export default function ParametersSection(props) {
             direction="column"
             spacing={2}
         >
-            {parameters.map((parameter) =>
+            {parameters.map((parameter, i) =>
                 <ParameterField
-                    key={parameter.name}
-                    parameterName={parameter.name}
-                    deletable={parameter.name !== "u"}
+                    key={i}
+                    index={i}
+                    parameter={parameter}
+                    deletable={i !== 0}
+                    deleteParameter={deleteParameter}
+                    parameterErrors={props.parameterErrors}
                 />
             )}
             {canAddParam ? <Button startIcon={<AddRounded />} onClick={addParameter}>Add parameter</Button> : null}

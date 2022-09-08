@@ -1,7 +1,8 @@
-import {useState } from 'react';
+import { useState } from 'react';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
+import { SnackbarError } from './../common/SnackbarMessage';
 import { DEFAULT_RESOLUTION } from './Fields';
 
 const MAX_RESOLUTION = 2048;
@@ -19,20 +20,20 @@ export default function ResolutionSection(props) {
         // Check if resolution only contains digits
         if (!REGEX_RESOLUTION.test(strResolution)) {
             setHasError(true);
-            return { type: "error", text: "Resolution must only contain digits" };
+            return new SnackbarError("Resolution must only contain digits");
         }
 
         const resolution = +strResolution;
         // Check if resolution is 0
         if (resolution === 0) {
             setHasError(true);
-            return { type: "error", text: "Resolution cannot be 0" };
+            return new SnackbarError("Resolution cannot be 0");
         }
 
         // Check if resolution is more than maximum allowed resolution
         if (resolution > MAX_RESOLUTION) {
             setHasError(true);
-            return { type: "error", text: "Resolution cannot be more than " + MAX_RESOLUTION };
+            return new SnackbarError("Resolution cannot be more than " + MAX_RESOLUTION);
         }
 
         setHasError(false);

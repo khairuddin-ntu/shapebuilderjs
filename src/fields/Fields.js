@@ -1,28 +1,36 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import MuiAlert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import FunctionsSection from './functions/FunctionsSection';
 import ParametersSection from './parameters/ParametersSection';
-import ResolutionSection from './ResolutionSection'
+import ResolutionSection from './ResolutionSection';
+import Parameter from './parameters/Parameter';
 
 import './Fields.css';
 
 export const DEFAULT_RESOLUTION = 100;
 
 export default function Fields(props) {
-    const [snackbarMessage, setSnackbarMessage] = useState(null);
+    const [snackbarMessage, setSnackbarMessage] = useState();
     const [resolution, setResolution] = useState(DEFAULT_RESOLUTION);
+    const [parameters, setParameters] = useState([new Parameter("u"), new Parameter("v")]);
+    const parameterErrors = useRef([null, null, null]);
 
     const generateShape = () => {
-        console.log("generateShape: Parsed resolution input = ", resolution);
+        for (const paramError of parameterErrors.current) {
+            if (!paramError) continue;
+            setSnackbarMessage(paramError);
+            return;
+        }
+
         if (isNaN(resolution)) {
             setSnackbarMessage(resolution);
             return;
         }
 
-        props.setRenderParams({ resolution: resolution });
+        props.setRenderParams({ parameters: parameters, resolution: resolution });
     };
 
     return (
@@ -31,7 +39,14 @@ export default function Fields(props) {
             sx={{ borderTop: 1 }}
         >
             <FunctionsSection id="functions-section" className="field__section" sectionName="Functions" />
-            <ParametersSection id="parameters-section" className="field__section" sectionName="Parameters" />
+            <ParametersSection
+                id="parameters-section"
+                className="field__section"
+                sectionName="Parameters"
+                parameters={parameters}
+                setParameters={setParameters}
+                parameterErrors={parameterErrors}
+            />
             <ResolutionSection
                 id="resolution-section"
                 setResolution={setResolution}
@@ -45,14 +60,14 @@ export default function Fields(props) {
                 </Button>
             </Box>
             {
-                snackbarMessage != null ?
+                snackbarMessage ?
                     <Snackbar
                         open
                         autoHideDuration={6000}
                         onClose={() => setSnackbarMessage(null)}
                     >
                         <MuiAlert elevation={6} variant="filled" severity={snackbarMessage.type}>
-                            {snackbarMessage.text}
+                            {snackbarMessage.message}
                         </MuiAlert>
                     </Snackbar>
                     : null
