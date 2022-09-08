@@ -29,6 +29,7 @@ export default function ParameterField(props) {
             return;
         }
 
+        parameter.start = paramMin;
         props.parameterErrors.current[props.index] = null;
         setMinHasError(false);
     };
@@ -49,6 +50,7 @@ export default function ParameterField(props) {
             return;
         }
 
+        parameter.end = paramMax;
         props.parameterErrors.current[props.index] = null;
         setMaxHasError(false);
     };
