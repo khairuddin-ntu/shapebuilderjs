@@ -57,7 +57,7 @@ export default function ParametersSection(props) {
                 <ParameterField
                     key={i}
                     index={i}
-                    parameterName={parameter.name}
+                    parameter={parameter}
                     deletable={i !== 0}
                     deleteParameter={deleteParameter}
                 />
