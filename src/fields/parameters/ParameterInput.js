@@ -6,6 +6,7 @@ export default function ParameterInput(props) {
             defaultValue={props.defaultValue}
             size="small"
             variant="outlined"
+            onChange={(event) => props.onChange(event.target.value)}
             inputProps={{
                 inputMode: "numeric",
                 size: 8
