@@ -20,6 +20,15 @@ export default function ParameterField(props) {
             return;
         }
 
+        const paramMin = +strMin;
+        if (paramMin >= parameter.end) {
+            props.parameterErrors.current[props.index] = new SnackbarError(
+                "Minimum value for parameter " + parameter.name + " cannot be the same or larger than maximum value"
+            );
+            setMinHasError(true);
+            return;
+        }
+
         props.parameterErrors.current[props.index] = null;
         setMinHasError(false);
     };
@@ -28,6 +37,15 @@ export default function ParameterField(props) {
         if (!REGEX_PARAMETER.test(strMax)) {
             props.parameterErrors.current[props.index] = new SnackbarError("Maximum value for parameter " + parameter.name + " contains invalid characters");
             setMaxHasError(true);
+            return;
+        }
+
+        const paramMax = +strMax;
+        if (paramMax <= parameter.start) {
+            props.parameterErrors.current[props.index] = new SnackbarError(
+                "Maximum value for parameter " + parameter.name + " cannot be the same or smaller than maximum value"
+            );
+            setMinHasError(true);
             return;
         }
 
