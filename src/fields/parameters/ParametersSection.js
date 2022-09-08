@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import Stack from '@mui/material/Stack';
-import ParameterField from './ParameterField';
 import Button from '@mui/material/Button';
 import AddRounded from '@mui/icons-material/AddRounded';
-import Parameter from './Parameter';
+import Parameter from './../../common/Parameter';
+import ParameterField from './ParameterField';
 
 export default function ParametersSection(props) {
     const [canAddParam, setCanAddParam] = useState(true);

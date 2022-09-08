@@ -7,7 +7,7 @@ import { DEFAULT_RESOLUTION } from './../common/Constants';
 import FunctionsSection from './functions/FunctionsSection';
 import ParametersSection from './parameters/ParametersSection';
 import ResolutionSection from './ResolutionSection';
-import Parameter from './parameters/Parameter';
+import Parameter from './../common/Parameter';
 
 import './Fields.css';
 

@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import Box from '@mui/material/Box';
 import { DEFAULT_RESOLUTION } from './common/Constants';
+import Parameter from './common/Parameter';
 import Scene from './render/Scene';
 import Fields from './fields/Fields';
 import Operators from './operators/Operators';
-import Parameter from './fields/parameters/Parameter';
 
 import './App.css';
 
