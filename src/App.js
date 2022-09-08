@@ -8,7 +8,7 @@ import Parameter from './fields/parameters/Parameter';
 import './App.css';
 
 export default function App() {
-    const [renderParams, setRenderParams] = useState({ parameters: [new Parameter("u")], resolution: 100 });
+    const [renderParams, setRenderParams] = useState({ parameters: [new Parameter("u"), new Parameter("v")], resolution: 100 });
 
     return (
         <Box id="app">

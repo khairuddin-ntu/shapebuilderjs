@@ -15,7 +15,7 @@ export const DEFAULT_RESOLUTION = 100;
 export default function Fields(props) {
     const [snackbarMessage, setSnackbarMessage] = useState();
     const [resolution, setResolution] = useState(DEFAULT_RESOLUTION);
-    const [parameters, setParameters] = useState([new Parameter("u")]);
+    const [parameters, setParameters] = useState([new Parameter("u"), new Parameter("v")]);
     const [parametersError, setParametersError] = useState();
 
     const generateShape = () => {
