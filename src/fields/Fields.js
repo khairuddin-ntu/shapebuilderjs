@@ -3,14 +3,13 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import MuiAlert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import { DEFAULT_RESOLUTION } from './../common/Constants';
 import FunctionsSection from './functions/FunctionsSection';
 import ParametersSection from './parameters/ParametersSection';
 import ResolutionSection from './ResolutionSection';
 import Parameter from './parameters/Parameter';
 
 import './Fields.css';
-
-export const DEFAULT_RESOLUTION = 100;
 
 export default function Fields(props) {
     const [snackbarMessage, setSnackbarMessage] = useState();

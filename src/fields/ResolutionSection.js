@@ -3,7 +3,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import { SnackbarError } from './../common/SnackbarMessage';
-import { DEFAULT_RESOLUTION } from './Fields';
+import { DEFAULT_RESOLUTION } from './../common/Constants';
 
 const MAX_RESOLUTION = 2048;
 const REGEX_RESOLUTION = /^\d+$/;
