@@ -29,7 +29,7 @@ export default function Fields(props) {
             return;
         }
 
-        props.setRenderParams({ resolution: resolution });
+        props.setRenderParams({ parameters: parameters, resolution: resolution });
     };
 
     return (

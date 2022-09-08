@@ -38,13 +38,13 @@ export default function ParameterField(props) {
         <Stack direction="row" alignItems="center">
             <Typography className="input-label">{parameter.name} = [</Typography>
             <ParameterInput
-                defaultValue={parameter.min}
+                defaultValue={parameter.start}
                 onChange={updateMin}
                 hasError={minHasError}
             />
             <Typography className="input-label">,</Typography>
             <ParameterInput
-                defaultValue={parameter.max}
+                defaultValue={parameter.end}
                 onChange={updateMax}
                 hasError={maxHasError}
             />
