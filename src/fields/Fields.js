@@ -29,7 +29,13 @@ export default function Fields(props) {
             return;
         }
 
-        props.setRenderParams({ parameters: parameters, resolution: resolution });
+        props.setRenderParams({
+            xEquation: (u, v) => 5 * Math.cos(2 * Math.PI * u),
+            yEquation: (u, v) => 5 * Math.sin(2 * Math.PI * u),
+            zEquation: (u, v) => (11 * v) - 5,
+            parameters: parameters,
+            resolution: resolution
+        });
     };
 
     return (
