@@ -6,8 +6,10 @@ import AddRounded from '@mui/icons-material/AddRounded';
 import Parameter from './Parameter';
 
 export default function ParametersSection(props) {
-    const [parameters, setParameters] = useState([new Parameter("u")]);
     const [canAddParam, setCanAddParam] = useState(true);
+
+    const parameters = props.parameters;
+    const setParameters = props.setParameters;
 
     const addParameter = () => {
         const paramNames = parameters.map((param) => param.name);

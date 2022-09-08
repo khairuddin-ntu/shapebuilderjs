@@ -5,7 +5,8 @@ import MuiAlert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import FunctionsSection from './functions/FunctionsSection';
 import ParametersSection from './parameters/ParametersSection';
-import ResolutionSection from './ResolutionSection'
+import ResolutionSection from './ResolutionSection';
+import Parameter from './parameters/Parameter';
 
 import './Fields.css';
 
@@ -14,6 +15,7 @@ export const DEFAULT_RESOLUTION = 100;
 export default function Fields(props) {
     const [snackbarMessage, setSnackbarMessage] = useState(null);
     const [resolution, setResolution] = useState(DEFAULT_RESOLUTION);
+    const [parameters, setParameters] = useState([new Parameter("u")]);
 
     const generateShape = () => {
         console.log("generateShape: Parsed resolution input = ", resolution);
@@ -31,7 +33,13 @@ export default function Fields(props) {
             sx={{ borderTop: 1 }}
         >
             <FunctionsSection id="functions-section" className="field__section" sectionName="Functions" />
-            <ParametersSection id="parameters-section" className="field__section" sectionName="Parameters" />
+            <ParametersSection
+                id="parameters-section"
+                className="field__section"
+                sectionName="Parameters"
+                parameters={parameters}
+                setParameters={setParameters}
+            />
             <ResolutionSection
                 id="resolution-section"
                 setResolution={setResolution}
