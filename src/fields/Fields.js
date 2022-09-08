@@ -59,14 +59,14 @@ export default function Fields(props) {
                 </Button>
             </Box>
             {
-                snackbarMessage != null ?
+                snackbarMessage ?
                     <Snackbar
                         open
                         autoHideDuration={6000}
                         onClose={() => setSnackbarMessage(null)}
                     >
                         <MuiAlert elevation={6} variant="filled" severity={snackbarMessage.type}>
-                            {snackbarMessage.text}
+                            {snackbarMessage.message}
                         </MuiAlert>
                     </Snackbar>
                     : null
