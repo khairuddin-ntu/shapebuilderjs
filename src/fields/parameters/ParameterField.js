@@ -25,10 +25,7 @@ export default function ParameterField(props) {
 
     const updateMax = (strMax) => {
         if (!REGEX_PARAMETER.test(strMax)) {
-            props.setParametersError({
-                type: "error",
-                text: "Maximum value for parameter " + parameter.name + " contains invalid characters"
-            });
+            props.setParametersError(new SnackbarError("Maximum value for parameter " + parameter.name + " contains invalid characters"));
             setMaxHasError(true);
             return;
         }
