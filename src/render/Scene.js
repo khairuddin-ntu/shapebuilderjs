@@ -18,13 +18,7 @@ export default function Scene(props) {
             return;
         }
 
-        currentRenderer.renderShape(
-            (u, v) => 5 * Math.cos(2 * Math.PI * u),
-            (u, v) => 5 * Math.sin(2 * Math.PI * u),
-            (u, v) => (11 * v) - 5,
-            props.renderParams.parameters,
-            props.renderParams.resolution
-        );
+        currentRenderer.renderShape(props.renderParams);
     }, [props.renderParams]);
 
     const startDrag = (event) => {

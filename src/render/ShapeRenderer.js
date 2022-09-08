@@ -23,7 +23,7 @@ export default class ShapeRenderer {
         });
     }
 
-    renderShape(xEquation, yEquation, zEquation, parameters, resolution) {
+    renderShape({ xEquation, yEquation, zEquation, parameters, resolution }) {
         switch (parameters.length) {
             case 1:
                 this.#render2dShape(xEquation, yEquation, zEquation, parameters[0], resolution);
@@ -34,7 +34,6 @@ export default class ShapeRenderer {
             default:
                 console.log("renderShape: Invalid parameter count [" + parameters.length + "]. Not rendering shape");
                 return;
-
         }
     }
 
