@@ -4,14 +4,22 @@ import IconButton from '@mui/material/IconButton';
 import CloseRounded from '@mui/icons-material/CloseRounded';
 import ParameterInput from './ParameterInput';
 
+const REGEX_PARAMETER = /^[-]?\d+$/;
+
 export default function ParameterField(props) {
     const parameter = props.parameter;
 
     const updateMin = (strMin) => {
-        console.log("updateMin: min value changed to", strMin);
+        if (!REGEX_PARAMETER.test(strMin)) {
+            console.log("updateMin: min value [" + strMin + "] contains invalid characters");
+        }
     };
 
     const updateMax = (strMax) => {
+        if (!REGEX_PARAMETER.test(strMax)) {
+            console.log("updateMax: max value [" + strMax + "] contains invalid characters");
+        }
+
         console.log("updateMax: max value changed to", strMax);
     };
 
