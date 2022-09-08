@@ -3,7 +3,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import CloseRounded from '@mui/icons-material/CloseRounded';
-import { ErrorMessage } from '../../common/SnackbarMessage';
+import { SnackbarError } from '../../common/SnackbarMessage';
 import ParameterInput from './ParameterInput';
 
 const REGEX_PARAMETER = /^[-]?\d+$/;
@@ -15,7 +15,7 @@ export default function ParameterField(props) {
 
     const updateMin = (strMin) => {
         if (!REGEX_PARAMETER.test(strMin)) {
-            props.setParametersError(new ErrorMessage("Minimum value for parameter " + parameter.name + " contains invalid characters"));
+            props.setParametersError(new SnackbarError("Minimum value for parameter " + parameter.name + " contains invalid characters"));
             setMinHasError(true);
             return;
         }

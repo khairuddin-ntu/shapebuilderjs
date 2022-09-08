@@ -8,7 +8,7 @@ class SnackbarMessage {
     }
 }
 
-export class ErrorMessage extends SnackbarMessage {
+export class SnackbarError extends SnackbarMessage {
     constructor(message) {
         super("error", message);
     }
