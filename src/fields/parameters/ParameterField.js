@@ -5,13 +5,17 @@ import IconButton from '@mui/material/IconButton';
 import CloseRounded from '@mui/icons-material/CloseRounded';
 import { SnackbarError } from '../../common/SnackbarMessage';
 import ParameterInput from './ParameterInput';
+import ResolutionInput from './ResolutionInput';
 
+const MIN_RESOLUTION = 3, MAX_RESOLUTION = 2048;
 const REGEX_PARAMETER = /^[-]?\d+$/;
+const REGEX_RESOLUTION = /^\d+$/;
 
 export default function ParameterField(props) {
     const parameter = props.parameter;
     const [minHasError, setMinHasError] = useState(false);
     const [maxHasError, setMaxHasError] = useState(false);
+    const [resolutionHasError, setResolutionHasError] = useState(false);
 
     const updateMin = (strMin) => {
         if (!REGEX_PARAMETER.test(strMin)) {
@@ -55,6 +59,34 @@ export default function ParameterField(props) {
         setMaxHasError(false);
     };
 
+    const updateResolution = (strResolution) => {
+        // Check if resolution only contains digits
+        if (!REGEX_RESOLUTION.test(strResolution)) {
+            setResolutionHasError(true);
+            props.parameterErrors.current[props.index] = new SnackbarError("Resolution must only contain digits");
+            return;
+        }
+
+        const resolution = +strResolution;
+        // Check if resolution is less than minimum allowed resolution
+        if (resolution < MIN_RESOLUTION) {
+            setResolutionHasError(true);
+            props.parameterErrors.current[props.index] = new SnackbarError("Resolution cannot be less than " + MIN_RESOLUTION);
+            return;
+        }
+
+        // Check if resolution is more than maximum allowed resolution
+        if (resolution > MAX_RESOLUTION) {
+            setResolutionHasError(true);
+            props.parameterErrors.current[props.index] = new SnackbarError("Resolution cannot be more than " + MAX_RESOLUTION);
+            return;
+        }
+
+        setResolutionHasError(false);
+        parameter.resolution = resolution;
+        props.parameterErrors.current[props.index] = null;
+    };
+
     return (
         <Stack direction="row" alignItems="center">
             <Typography className="input-label">{parameter.name} = [</Typography>
@@ -69,7 +101,12 @@ export default function ParameterField(props) {
                 onChange={updateMax}
                 hasError={maxHasError}
             />
-            <Typography className="input-label">]</Typography>
+            <Typography className="input-label">],</Typography>
+            <ResolutionInput
+                defaultValue={parameter.resolution}
+                onChange={updateResolution}
+                hasError={resolutionHasError}
+            />
             {props.deletable ?
                 <IconButton color="error" onClick={() => props.deleteParameter(props.index)}>
                     <CloseRounded />
