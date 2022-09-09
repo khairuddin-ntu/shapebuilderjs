@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import { SnackbarError } from './../common/SnackbarMessage';
 import { DEFAULT_RESOLUTION } from './../common/Constants';
 
-const MAX_RESOLUTION = 2048;
+const MIN_RESOLUTION = 3, MAX_RESOLUTION = 2048;
 const REGEX_RESOLUTION = /^\d+$/;
 
 export default function ResolutionSection(props) {
@@ -26,9 +26,9 @@ export default function ResolutionSection(props) {
 
         const resolution = +strResolution;
         // Check if resolution is 0
-        if (resolution === 0) {
+        if (resolution < MIN_RESOLUTION) {
             setHasError(true);
-            props.resolutionError.current =  new SnackbarError("Resolution cannot be 0");
+            props.resolutionError.current = new SnackbarError("Resolution cannot be less than " + MIN_RESOLUTION);
             return;
         }
 
