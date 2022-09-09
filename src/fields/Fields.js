@@ -23,9 +23,9 @@ export default function Fields(props) {
         }
 
         props.setRenderParams({
-            xEquation: (u, v) => 5 * Math.cos(2 * Math.PI * u),
-            yEquation: (u, v) => 5 * Math.sin(2 * Math.PI * u),
-            zEquation: (u, v) => (11 * v) - 5,
+            xEquation: (u, v) => 2.5 * Math.cos(-Math.PI / 2 + u * Math.PI) * Math.cos(-Math.PI + v * 2 * Math.PI),
+            yEquation: (u, v) => 2.5 * Math.cos(-Math.PI / 2 + u * Math.PI) * Math.sin(-Math.PI + v * 2 * Math.PI),
+            zEquation: (u, v) => 2.5 * Math.sin(-Math.PI / 2 + u * Math.PI),
             parameters: parameters.current
         });
     };
