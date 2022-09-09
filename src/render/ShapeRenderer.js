@@ -38,7 +38,7 @@ export default class ShapeRenderer {
     }
 
     zoomBy(zoomAmount) {
-        this.#camera.position.z += zoomAmount * 0.1;
+        this.#camera.position.z += zoomAmount * 0.01;
     }
 
     update = () => {
