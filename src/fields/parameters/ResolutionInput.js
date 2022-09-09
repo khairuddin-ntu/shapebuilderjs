@@ -4,10 +4,7 @@ import TextField from '@mui/material/TextField';
 
 export default function ResolutionInput(props) {
     return (
-        <React.Fragment
-            direction="row"
-            alignItems="center"
-        >
+        <React.Fragment>
             <Typography className="input-label">Increment =</Typography>
             <TextField
                 size="small"
