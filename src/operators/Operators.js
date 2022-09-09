@@ -5,18 +5,18 @@ import { ValueOperator, ArithmeticOperator } from './../common/Operator';
 import './Operators.css';
 
 const operatorList = [
-    ArithmeticOperator("Addition", null, null),
-    ArithmeticOperator("Subtraction", null, null),
-    ArithmeticOperator("Multiplication", null, null),
-    ArithmeticOperator("Division", null, null),
-    ValueOperator("Real Number", null, null),
-    ValueOperator("pi", null, null),
-    ValueOperator("Parenthesis", null, null),
-    ValueOperator("Sine", null, null),
-    ValueOperator("Cosine", null, null),
-    ValueOperator("Tangent", null, null),
-    ValueOperator("Fraction", null, null),
-    ValueOperator("Power", null, null)
+    new ArithmeticOperator("Addition", null, null),
+    new ArithmeticOperator("Subtraction", null, null),
+    new ArithmeticOperator("Multiplication", null, null),
+    new ArithmeticOperator("Division", null, null),
+    new ValueOperator("Real Number", null, null),
+    new ValueOperator("pi", null, null),
+    new ValueOperator("Parenthesis", null, null),
+    new ValueOperator("Sine", null, null),
+    new ValueOperator("Cosine", null, null),
+    new ValueOperator("Tangent", null, null),
+    new ValueOperator("Fraction", null, null),
+    new ValueOperator("Power", null, null)
 ];
 
 export default function Operators(props) {
