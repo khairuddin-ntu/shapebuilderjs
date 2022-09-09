@@ -20,8 +20,15 @@ const operatorList = [
         () => <RemoveRoundedIcon fontSize="large" />,
         null
     ),
-    new ArithmeticOperator("Multiplication", null, null),
-    new ArithmeticOperator("Division", null, null),
+    new ArithmeticOperator(
+        "Multiplication",
+        () => <Typography variant="h3">×</Typography>,
+        null),
+    new ArithmeticOperator(
+        "Division",
+        () => <Typography variant="h3">÷</Typography>,
+        null
+    ),
     new ValueOperator("Parenthesis", null, null),
     new ValueOperator("Sine", null, null),
     new ValueOperator("Cosine", null, null),
