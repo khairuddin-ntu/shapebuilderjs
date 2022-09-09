@@ -13,7 +13,10 @@ import './Fields.css';
 
 export default function Fields(props) {
     const [snackbarMessage, setSnackbarMessage] = useState();
-    const [resolution, setResolution] = useState(DEFAULT_RESOLUTION);
+    // Resolution states
+    const resolution = useRef(DEFAULT_RESOLUTION);
+    const resolutionError = useRef();
+    // Parameter states
     const parameters = useRef([new Parameter("u"), new Parameter("v")]);
     const parameterErrors = useRef([null, null, null]);
 
@@ -24,8 +27,9 @@ export default function Fields(props) {
             return;
         }
 
-        if (isNaN(resolution)) {
-            setSnackbarMessage(resolution);
+        const resError = resolutionError.current;
+        if (resError) {
+            setSnackbarMessage(resError);
             return;
         }
 
@@ -34,7 +38,7 @@ export default function Fields(props) {
             yEquation: (u, v) => 5 * Math.sin(2 * Math.PI * u),
             zEquation: (u, v) => (11 * v) - 5,
             parameters: parameters.current,
-            resolution: resolution
+            resolution: resolution.current
         });
     };
 
@@ -53,7 +57,8 @@ export default function Fields(props) {
             />
             <ResolutionSection
                 id="resolution-section"
-                setResolution={setResolution}
+                resolution={resolution}
+                resolutionError={resolutionError}
             />
             <Box id="actions-section">
                 <Button

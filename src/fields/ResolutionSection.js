@@ -13,31 +13,35 @@ export default function ResolutionSection(props) {
 
     const onResolutionChange = (event) => {
         const resolutionInput = event.target.value;
-        props.setResolution(parseResolution(resolutionInput));
+        parseResolution(resolutionInput);
     };
 
     const parseResolution = (strResolution) => {
         // Check if resolution only contains digits
         if (!REGEX_RESOLUTION.test(strResolution)) {
             setHasError(true);
-            return new SnackbarError("Resolution must only contain digits");
+            props.resolutionError.current = new SnackbarError("Resolution must only contain digits");
+            return;
         }
 
         const resolution = +strResolution;
         // Check if resolution is 0
         if (resolution === 0) {
             setHasError(true);
-            return new SnackbarError("Resolution cannot be 0");
+            props.resolutionError.current =  new SnackbarError("Resolution cannot be 0");
+            return;
         }
 
         // Check if resolution is more than maximum allowed resolution
         if (resolution > MAX_RESOLUTION) {
             setHasError(true);
-            return new SnackbarError("Resolution cannot be more than " + MAX_RESOLUTION);
+            props.resolutionError.current = new SnackbarError("Resolution cannot be more than " + MAX_RESOLUTION);
+            return;
         }
 
         setHasError(false);
-        return resolution;
+        props.resolution.current = resolution;
+        props.resolutionError.current = null;
     }
 
     return (
