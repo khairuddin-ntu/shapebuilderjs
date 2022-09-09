@@ -23,13 +23,13 @@ export default class ShapeRenderer {
         });
     }
 
-    renderShape({ xEquation, yEquation, zEquation, parameters, resolution }) {
+    renderShape({ xEquation, yEquation, zEquation, parameters }) {
         switch (parameters.length) {
             case 1:
-                this.#render2dShape(xEquation, yEquation, zEquation, parameters[0], resolution);
+                this.#render2dShape(xEquation, yEquation, zEquation, parameters[0]);
                 return;
             case 2:
-                this.#render3dShape(xEquation, yEquation, zEquation, parameters[0], parameters[1], resolution);
+                this.#render3dShape(xEquation, yEquation, zEquation, parameters[0], parameters[1]);
                 return;
             default:
                 console.log("renderShape: Invalid parameter count [" + parameters.length + "]. Not rendering shape");
@@ -152,7 +152,7 @@ export default class ShapeRenderer {
         axesGroup.add(mesh);
     }
 
-    #render2dShape(xEquation, yEquation, zEquation, uParameter, resolution) {
+    #render2dShape(xEquation, yEquation, zEquation, uParameter) {
         this.#removeExistingShape();
 
         this.#shape = new THREE.Group();
@@ -160,7 +160,7 @@ export default class ShapeRenderer {
         let prevVector, currentVector;
         let points, geometry, line;
 
-        for (let u = uParameter.start; u <= uParameter.end; u += uParameter.range / resolution) {
+        for (let u = uParameter.start; u <= uParameter.end; u += uParameter.range / uParameter.resolution) {
             currentVector = new THREE.Vector3(
                 xEquation(u),
                 yEquation(u),
@@ -181,7 +181,7 @@ export default class ShapeRenderer {
         this.#scene.add(this.#shape);
     }
 
-    #render3dShape(xEquation, yEquation, zEquation, uParameter, vParameter, resolution) {
+    #render3dShape(xEquation, yEquation, zEquation, uParameter, vParameter) {
         this.#removeExistingShape();
 
         const geometry = new ParametricGeometry(
@@ -195,7 +195,7 @@ export default class ShapeRenderer {
                     zEquation(u, v)
                 );
             },
-            resolution
+            uParameter, vParameter
         );
         this.#shape = new THREE.Mesh(geometry, SHAPE_3D_MATERIAL);
         this.#scene.add(this.#shape);

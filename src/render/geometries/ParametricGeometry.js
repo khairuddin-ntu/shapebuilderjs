@@ -12,7 +12,7 @@ import {
 const EPS = 0.00001;
 
 export default class ParametricGeometry extends BufferGeometry {
-    constructor(func, resolution) {
+    constructor(func, paramU, paramV) {
         super();
 
         // buffers
@@ -27,15 +27,15 @@ export default class ParametricGeometry extends BufferGeometry {
         const pu = new Vector3(), pv = new Vector3();
 
         // generate vertices, normals and uvs
-        const sliceCount = resolution + 1;
+        const sliceCount = paramV.resolution + 1;
 
         let u, v;
         let a, b, c, d;
-        for (let i = 0; i <= resolution; i++) {
-            u = i / resolution;
+        for (let i = 0; i <= paramU.resolution; i++) {
+            u = i / paramU.resolution;
 
-            for (let j = 0; j <= resolution; j++) {
-                v = j / resolution;
+            for (let j = 0; j <= paramV.resolution; j++) {
+                v = j / paramV.resolution;
 
                 // vertex
                 func(u, v, p0);
@@ -67,7 +67,7 @@ export default class ParametricGeometry extends BufferGeometry {
                 uvs.push(u, v);
 
                 // generate indices
-                if (i === resolution || j === resolution) {
+                if (i === paramU.resolution || j === paramV.resolution) {
                     continue
                 }
 

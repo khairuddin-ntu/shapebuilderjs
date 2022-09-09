@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Box from '@mui/material/Box';
-import { DEFAULT_RESOLUTION } from './common/Constants';
 import Parameter from './common/Parameter';
 import Scene from './render/Scene';
 import Fields from './fields/Fields';
@@ -13,8 +12,7 @@ export default function App() {
         xEquation: (u, v) => 5 * Math.cos(2 * Math.PI * u),
         yEquation: (u, v) => 5 * Math.sin(2 * Math.PI * u),
         zEquation: (u, v) => (11 * v) - 5,
-        parameters: [new Parameter("u"), new Parameter("v")],
-        resolution: DEFAULT_RESOLUTION
+        parameters: [new Parameter("u"), new Parameter("v")]
     });
 
     return (
