@@ -1,7 +1,5 @@
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import AddRoundedIcon from '@mui/icons-material/AddRounded';
-import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
 import { ValueOperator, ArithmeticOperator } from './../common/Operator';
 import OperatorItem from './OperatorItem';
 
@@ -12,21 +10,21 @@ const operatorList = [
     new ValueOperator("pi", null, null),
     new ArithmeticOperator(
         "Addition",
-        () => <AddRoundedIcon fontSize="large" />,
+        () => <Typography variant="h4">+</Typography>,
         null
     ),
     new ArithmeticOperator(
         "Subtraction",
-        () => <RemoveRoundedIcon fontSize="large" />,
+        () => <Typography variant="h4">-</Typography>,
         null
     ),
     new ArithmeticOperator(
         "Multiplication",
-        () => <Typography variant="h3">×</Typography>,
+        () => <Typography variant="h4">×</Typography>,
         null),
     new ArithmeticOperator(
         "Division",
-        () => <Typography variant="h3">÷</Typography>,
+        () => <Typography variant="h4">÷</Typography>,
         null
     ),
     new ValueOperator("Parenthesis", null, null),
