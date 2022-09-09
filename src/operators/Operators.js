@@ -8,6 +8,8 @@ import OperatorItem from './OperatorItem';
 import './Operators.css';
 
 const operatorList = [
+    new ValueOperator("Real Number", null, null),
+    new ValueOperator("pi", null, null),
     new ArithmeticOperator(
         "Addition",
         () => <AddRoundedIcon fontSize="large" />,
@@ -20,8 +22,6 @@ const operatorList = [
     ),
     new ArithmeticOperator("Multiplication", null, null),
     new ArithmeticOperator("Division", null, null),
-    new ValueOperator("Real Number", null, null),
-    new ValueOperator("pi", null, null),
     new ValueOperator("Parenthesis", null, null),
     new ValueOperator("Sine", null, null),
     new ValueOperator("Cosine", null, null),
