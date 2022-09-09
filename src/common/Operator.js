@@ -6,7 +6,7 @@ class Operator {
     operation;
 
     constructor(name, generateUi, operation) {
-        if (this.constructor == Operator) {
+        if (this.constructor === Operator) {
             throw new Error("Abstract class cannot be instantiated");
         }
 
