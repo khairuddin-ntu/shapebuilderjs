@@ -91,7 +91,7 @@ export default class ShapeRenderer {
 
     #drawAxis(axesGroup, axesType) {
         // Create line
-        let geometry = new THREE.CylinderGeometry(0.2, 0.2, 10, 20);
+        let geometry = new THREE.CylinderGeometry(0.1, 0.1, 10, 20);
         let mesh = new THREE.Mesh(geometry, AXES_MATERIAL);
         switch (axesType) {
             case "x":
@@ -106,7 +106,7 @@ export default class ShapeRenderer {
         axesGroup.add(mesh);
 
         // Create arrow head
-        geometry = new THREE.ConeGeometry(0.5, 1, 20);
+        geometry = new THREE.ConeGeometry(0.25, 0.5, 20);
         mesh = new THREE.Mesh(geometry, AXES_MATERIAL);
         switch (axesType) {
             case "x":
