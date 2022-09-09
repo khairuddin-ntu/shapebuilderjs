@@ -25,7 +25,7 @@ export default function ResolutionSection(props) {
         }
 
         const resolution = +strResolution;
-        // Check if resolution is 0
+        // Check if resolution is less than minimum allowed resolution
         if (resolution < MIN_RESOLUTION) {
             setHasError(true);
             props.resolutionError.current = new SnackbarError("Resolution cannot be less than " + MIN_RESOLUTION);
