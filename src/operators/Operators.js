@@ -1,13 +1,23 @@
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
 import { ValueOperator, ArithmeticOperator } from './../common/Operator';
 import OperatorItem from './OperatorItem';
 
 import './Operators.css';
 
 const operatorList = [
-    new ArithmeticOperator("Addition", null, null),
-    new ArithmeticOperator("Subtraction", null, null),
+    new ArithmeticOperator(
+        "Addition",
+        () => <AddRoundedIcon fontSize="large" />,
+        null
+    ),
+    new ArithmeticOperator(
+        "Subtraction",
+        () => <RemoveRoundedIcon fontSize="large" />,
+        null
+    ),
     new ArithmeticOperator("Multiplication", null, null),
     new ArithmeticOperator("Division", null, null),
     new ValueOperator("Real Number", null, null),
