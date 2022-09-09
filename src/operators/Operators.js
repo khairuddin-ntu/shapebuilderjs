@@ -1,6 +1,7 @@
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { ValueOperator, ArithmeticOperator } from './../common/Operator';
+import OperatorItem from './OperatorItem';
 
 import './Operators.css';
 
@@ -33,7 +34,17 @@ export default function Operators(props) {
             >
                 <Typography variant="h4">Operators</Typography>
             </Grid>
-
+            {operatorList.map((operator, i) => (
+                <Grid
+                    item
+                    key={i}
+                    xs={1}
+                >
+                    <OperatorItem
+                        operator={operator}
+                    />
+                </Grid>
+            ))}
         </Grid>
     );
 }
