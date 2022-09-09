@@ -13,3 +13,7 @@ class Operator {
         this.operation = operation;
     }
 }
+
+class FixedValueOperator extends Operator {}
+
+class ArithmeticOperator extends Operator {}
