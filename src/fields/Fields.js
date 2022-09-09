@@ -14,7 +14,7 @@ import './Fields.css';
 export default function Fields(props) {
     const [snackbarMessage, setSnackbarMessage] = useState();
     const [resolution, setResolution] = useState(DEFAULT_RESOLUTION);
-    const [parameters, setParameters] = useState([new Parameter("u"), new Parameter("v")]);
+    const parameters = useRef([new Parameter("u"), new Parameter("v")]);
     const parameterErrors = useRef([null, null, null]);
 
     const generateShape = () => {
@@ -33,7 +33,7 @@ export default function Fields(props) {
             xEquation: (u, v) => 5 * Math.cos(2 * Math.PI * u),
             yEquation: (u, v) => 5 * Math.sin(2 * Math.PI * u),
             zEquation: (u, v) => (11 * v) - 5,
-            parameters: parameters,
+            parameters: parameters.current,
             resolution: resolution
         });
     };
@@ -49,7 +49,6 @@ export default function Fields(props) {
                 className="field__section"
                 sectionName="Parameters"
                 parameters={parameters}
-                setParameters={setParameters}
                 parameterErrors={parameterErrors}
             />
             <ResolutionSection

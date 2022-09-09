@@ -9,28 +9,28 @@ export default function ParametersSection(props) {
     const [canAddParam, setCanAddParam] = useState(true);
 
     const parameters = props.parameters;
-    const setParameters = props.setParameters;
 
     const addParameter = () => {
-        const paramNames = parameters.map((param) => param.name);
+        const params = parameters.current;
+
+        const paramNames = params.map((param) => param.name);
         if (!paramNames.includes("v")) {
-            setParameters(
-                [...parameters, new Parameter("v")].sort(
-                    (paramA, paramB) => {
-                        if (paramA.name < paramB.name) {
-                            return -1;
-                        }
-
-                        if (paramA.name > paramB.name) {
-                            return 1;
-                        }
-
-                        return 0;
+            params.push(new Parameter("v"));
+            params.sort(
+                (paramA, paramB) => {
+                    if (paramA.name < paramB.name) {
+                        return -1;
                     }
-                )
+
+                    if (paramA.name > paramB.name) {
+                        return 1;
+                    }
+
+                    return 0;
+                }
             );
         } else {
-            setParameters([...parameters, new Parameter("w")]);
+            params.push(new Parameter("w"));
         }
 
         if (paramNames.length === 2) {
@@ -40,9 +40,8 @@ export default function ParametersSection(props) {
 
     const deleteParameter = (key) => {
         console.log("Deleting parameter at index", key);
-        const params = [...parameters];
+        const params = parameters.current;
         params.splice(key, 1);
-        setParameters(params);
         setCanAddParam(true);
     };
 
@@ -53,7 +52,7 @@ export default function ParametersSection(props) {
             direction="column"
             spacing={2}
         >
-            {parameters.map((parameter, i) =>
+            {parameters.current.map((parameter, i) =>
                 <ParameterField
                     key={i}
                     index={i}
