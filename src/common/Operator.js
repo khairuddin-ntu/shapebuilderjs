@@ -1,3 +1,4 @@
+import Typography from '@mui/material/Typography';
 import QuestionMarkRoundedIcon from '@mui/icons-material/QuestionMarkRounded';
 
 class Operator {
@@ -18,4 +19,12 @@ class Operator {
 
 export class ValueOperator extends Operator { }
 
-export class ArithmeticOperator extends Operator { }
+export class ArithmeticOperator extends Operator {
+    constructor(name, symbol, operation) {
+        super(
+            name,
+            () => <Typography variant="h4">{symbol}</Typography>,
+            operation
+        );
+    }
+}

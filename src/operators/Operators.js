@@ -9,22 +9,18 @@ const operatorList = [
     new ValueOperator("Real Number", null, null),
     new ValueOperator("pi", null, null),
     new ArithmeticOperator(
-        "Addition",
-        () => <Typography variant="h4">+</Typography>,
+        "Addition", "+",
         null
     ),
     new ArithmeticOperator(
-        "Subtraction",
-        () => <Typography variant="h4">-</Typography>,
+        "Subtraction", "-",
         null
     ),
     new ArithmeticOperator(
-        "Multiplication",
-        () => <Typography variant="h4">×</Typography>,
+        "Multiplication", "×",
         null),
     new ArithmeticOperator(
-        "Division",
-        () => <Typography variant="h4">÷</Typography>,
+        "Division", "÷",
         null
     ),
     new ValueOperator("Parenthesis", null, null),
