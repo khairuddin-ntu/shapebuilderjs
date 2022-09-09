@@ -1,15 +1,15 @@
 class Operator {
     name;
-    ui;
+    generateUi;
     operation;
     
-    constructor(name, ui, operation) {
+    constructor(name, generateUi, operation) {
         if (this.constructor == Operator) {
             throw new Error("Abstract class cannot be instantiated");
         }
 
         this.name = name;
-        this.ui = ui;
+        this.generateUi = generateUi;
         this.operation = operation;
     }
 }
