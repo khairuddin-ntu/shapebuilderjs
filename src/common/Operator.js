@@ -1,5 +1,4 @@
 import Typography from '@mui/material/Typography';
-import QuestionMarkRoundedIcon from '@mui/icons-material/QuestionMarkRounded';
 
 class Operator {
     name;
@@ -12,7 +11,7 @@ class Operator {
         }
 
         this.name = name;
-        this.generateUi = generateUi ? generateUi : () => <QuestionMarkRoundedIcon />;
+        this.generateUi = generateUi ? generateUi : () => <Typography variant="h4">?</Typography>;
         this.operation = operation;
     }
 }
