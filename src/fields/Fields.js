@@ -3,19 +3,14 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import MuiAlert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
-import { DEFAULT_RESOLUTION } from './../common/Constants';
 import FunctionsSection from './functions/FunctionsSection';
 import ParametersSection from './parameters/ParametersSection';
-import ResolutionSection from './ResolutionSection';
 import Parameter from './../common/Parameter';
 
 import './Fields.css';
 
 export default function Fields(props) {
     const [snackbarMessage, setSnackbarMessage] = useState();
-    // Resolution states
-    const resolution = useRef(DEFAULT_RESOLUTION);
-    const resolutionError = useRef();
     // Parameter states
     const parameters = useRef([new Parameter("u"), new Parameter("v")]);
     const parameterErrors = useRef([null, null, null]);
@@ -27,18 +22,11 @@ export default function Fields(props) {
             return;
         }
 
-        const resError = resolutionError.current;
-        if (resError) {
-            setSnackbarMessage(resError);
-            return;
-        }
-
         props.setRenderParams({
             xEquation: (u, v) => 5 * Math.cos(2 * Math.PI * u),
             yEquation: (u, v) => 5 * Math.sin(2 * Math.PI * u),
             zEquation: (u, v) => (11 * v) - 5,
-            parameters: parameters.current,
-            resolution: resolution.current
+            parameters: parameters.current
         });
     };
 
@@ -54,11 +42,6 @@ export default function Fields(props) {
                 sectionName="Parameters"
                 parameters={parameters}
                 parameterErrors={parameterErrors}
-            />
-            <ResolutionSection
-                id="resolution-section"
-                resolution={resolution}
-                resolutionError={resolutionError}
             />
             <Box id="actions-section">
                 <Button

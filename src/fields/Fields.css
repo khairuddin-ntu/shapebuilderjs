@@ -7,7 +7,7 @@
     grid-template-areas:
         "functions parameters"
         "functions parameters"
-        "functions resolution"
+        "functions parameters"
         "functions actions";
 }
 
@@ -18,11 +18,6 @@
 
 #parameters-section {
     grid-area: parameters;
-    place-self: start;
-}
-
-#resolution-section {
-    grid-area: resolution;
     place-self: start;
 }
 
