@@ -1,7 +1,7 @@
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import { ValueOperator, ArithmeticOperator } from './../common/Operator';
+import { ValueOperator, ArithmeticOperator, FunctionOperator } from './../common/Operator';
 import OperatorItem from './OperatorItem';
 
 import './Operators.css';
@@ -24,7 +24,7 @@ const operatorList = [
     new ValueOperator(
         "pi", () => <Typography variant="h4">π</Typography>,
         null
-        ),
+    ),
     new ArithmeticOperator(
         "Addition", "+",
         null
@@ -40,10 +40,22 @@ const operatorList = [
         "Division", "÷",
         null
     ),
-    new ValueOperator("Parenthesis", null, null),
-    new ValueOperator("Sine", null, null),
-    new ValueOperator("Cosine", null, null),
-    new ValueOperator("Tangent", null, null),
+    new FunctionOperator(
+        "Parenthesis", null,
+        null
+    ),
+    new FunctionOperator(
+        "Sine", "sin",
+        null
+    ),
+    new FunctionOperator(
+        "Cosine", "cos",
+        null
+    ),
+    new FunctionOperator(
+        "Tangent", "tan",
+        null
+    ),
     new ValueOperator("Fraction", null, null),
     new ValueOperator("Power", null, null)
 ];
