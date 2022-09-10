@@ -1,13 +1,30 @@
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
 import { ValueOperator, ArithmeticOperator } from './../common/Operator';
 import OperatorItem from './OperatorItem';
 
 import './Operators.css';
 
 const operatorList = [
-    new ValueOperator("Real Number", null, null),
-    new ValueOperator("pi", null, null),
+    new ValueOperator(
+        "Real Number",
+        () => (
+            // TODO: Resize text field whenever user input changes
+            <TextField
+                disabled
+                size="small"
+                variant="outlined"
+                type="text"
+                inputProps={{ size: 1 }}
+            />
+        ),
+        null
+    ),
+    new ValueOperator(
+        "pi", () => <Typography variant="h4">π</Typography>,
+        null
+        ),
     new ArithmeticOperator(
         "Addition", "+",
         null
