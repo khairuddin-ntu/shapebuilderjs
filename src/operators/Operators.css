@@ -1,3 +1,10 @@
 ﻿#operators {
     padding: 4%;
 }
+
+#fraction-divider {
+    border: none;
+    background-color: black;
+    height: 0.2vh;
+    width: 3vw;
+}
