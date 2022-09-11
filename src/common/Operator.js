@@ -25,7 +25,13 @@ export class ArithmeticOperator extends Operator {
         super(
             name,
             () => <Typography variant="h4">{symbol}</Typography>,
-            operation
+            (prev, next) => {
+                if (!(prev instanceof ValueOperator) || !(next instanceof ValueOperator)) {
+                    return new Error("There must be a value before and after operator", name);
+                }
+
+                operation(prev, next);
+            }
         );
     }
 }
