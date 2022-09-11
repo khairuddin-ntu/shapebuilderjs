@@ -29,18 +29,19 @@ const operatorList = [
     ),
     new ArithmeticOperator(
         "Addition", "+",
-        null
+        (prev, next) => prev + next
     ),
     new ArithmeticOperator(
         "Subtraction", "-",
-        null
+        (prev, next) => prev - next
     ),
     new ArithmeticOperator(
         "Multiplication", "×",
-        null),
+        (prev, next) => prev * next
+    ),
     new ArithmeticOperator(
         "Division", "÷",
-        null
+        (prev, next) => prev / next
     ),
     new FunctionOperator(
         "Parenthesis", null,
