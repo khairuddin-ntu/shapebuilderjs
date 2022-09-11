@@ -18,7 +18,9 @@ class Operator {
     }
 }
 
-export class ValueOperator extends Operator { }
+export class ValueOperator extends Operator {
+    value;
+}
 
 export class ArithmeticOperator extends Operator {
     constructor(name, symbol, operation) {
@@ -30,7 +32,7 @@ export class ArithmeticOperator extends Operator {
                     return new Error("There must be a value before and after operator", name);
                 }
 
-                operation(prev, next);
+                return operation(prev.value, prev.value);
             }
         );
     }
