@@ -3,20 +3,21 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
-import { ValueOperator, ArithmeticOperator, FunctionOperator } from './../common/Operator';
+import { FixedValueOperator, ArithmeticOperator, FunctionOperator } from './../common/Operator';
 import OperatorItem from './OperatorItem';
 
 import './Operators.css';
 
 const operatorList = [
-    new ValueOperator(
+    new FixedValueOperator(
         "Exponent",
         () => <Typography className="exponent" variant="h4">e</Typography>,
-        null
+        Math.E
     ),
-    new ValueOperator(
-        "pi", () => <Typography variant="h4">π</Typography>,
-        null
+    new FixedValueOperator(
+        "pi",
+        () => <Typography variant="h4">π</Typography>,
+        Math.PI
     ),
     new ArithmeticOperator(
         "Addition", "+",
@@ -50,7 +51,7 @@ const operatorList = [
         "Tangent", "tan",
         null
     ),
-    new ValueOperator(
+    new FixedValueOperator(
         "Fraction",
         () => (
             <Stack
@@ -72,7 +73,7 @@ const operatorList = [
         ),
         null
     ),
-    new ValueOperator(
+    new FixedValueOperator(
         "Power",
         () => (
             <Stack

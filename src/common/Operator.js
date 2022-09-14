@@ -18,8 +18,13 @@ class Operator {
     }
 }
 
-export class ValueOperator extends Operator {
+export class FixedValueOperator extends Operator {
     value;
+
+    constructor(name, generateUi, value) {
+        super(name, generateUi, () => value);
+        this.value = value;
+    }
 }
 
 export class ArithmeticOperator extends Operator {
@@ -28,7 +33,7 @@ export class ArithmeticOperator extends Operator {
             name,
             () => <Typography variant="h4">{symbol}</Typography>,
             (prev, next) => {
-                if (!(prev instanceof ValueOperator) || !(next instanceof ValueOperator)) {
+                if (!(prev instanceof FixedValueOperator) || !(next instanceof FixedValueOperator)) {
                     return new Error("There must be a value before and after operator", name);
                 }
 
