@@ -66,7 +66,8 @@ export default class ShapeRenderer {
         this.#camera.translateZ(14);
 
         const light = new THREE.DirectionalLight();
-        light.position.set(-1, 2, 4);
+        light.intensity = 0.9;
+        light.position.set(5, -7, -10);
         this.#scene.add(light);
     }
 
