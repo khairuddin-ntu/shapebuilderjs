@@ -5,12 +5,13 @@ import TextGeometry from './geometries/TextGeometry';
 
 const SHAPE_2D_MATERIAL = new THREE.LineBasicMaterial({ color: 0x00ff00 });
 const SHAPE_3D_MATERIAL = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
-const AXES_MATERIAL = new THREE.MeshStandardMaterial({ color: 0xffff00 });
-const TEXT_MATERIAL = new THREE.MeshBasicMaterial({ color: 0x000000 });
+const AXES_MATERIAL = new THREE.MeshMatcapMaterial({ color: 0xffff00 });
+const TEXT_MATERIAL = new THREE.MeshMatcapMaterial({ color: 0x000000 });
 
 export default class ShapeRenderer {
     #renderer;
     #scene;
+    #shapeGroup;
     #shape;
     #camera;
     #fontData;
@@ -48,8 +49,8 @@ export default class ShapeRenderer {
 
     rotateShape(x, y) {
         // rotateX() & rotateY() are not meant to be used for animation
-        this.#scene.rotation.x += y / 100;
-        this.#scene.rotation.y += x / 100;
+        this.#shapeGroup.rotation.x += y / 100;
+        this.#shapeGroup.rotation.y += x / 100;
     }
 
     #setUpScene(canvasRef) {
@@ -69,6 +70,9 @@ export default class ShapeRenderer {
         light.intensity = 0.9;
         light.position.set(5, -7, -10);
         this.#scene.add(light);
+
+        this.#shapeGroup = new THREE.Group();
+        this.#scene.add(this.#shapeGroup);
     }
 
     #loadFont(onComplete) {
@@ -87,7 +91,7 @@ export default class ShapeRenderer {
         this.#drawAxis(axesGroup, "x");
         this.#drawAxis(axesGroup, "y");
         this.#drawAxis(axesGroup, "z");
-        this.#scene.add(axesGroup);
+        this.#shapeGroup.add(axesGroup);
     }
 
     #drawAxis(axesGroup, axesType) {
@@ -179,7 +183,7 @@ export default class ShapeRenderer {
             prevVector = currentVector;
         }
 
-        this.#scene.add(this.#shape);
+        this.#shapeGroup.add(this.#shape);
     }
 
     #render3dShape(xEquation, yEquation, zEquation, uParameter, vParameter) {
@@ -199,7 +203,7 @@ export default class ShapeRenderer {
             uParameter, vParameter
         );
         this.#shape = new THREE.Mesh(geometry, SHAPE_3D_MATERIAL);
-        this.#scene.add(this.#shape);
+        this.#shapeGroup.add(this.#shape);
     }
 
     #removeExistingShape() {
