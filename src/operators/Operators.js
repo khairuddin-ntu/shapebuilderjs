@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
-import { FixedValueOperator, ArithmeticOperator, FunctionOperator } from './../common/Operator';
+import { FixedValueOperator, ArithmeticOperator, FunctionOperator, WrapperOperator } from './../common/Operator';
 import OperatorItem from './OperatorItem';
 
 import './Operators.css';
@@ -51,7 +51,7 @@ const operatorList = [
         "Tangent", "tan",
         null
     ),
-    new FixedValueOperator(
+    new WrapperOperator(
         "Fraction",
         () => (
             <Stack
@@ -73,7 +73,7 @@ const operatorList = [
         ),
         null
     ),
-    new FixedValueOperator(
+    new WrapperOperator(
         "Power",
         () => (
             <Stack

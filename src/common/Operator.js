@@ -18,6 +18,8 @@ class Operator {
     }
 }
 
+export class WrapperOperator extends Operator { }
+
 export class FixedValueOperator extends Operator {
     value;
 
