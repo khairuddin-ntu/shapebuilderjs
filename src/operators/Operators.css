@@ -2,6 +2,10 @@
     padding: 4%;
 }
 
+.exponent {
+    font-style: italic;
+}
+
 #fraction-divider {
     border: none;
     background-color: black;

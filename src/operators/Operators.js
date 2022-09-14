@@ -10,17 +10,8 @@ import './Operators.css';
 
 const operatorList = [
     new ValueOperator(
-        "Real Number",
-        () => (
-            // TODO: Resize text field whenever user input changes
-            <TextField
-                disabled
-                size="small"
-                variant="outlined"
-                type="text"
-                inputProps={{ size: 1 }}
-            />
-        ),
+        "Exponent",
+        () => <Typography className="exponent" variant="h4">e</Typography>,
         null
     ),
     new ValueOperator(
