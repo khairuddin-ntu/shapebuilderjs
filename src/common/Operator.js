@@ -38,7 +38,7 @@ export class ArithmeticOperator extends Operator {
     }
 }
 
-export class FunctionOperator extends ValueOperator {
+export class FunctionOperator extends Operator {
     constructor(name, functionName, operation) {
         super(
             name,
