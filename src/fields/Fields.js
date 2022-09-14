@@ -11,11 +11,15 @@ import './Fields.css';
 
 export default function Fields(props) {
     const [snackbarMessage, setSnackbarMessage] = useState();
+    // Functions state
+    const functions = useRef([]);
     // Parameter states
     const parameters = useRef([new Parameter("u"), new Parameter("v")]);
     const parameterErrors = useRef([null, null, null]);
 
     const generateShape = () => {
+        console.log(functions);
+
         for (const paramError of parameterErrors.current) {
             if (!paramError) continue;
             setSnackbarMessage(paramError);
@@ -35,7 +39,12 @@ export default function Fields(props) {
             id="fields"
             sx={{ borderTop: 1 }}
         >
-            <FunctionsSection id="functions-section" className="field__section" sectionName="Functions" />
+            <FunctionsSection
+                id="functions-section"
+                className="field__section"
+                sectionName="Functions"
+                functionsRef={functions}
+            />
             <ParametersSection
                 id="parameters-section"
                 className="field__section"

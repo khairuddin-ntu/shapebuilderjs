@@ -2,6 +2,9 @@ import Stack from '@mui/material/Stack';
 import FunctionField from './FunctionField';
 
 export default function FunctionsSection(props) {
+    const functionNames = ["x", "y", "z"];
+    const inputs = props.functionsRef;
+
     return (
         <Stack
             id={props.id}
@@ -9,9 +12,16 @@ export default function FunctionsSection(props) {
             direction="column"
             spacing={2}
         >
-            <FunctionField functionName="x" />
-            <FunctionField functionName="y" />
-            <FunctionField functionName="z" />
+            {
+                functionNames.map((name, i) =>
+                    <FunctionField
+                        key={i}
+                        index={i}
+                        inputsRef={inputs}
+                        functionName={name}
+                    />
+                )
+            }
         </Stack>
     );
 }
