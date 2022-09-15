@@ -18,7 +18,6 @@ export default function FunctionsSection(props) {
                         key={i}
                         index={i}
                         inputsRef={inputs}
-                        inputErrorsRef={props.functionErrorsRef}
                         functionName={name}
                     />
                 )

@@ -19,7 +19,6 @@ export default function Fields(props) {
     const parameterErrors = useRef([null, null, null]);
     // Functions state
     const functionInputs = useRef(["", "", ""]);
-    const functionErrors = useRef([null, null, null]);
 
     const generateShape = () => {
         for (const paramError of parameterErrors.current) {
@@ -62,7 +61,6 @@ export default function Fields(props) {
                 className="field__section"
                 sectionName="Functions"
                 functionsRef={functionInputs}
-                functionErrorsRef={functionErrors}
             />
             <ParametersSection
                 id="parameters-section"
