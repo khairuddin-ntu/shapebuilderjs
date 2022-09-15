@@ -13,6 +13,7 @@ export default function Fields(props) {
     const [snackbarMessage, setSnackbarMessage] = useState();
     // Functions state
     const functions = useRef([]);
+    const functionErrors = useRef([null, null, null]);
     // Parameter states
     const parameters = useRef([new Parameter("u"), new Parameter("v")]);
     const parameterErrors = useRef([null, null, null]);
@@ -44,6 +45,7 @@ export default function Fields(props) {
                 className="field__section"
                 sectionName="Functions"
                 functionsRef={functions}
+                functionErrorsRef={functionErrors}
             />
             <ParametersSection
                 id="parameters-section"
