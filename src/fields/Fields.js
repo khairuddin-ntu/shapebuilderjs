@@ -6,25 +6,32 @@ import Snackbar from '@mui/material/Snackbar';
 import FunctionsSection from './functions/FunctionsSection';
 import ParametersSection from './parameters/ParametersSection';
 import Parameter from './../common/Parameter';
+import { SnackbarError } from './../common/SnackbarMessage';
+import { functionNames } from '../common/Constants';
 
 import './Fields.css';
 
 export default function Fields(props) {
     const [snackbarMessage, setSnackbarMessage] = useState();
-    // Functions state
-    const functions = useRef([]);
-    const functionErrors = useRef([null, null, null]);
     // Parameter states
     const parameters = useRef([new Parameter("u"), new Parameter("v")]);
     const parameterErrors = useRef([null, null, null]);
+    // Functions state
+    const functions = useRef([]);
+    const functionErrors = useRef([null, null, null]);
 
     const generateShape = () => {
-        console.log(functions);
-
         for (const paramError of parameterErrors.current) {
             if (!paramError) continue;
             setSnackbarMessage(paramError);
             return;
+        }
+
+        for (const [i, funcInput] of functions.current.entries()) {
+            if (funcInput.length === 0 || !/^\S*$/.test(funcInput)) {
+                setSnackbarMessage(new SnackbarError("Function " + functionNames[i] + " cannot be blank"));
+                return;
+            }
         }
 
         props.setRenderParams({
