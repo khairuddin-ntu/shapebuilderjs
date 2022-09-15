@@ -17,7 +17,7 @@ export default function Fields(props) {
     const parameters = useRef([new Parameter("u"), new Parameter("v")]);
     const parameterErrors = useRef([null, null, null]);
     // Functions state
-    const functions = useRef([]);
+    const functions = useRef(["", "", ""]);
     const functionErrors = useRef([null, null, null]);
 
     const generateShape = () => {
