@@ -8,6 +8,7 @@ import ParametersSection from './parameters/ParametersSection';
 import Parameter from './../common/Parameter';
 import { SnackbarError } from './../common/SnackbarMessage';
 import { functionNames } from '../common/Constants';
+import parseFunctionInput from './functions/parser/FunctionParser';
 
 import './Fields.css';
 
@@ -17,7 +18,7 @@ export default function Fields(props) {
     const parameters = useRef([new Parameter("u"), new Parameter("v")]);
     const parameterErrors = useRef([null, null, null]);
     // Functions state
-    const functions = useRef(["", "", ""]);
+    const functionInputs = useRef(["", "", ""]);
     const functionErrors = useRef([null, null, null]);
 
     const generateShape = () => {
@@ -27,11 +28,20 @@ export default function Fields(props) {
             return;
         }
 
-        for (const [i, funcInput] of functions.current.entries()) {
+        const functions = [];
+        for (const [i, funcInput] of functionInputs.current.entries()) {
             if (funcInput.length === 0 || !/^\S*$/.test(funcInput)) {
                 setSnackbarMessage(new SnackbarError("Function " + functionNames[i] + " cannot be blank"));
                 return;
             }
+
+            const [func, error] = parseFunctionInput(parameters, funcInput);
+            if (error) {
+                setSnackbarMessage(error);
+                return;
+            }
+
+            functions.push(func);
         }
 
         props.setRenderParams({
@@ -51,7 +61,7 @@ export default function Fields(props) {
                 id="functions-section"
                 className="field__section"
                 sectionName="Functions"
-                functionsRef={functions}
+                functionsRef={functionInputs}
                 functionErrorsRef={functionErrors}
             />
             <ParametersSection
