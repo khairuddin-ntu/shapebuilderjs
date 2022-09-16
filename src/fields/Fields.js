@@ -7,7 +7,7 @@ import FunctionsSection from './functions/FunctionsSection';
 import ParametersSection from './parameters/ParametersSection';
 import Parameter from './../common/Parameter';
 import { SnackbarError } from './../common/SnackbarMessage';
-import { functionNames } from '../common/Constants';
+import { functionNames, BLANK_REGEX } from '../common/Constants';
 import parseFunctionInput from './functions/parser/FunctionParser';
 
 import './Fields.css';
@@ -29,7 +29,7 @@ export default function Fields(props) {
 
         const functions = [];
         for (const [i, funcInput] of functionInputs.current.entries()) {
-            if (funcInput.length === 0 || !/^\S*$/.test(funcInput)) {
+            if (funcInput.length === 0 || !BLANK_REGEX.test(funcInput)) {
                 setSnackbarMessage(new SnackbarError("Function " + functionNames[i] + " cannot be blank"));
                 return;
             }
