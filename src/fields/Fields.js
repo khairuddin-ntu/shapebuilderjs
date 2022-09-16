@@ -16,6 +16,8 @@ export default function Fields(props) {
     const parameterErrors = useRef([null, null, null]);
 
     const generateShape = () => {
+        setSnackbarMessage(null);
+
         for (const paramError of parameterErrors.current) {
             if (!paramError) continue;
             setSnackbarMessage(paramError);
