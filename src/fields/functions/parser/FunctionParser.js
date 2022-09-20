@@ -2,18 +2,28 @@ import { SnackbarError } from "../../../common/SnackbarMessage";
 import { isEmptyOrBlank } from "../../../common/StringUtils";
 
 const NUMBER_REGEX = /\d+(\.\d+)?/g;
+const PI_REGEX = /pi/g;
 
 export default function parseFunctionInput(parameters, strInput) {
     console.log("parseFunctionInput: Input = " + strInput);
 
     // Get all numbers
     const numbers = [];
-    const remainingChars = strInput.replace(NUMBER_REGEX, (match, _p1, offset) => {
+    let remainingChars = strInput.replace(NUMBER_REGEX, (match, _p1, offset) => {
         numbers.push({ input: match, index: offset });
         return "";
     });
 
     console.log(numbers);
+
+    // Get all instances of pi
+    const pis = [];
+    remainingChars = remainingChars.replace(PI_REGEX, (match, offset) => {
+        pis.push({ input: match, index: offset });
+        return "";
+    });
+
+    console.log(pis);
 
     // Get remaining characters after parsing
     console.log("parseFunctionInput: Remaining characters = " + remainingChars);
