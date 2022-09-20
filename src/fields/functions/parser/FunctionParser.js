@@ -15,7 +15,7 @@ export default function parseFunctionInput(parameters, strInput) {
     console.log(remainingChars);
 
     for (const chars of remainingChars) {
-        if (isEmptyOrBlank(chars)) continue;
+        if (!chars || isEmptyOrBlank(chars)) continue;
         return [null, new SnackbarError("Invalid input: " + chars)];
     }
 
