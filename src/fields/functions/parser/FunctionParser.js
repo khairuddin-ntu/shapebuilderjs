@@ -3,6 +3,7 @@ import { isEmptyOrBlank } from "../../../common/StringUtils";
 
 const NUMBER_REGEX = /\d+(\.\d+)?/g;
 const PI_REGEX = /pi/g;
+const MATH_OPERATOR_REGEX = /[+\-*/]/g;
 
 export default function parseFunctionInput(parameters, strInput) {
     console.log("parseFunctionInput: Input = " + strInput);
@@ -24,6 +25,15 @@ export default function parseFunctionInput(parameters, strInput) {
     });
 
     console.log(pis);
+
+    // Get all basic mathematical operations
+    const operators = [];
+    remainingChars = remainingChars.replace(MATH_OPERATOR_REGEX, (match, offset) => {
+        operators.push({input: match, index: offset});
+        return "";
+    });
+
+    console.log(operators);
 
     // Get remaining characters after parsing
     console.log("parseFunctionInput: Remaining characters = " + remainingChars);
