@@ -1,4 +1,5 @@
 import { SnackbarError } from "../../../common/SnackbarMessage";
+import { isEmptyOrBlank } from "../../../common/StringUtils";
 
 const DECIMAL_REGEX = /\d+\.\d+/g;
 
@@ -9,5 +10,14 @@ export default function parseFunctionInput(parameters, strInput) {
     const decimals = [...strInput.matchAll(DECIMAL_REGEX)];
     console.log(decimals);
 
-    return [null, new SnackbarError("Parse input not completed")]
+    // Get remaining characters after parsing
+    const remainingChars = strInput.split(DECIMAL_REGEX);
+    console.log(remainingChars);
+
+    for (const chars of remainingChars) {
+        if (isEmptyOrBlank(chars)) continue;
+        return [null, new SnackbarError("Invalid input: " + chars)];
+    }
+
+    return [null, new SnackbarError("Parse input not completed")];
 };
