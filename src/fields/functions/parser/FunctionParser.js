@@ -7,16 +7,19 @@ export default function parseFunctionInput(parameters, strInput) {
     console.log("parseFunctionInput: Input = " + strInput);
 
     // Get all numbers
-    const numbers = [...strInput.matchAll(NUMBER_REGEX)];
+    const numbers = [];
+    const remainingChars = strInput.replace(NUMBER_REGEX, (match, _p1, offset) => {
+        numbers.push({ input: match, index: offset });
+        return "";
+    });
+
     console.log(numbers);
 
     // Get remaining characters after parsing
-    const remainingChars = strInput.split(NUMBER_REGEX);
-    console.log(remainingChars);
+    console.log("parseFunctionInput: Remaining characters = " + remainingChars);
 
-    for (const chars of remainingChars) {
-        if (!chars || isEmptyOrBlank(chars)) continue;
-        return [null, new SnackbarError("Invalid input: " + chars)];
+    if (!isEmptyOrBlank(remainingChars)) {
+        return [null, new SnackbarError("Invalid input: " + remainingChars[0])];
     }
 
     return [null, new SnackbarError("Parse input not completed")];
