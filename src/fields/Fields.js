@@ -31,15 +31,23 @@ export default function Fields(props) {
         }
 
         const functions = [];
+        let functionName;
         for (const [i, funcInput] of functionInputs.current.entries()) {
+            functionName = FUNCTION_NAMES[i];
+
             if (isEmptyOrBlank(funcInput)) {
-                setSnackbarMessage(new SnackbarError("Function " + FUNCTION_NAMES[i] + " cannot be blank"));
+                setSnackbarMessage(new SnackbarError("Function " + functionName + " cannot be blank"));
                 return;
             }
 
             const [func, error] = parseFunctionInput(parameters, funcInput);
             if (error) {
                 setSnackbarMessage(error);
+                return;
+            }
+
+            if (!func) {
+                setSnackbarMessage(new SnackbarError("Unknown error while parsing function", functionName));
                 return;
             }
 
