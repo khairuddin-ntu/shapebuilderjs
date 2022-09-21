@@ -1,10 +1,11 @@
-import Token from './Token';
+import Token, { WrapperToken } from './Token';
 import { SnackbarError } from "../../../common/SnackbarMessage";
 import { isEmptyOrBlank } from "../../../common/StringUtils";
 
 const NUMBER_REGEX = /\d+(\.\d+)?/g;
 const PI_REGEX = /pi/g;
 const MATH_OPERATOR_REGEX = /[+\-*/]/g;
+const PAREN_REGEX = /\(.+\)/g;
 
 export default function parseFunctionInput(parameters, strInput) {
     console.log("parseFunctionInput: Input = " + strInput);
@@ -26,8 +27,14 @@ function getTokens(parameters, strInput) {
         return " ".repeat(match.length);
     };
 
+    // Get all parenthesis
+    let remainingChars = strInput.replace(PAREN_REGEX, (match, offset) => {
+        tokens.push(new WrapperToken(match.substring(1, match.length - 1), offset));
+        return " ".repeat(match.length);
+    });
+
     // Get all numbers
-    let remainingChars = strInput.replace(
+    remainingChars = remainingChars.replace(
         NUMBER_REGEX,
         (match, _p1, offset) => getLeafNode(match, offset)
     );
