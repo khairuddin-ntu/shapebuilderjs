@@ -31,8 +31,13 @@ function getTokens(parameters, strInput) {
 
     // Get all parenthesis
     let remainingChars = strInput.replace(PAREN_REGEX, (match, offset) => {
-        tokens.push(new WrapperToken(match, offset));
-        return " ".repeat(match.length);
+        const wrapperToken = new WrapperToken(match, offset);
+
+        const [childTokens, remainingChars] = getTokens(parameters, wrapperToken.childInput);
+        wrapperToken.addChildTokens(childTokens);
+
+        tokens.push(wrapperToken);
+        return " " + remainingChars + " ";
     });
 
     // Get all numbers
