@@ -1,11 +1,12 @@
-import Token, { WrapperToken } from './Token';
+import Token, { FuncToken, WrapperToken } from './Token';
 import { SnackbarError } from "../../../common/SnackbarMessage";
 import { isEmptyOrBlank } from "../../../common/StringUtils";
 
+const TRIGO_REGEX = /(sin|cos|tan)\(.+\)/g;
+const PAREN_REGEX = /\(.+\)/g;
 const NUMBER_REGEX = /\d+(\.\d+)?/g;
 const PI_REGEX = /pi/g;
 const MATH_OPERATOR_REGEX = /[+\-*/]/g;
-const PAREN_REGEX = /\(.+\)/g;
 
 export default function parseFunctionInput(parameters, strInput) {
     console.log("parseFunctionInput: Input = " + strInput);
@@ -29,8 +30,19 @@ function getTokens(parameters, strInput) {
         return " ".repeat(match.length);
     };
 
+    // Get all trigonometric functions
+    let remainingChars = strInput.replace(TRIGO_REGEX, (match, _p1, offset) => {
+        const funcToken = new FuncToken(match, offset);
+       
+        const [childTokens, remainingChars] = getTokens(parameters, funcToken.childInput);
+        funcToken.addChildTokens(childTokens);
+
+        tokens.push(funcToken);
+        return "    " + remainingChars + " ";
+    });
+
     // Get all parenthesis
-    let remainingChars = strInput.replace(PAREN_REGEX, (match, offset) => {
+    remainingChars = remainingChars.replace(PAREN_REGEX, (match, offset) => {
         const wrapperToken = new WrapperToken(match, offset);
 
         const [childTokens, remainingChars] = getTokens(parameters, wrapperToken.childInput);

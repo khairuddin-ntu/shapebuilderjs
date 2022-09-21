@@ -19,3 +19,9 @@ export class WrapperToken extends Token {
         this.childTokens.push(...tokens);
     }
 }
+
+export class FuncToken extends WrapperToken {
+    get childInput() {
+        return this.input.substring(4, this.input.length - 1);
+    }
+}
