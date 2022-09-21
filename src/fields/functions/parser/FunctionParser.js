@@ -12,7 +12,7 @@ export default function parseFunctionInput(parameters, strInput) {
     const numbers = [];
     let remainingChars = strInput.replace(NUMBER_REGEX, (match, _p1, offset) => {
         numbers.push({ input: match, index: offset });
-        return "";
+        return " ".repeat(match.length);
     });
 
     console.log(numbers);
@@ -21,7 +21,7 @@ export default function parseFunctionInput(parameters, strInput) {
     const pis = [];
     remainingChars = remainingChars.replace(PI_REGEX, (match, offset) => {
         pis.push({ input: match, index: offset });
-        return "";
+        return " ".repeat(match.length);
     });
 
     console.log(pis);
@@ -30,14 +30,14 @@ export default function parseFunctionInput(parameters, strInput) {
     const operators = [];
     remainingChars = remainingChars.replace(MATH_OPERATOR_REGEX, (match, offset) => {
         operators.push({input: match, index: offset});
-        return "";
+        return " ".repeat(match.length);
     });
 
     console.log(operators);
 
     // Get remaining characters after parsing
+    remainingChars = remainingChars.trim();
     console.log("parseFunctionInput: Remaining characters = " + remainingChars);
-
     if (!isEmptyOrBlank(remainingChars)) {
         return [null, new SnackbarError("Invalid input: " + remainingChars[0])];
     }
