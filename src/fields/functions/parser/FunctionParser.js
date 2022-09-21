@@ -11,53 +11,42 @@ export default function parseFunctionInput(parameters, strInput) {
 
     const tokens = getTokens(parameters, strInput);
     console.log(tokens);
-    if (tokens.length === 1) {
-        return [null, tokens[0]];
+    if (!Array.isArray(tokens)) {
+        return [null, tokens];
     }
 
     return [null, new SnackbarError("Parse input not completed")];
 };
 
-function retrieveToken(arr, match, offset) {
-    arr.push(new Token(match, offset));
-    return " ".repeat(match.length);
-}
-
 function getTokens(parameters, strInput) {
+    const tokens = [];
+
+    const getLeafNode = (match, offset) => {
+        tokens.push(new Token(match, offset));
+        return " ".repeat(match.length);
+    };
+
     // Get all numbers
-    const numbers = [];
     let remainingChars = strInput.replace(
         NUMBER_REGEX,
-        (match, _p1, offset) => retrieveToken(numbers, match, offset)
+        (match, _p1, offset) => getLeafNode(match, offset)
     );
 
     // Get all instances of pi
-    const pis = [];
-    remainingChars = remainingChars.replace(
-        PI_REGEX,
-        (match, offset) => retrieveToken(pis, match, offset)
-    );
+    remainingChars = remainingChars.replace(PI_REGEX, getLeafNode);
 
     // Get all basic mathematical operations
-    const operators = [];
-    remainingChars = remainingChars.replace(
-        MATH_OPERATOR_REGEX,
-        (match, offset) => retrieveToken(operators, match, offset)
-    );
+    remainingChars = remainingChars.replace(MATH_OPERATOR_REGEX, getLeafNode);
 
     // Get all instances of params
-    const params = [];
     for (const paramRegex of parameters.map((param) => new RegExp(param.name))) {
-        remainingChars = remainingChars.replace(
-            paramRegex,
-            (match, offset) => retrieveToken(params, match, offset)
-        );
+        remainingChars = remainingChars.replace(paramRegex, getLeafNode);
     }
 
     // Get remaining characters after parsing
     remainingChars = remainingChars.trim();
     console.log("parseFunctionInput: Remaining characters = " + remainingChars);
     return isEmptyOrBlank(remainingChars)
-        ? [numbers, pis, operators, params]
-        : [new SnackbarError("Invalid input: " + remainingChars[0])];
+        ? tokens.sort((a, b) => a.index - b.index)
+        : new SnackbarError("Invalid input: " + remainingChars[0]);
 }
