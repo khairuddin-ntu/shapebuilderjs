@@ -29,7 +29,7 @@ function getTokens(parameters, strInput) {
 
     // Get all parenthesis
     let remainingChars = strInput.replace(PAREN_REGEX, (match, offset) => {
-        tokens.push(new WrapperToken(match.substring(1, match.length - 1), offset));
+        tokens.push(new WrapperToken(match, offset));
         return " ".repeat(match.length);
     });
 

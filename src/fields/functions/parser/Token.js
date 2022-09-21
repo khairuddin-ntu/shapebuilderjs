@@ -11,6 +11,10 @@ export default class Token {
 export class WrapperToken extends Token {
     childTokens = [];
 
+    get childInput() {
+        return this.input.substring(1, this.input.length - 1);
+    }
+
     addChildTokens(tokens) {
         this.childTokens.push(...tokens);
     }
