@@ -1,4 +1,4 @@
-import Token, { FuncToken, WrapperToken } from './Token';
+import Token, { WrapperToken } from './Token';
 import { SnackbarError } from "../../../common/SnackbarMessage";
 import { isEmptyOrBlank } from "../../../common/StringUtils";
 
@@ -30,7 +30,8 @@ function getTokens(parameters, strInput) {
         return " ".repeat(match.length);
     };
 
-    const getParentNode = (parentToken) => {
+    const getParentNode = (match, offset) => {
+        const parentToken = new WrapperToken(match, offset);
         const [childTokens, remainingChars] = getTokens(parameters, parentToken.childInput);
         parentToken.addChildTokens(childTokens);
 
@@ -40,20 +41,15 @@ function getTokens(parameters, strInput) {
 
     // Get all trigonometric functions
     let remainingChars = strInput.replace(
-        TRIGO_REGEX,
-        (match, _p1, offset) => getParentNode(new FuncToken(match, offset))
+        TRIGO_REGEX, (match, _p1, offset) => getParentNode(match, offset)
     );
 
     // Get all parenthesis
-    remainingChars = remainingChars.replace(
-        PAREN_REGEX,
-        (match, offset) => getParentNode(new WrapperToken(match, offset))
-    );
+    remainingChars = remainingChars.replace(PAREN_REGEX, getParentNode);
 
     // Get all numbers
     remainingChars = remainingChars.replace(
-        NUMBER_REGEX,
-        (match, _p1, offset) => getLeafNode(match, offset)
+        NUMBER_REGEX, (match, _p1, offset) => getLeafNode(match, offset)
     );
 
     // Get all instances of pi
