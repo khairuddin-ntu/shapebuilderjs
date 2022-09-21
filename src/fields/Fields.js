@@ -30,6 +30,8 @@ export default function Fields(props) {
             return;
         }
 
+        const params = parameters.current;
+
         const functions = [];
         let functionName;
         for (const [i, funcInput] of functionInputs.current.entries()) {
@@ -40,7 +42,7 @@ export default function Fields(props) {
                 return;
             }
 
-            const [func, error] = parseFunctionInput(parameters, funcInput);
+            const [func, error] = parseFunctionInput(params, funcInput);
             if (error) {
                 setSnackbarMessage(error);
                 return;
@@ -58,7 +60,7 @@ export default function Fields(props) {
             xEquation: (u, v) => 2.5 * Math.cos(-Math.PI / 2 + u * Math.PI) * Math.cos(-Math.PI + v * 2 * Math.PI),
             yEquation: (u, v) => 2.5 * Math.cos(-Math.PI / 2 + u * Math.PI) * Math.sin(-Math.PI + v * 2 * Math.PI),
             zEquation: (u, v) => 2.5 * Math.sin(-Math.PI / 2 + u * Math.PI),
-            parameters: parameters.current
+            parameters: params
         });
     };
 
