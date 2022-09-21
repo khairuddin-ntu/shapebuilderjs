@@ -1,3 +1,4 @@
+import Token from './Token';
 import { SnackbarError } from "../../../common/SnackbarMessage";
 import { isEmptyOrBlank } from "../../../common/StringUtils";
 
@@ -21,21 +22,21 @@ function getTokens(parameters, strInput) {
     // Get all numbers
     const numbers = [];
     let remainingChars = strInput.replace(NUMBER_REGEX, (match, _p1, offset) => {
-        numbers.push({ input: match, index: offset });
+        numbers.push(new Token(match, offset));
         return " ".repeat(match.length);
     });
 
     // Get all instances of pi
     const pis = [];
     remainingChars = remainingChars.replace(PI_REGEX, (match, offset) => {
-        pis.push({ input: match, index: offset });
+        pis.push(new Token(match, offset));
         return " ".repeat(match.length);
     });
 
     // Get all basic mathematical operations
     const operators = [];
     remainingChars = remainingChars.replace(MATH_OPERATOR_REGEX, (match, offset) => {
-        operators.push({ input: match, index: offset });
+        operators.push(new Token(match, offset));
         return " ".repeat(match.length);
     });
 
@@ -44,7 +45,7 @@ function getTokens(parameters, strInput) {
     const paramRegexs = parameters.map((param) => new RegExp(param.name));
     for (const paramRegex of paramRegexs) {
         remainingChars = remainingChars.replace(paramRegex, (match, offset) => {
-            params.push({input: match, index: offset});
+            params.push(new Token(match, offset));
             return " ".repeat(match.length);
         })
     }
