@@ -7,3 +7,11 @@ export default class Token {
         this.index = index;
     }
 }
+
+export class WrapperToken {
+    childTokens = [];
+
+    addChildTokens(tokens) {
+        this.childTokens.push(...tokens);
+    }
+}
