@@ -30,27 +30,25 @@ function getTokens(parameters, strInput) {
         return " ".repeat(match.length);
     };
 
-    // Get all trigonometric functions
-    let remainingChars = strInput.replace(TRIGO_REGEX, (match, _p1, offset) => {
-        const funcToken = new FuncToken(match, offset);
-       
-        const [childTokens, remainingChars] = getTokens(parameters, funcToken.childInput);
-        funcToken.addChildTokens(childTokens);
+    const getParentNode = (parentToken) => {
+        const [childTokens, remainingChars] = getTokens(parameters, parentToken.childInput);
+        parentToken.addChildTokens(childTokens);
 
-        tokens.push(funcToken);
+        tokens.push(parentToken);
         return "    " + remainingChars + " ";
-    });
+    };
+
+    // Get all trigonometric functions
+    let remainingChars = strInput.replace(
+        TRIGO_REGEX,
+        (match, _p1, offset) => getParentNode(new FuncToken(match, offset))
+    );
 
     // Get all parenthesis
-    remainingChars = remainingChars.replace(PAREN_REGEX, (match, offset) => {
-        const wrapperToken = new WrapperToken(match, offset);
-
-        const [childTokens, remainingChars] = getTokens(parameters, wrapperToken.childInput);
-        wrapperToken.addChildTokens(childTokens);
-
-        tokens.push(wrapperToken);
-        return " " + remainingChars + " ";
-    });
+    remainingChars = remainingChars.replace(
+        PAREN_REGEX,
+        (match, offset) => getParentNode(new WrapperToken(match, offset))
+    );
 
     // Get all numbers
     remainingChars = remainingChars.replace(
