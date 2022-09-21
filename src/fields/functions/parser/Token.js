@@ -8,7 +8,7 @@ export default class Token {
     }
 }
 
-export class WrapperToken {
+export class WrapperToken extends Token {
     childTokens = [];
 
     addChildTokens(tokens) {
