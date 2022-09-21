@@ -10,10 +10,12 @@ const PAREN_REGEX = /\(.+\)/g;
 export default function parseFunctionInput(parameters, strInput) {
     console.log("parseFunctionInput: Input = " + strInput);
 
-    const tokens = getTokens(parameters, strInput);
+    let [tokens, remainingChars] = getTokens(parameters, strInput);
     console.log(tokens);
-    if (!Array.isArray(tokens)) {
-        return [null, tokens];
+    console.log("parseFunctionInput: Remaining characters = \"" + remainingChars + "\"");
+    remainingChars = remainingChars.trim();
+    if (!isEmptyOrBlank(remainingChars)) {
+        return [null, new SnackbarError("Invalid input: " + remainingChars[0])];
     }
 
     return [null, new SnackbarError("Parse input not completed")];
@@ -51,9 +53,5 @@ function getTokens(parameters, strInput) {
     }
 
     // Get remaining characters after parsing
-    remainingChars = remainingChars.trim();
-    console.log("parseFunctionInput: Remaining characters = " + remainingChars);
-    return isEmptyOrBlank(remainingChars)
-        ? tokens.sort((a, b) => a.index - b.index)
-        : new SnackbarError("Invalid input: " + remainingChars[0]);
+    return [tokens.sort((a, b) => a.index - b.index), remainingChars];
 }
