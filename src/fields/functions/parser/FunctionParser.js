@@ -35,7 +35,7 @@ function getTokens(parameters, strInput) {
         parentToken.addChildTokens(childTokens);
 
         tokens.push(parentToken);
-        return "    " + remainingChars + " ";
+        return " ".repeat(parentToken.prefixLength) + remainingChars + " ".repeat(parentToken.suffixLength);
     };
 
     // Get all trigonometric functions
