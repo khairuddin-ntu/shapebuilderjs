@@ -66,3 +66,44 @@ function getTokens(parameters, strInput) {
     // Get remaining characters after parsing
     return [tokens.sort((a, b) => a.index - b.index), remainingChars];
 }
+
+function getParenthesis(strInput) {
+    const stringParts = [];
+    let parenCount;
+    let endChar;
+    for (let i = 0; i < strInput.length; i++) {
+        if (strInput[i] !== "(") {
+            return SnackbarError("Extra closing bracket at index " + i);
+        }
+
+        if (strInput[i] !== "(") continue;
+
+        parenCount = 0;
+        for (let j = i + 1; j < strInput.length; j++) {
+            endChar = strInput[j];
+            // Return error if this is the last character & it's not a closing bracket
+            if (j === strInput.length - 1 && endChar !== ")") {
+                return SnackbarError("Missing closing bracket for index " + i);
+            }
+
+            // Check if there are inner parenthesis
+            if (endChar === "(") {
+                parenCount++;
+                continue;
+            }
+
+            // Check if character is closing round bracket
+            if (endChar !== ")") continue;
+
+            // Check if closing round bracket belongs to an inner parenthesis
+            if (parenCount > 0) {
+                parenCount--;
+                continue;
+            }
+
+            stringParts.push(strInput.substring(i, j + 1));
+            i += j - i;
+            break;
+        }
+    }
+}
