@@ -11,12 +11,11 @@ const MATH_OPERATOR_REGEX = /[+\-*/]/g;
 export default function parseFunctionInput(parameters, strInput) {
     console.log("parseFunctionInput: Input = " + strInput);
 
-    let [tokens, remainingChars] = getTokens(parameters, strInput);
+    let [tokens, tokenError] = getTokens(parameters, strInput);
     console.log(tokens);
     console.log("parseFunctionInput: Remaining characters = \"" + remainingChars + "\"");
-    remainingChars = remainingChars.trim();
-    if (!isEmptyOrBlank(remainingChars)) {
-        return [null, new SnackbarError("Invalid input: " + remainingChars[0])];
+    if (tokenError) {
+        return [null, tokenError];
     }
 
     return [null, new SnackbarError("Parse input not completed")];
@@ -61,6 +60,11 @@ function getTokens(parameters, strInput) {
     // Get all instances of params
     for (const paramRegex of parameters.map((param) => new RegExp(param.name))) {
         remainingChars = remainingChars.replace(paramRegex, getLeafNode);
+    }
+
+    remainingChars = remainingChars.trim()
+    if (!isEmptyOrBlank(remainingChars)) {
+        return [tokens, new SnackbarError("Invalid input: " + remainingChars[0])];
     }
 
     // Get remaining characters after parsing
