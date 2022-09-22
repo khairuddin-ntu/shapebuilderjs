@@ -67,7 +67,7 @@ function getTokens(parameters, strInput) {
     return [tokens.sort((a, b) => a.index - b.index), remainingChars];
 }
 
-function getParenthesis(strInput) {
+function getAllParenthesis(strInput) {
     const stringParts = [];
     let parenCount;
     let endChar;
@@ -101,6 +101,7 @@ function getParenthesis(strInput) {
                 continue;
             }
 
+            // Bracket pair found
             stringParts.push(strInput.substring(i, j + 1));
             i += j - i;
             break;
