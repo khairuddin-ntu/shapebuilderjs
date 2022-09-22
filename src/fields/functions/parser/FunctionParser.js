@@ -3,7 +3,6 @@ import { SnackbarError } from "../../../common/SnackbarMessage";
 import { isEmptyOrBlank } from "../../../common/StringUtils";
 
 const TRIGO_REGEX = /(sin|cos|tan)/;
-const PAREN_REGEX = /\(.+\)/g;
 const NUMBER_REGEX = /\d+(\.\d+)?/g;
 const PI_REGEX = /pi/g;
 const MATH_OPERATOR_REGEX = /[+\-*/]/g;
@@ -22,28 +21,31 @@ export default function parseFunctionInput(parameters, strInput) {
 
 function getTokens(parameters, strInput) {
     const tokens = [];
+    let remainingChars = strInput;
 
     const getLeafNode = (match, offset) => {
         tokens.push(new Token(match, offset));
         return " ".repeat(match.length);
     };
 
-    const getParentNode = (match, offset) => {
-        const parentToken = new WrapperToken(match, offset);
-        const [childTokens, remainingChars] = getTokens(parameters, parentToken.childInput);
+    // Get all trigonometric & parenthesis functions
+    const [parentTokens, parentTokenError] = getAllParentTokens(remainingChars);
+    if (parentTokenError) {
+        return [tokens, parentTokenError];
+    }
+
+    let endIndex;
+    for (const parentToken of parentTokens) {
+        const [childTokens, childTokenError] = getTokens(parameters, parentToken.childInput);
+        if (childTokenError) {
+            return [tokens, childTokenError];
+        }
+
         parentToken.addChildTokens(childTokens);
-
         tokens.push(parentToken);
-        return " ".repeat(parentToken.prefixLength) + remainingChars + " ".repeat(parentToken.suffixLength);
-    };
-
-    // Get all trigonometric functions
-    let remainingChars = strInput.replace(
-        TRIGO_REGEX, (match, _p1, offset) => getParentNode(match, offset)
-    );
-
-    // Get all parenthesis
-    remainingChars = remainingChars.replace(PAREN_REGEX, getParentNode);
+        endIndex = parentToken.index + parentToken.input.length;
+        remainingChars = remainingChars.substring(0, parentToken.index) + " ".repeat(parentToken.input.length) + remainingChars.substring(endIndex);
+    }
 
     // Get all numbers
     remainingChars = remainingChars.replace(
@@ -71,8 +73,8 @@ function getTokens(parameters, strInput) {
     return [tokens.sort((a, b) => a.index - b.index), remainingChars];
 }
 
-function getAllParenthesis(strInput) {
-    const wrappers = [];
+function getAllParentTokens(strInput) {
+    const parentTokens = [];
 
     let parenCount;
     let startChar, endChar;
@@ -84,7 +86,7 @@ function getAllParenthesis(strInput) {
         // Return error if character is a closing bracket
         // Must find opening bracket before finding closing bracket
         if (startChar === ")") {
-            return SnackbarError("Extra closing bracket at index " + i);
+            return [parentTokens, new SnackbarError("Extra closing bracket at index " + i)];
         }
 
         // Go to next position if character is not an opening bracket
@@ -93,7 +95,7 @@ function getAllParenthesis(strInput) {
         // Return error if last 2 characters are opening brackets
         // Must have at least 1 character & 1 closing bracket after opening bracket
         if (i >= strInput.length - 2) {
-            return SnackbarError("Missing closing bracket for index " + i);
+            return [parentTokens, new SnackbarError("Missing closing bracket for index " + i)];
         }
 
         parenCount = 0;
@@ -105,7 +107,7 @@ function getAllParenthesis(strInput) {
                 // Return error if it's the last character
                 // Closing bracket for given opening bracket not found
                 if (j === strInput.length - 1) {
-                    return SnackbarError("Missing closing bracket for index " + i);
+                    return [parentTokens, new SnackbarError("Missing closing bracket for index " + i)];
                 }
 
                 // Increment parenthesis counter if there are inner parenthesis
@@ -119,7 +121,7 @@ function getAllParenthesis(strInput) {
                 // Return error if last character is a closing bracket
                 // but does not belong to given opening bracket
                 if (j === strInput.length - 1) {
-                    return SnackbarError("Missing closing bracket for index " + i);
+                    return [parentTokens, new SnackbarError("Missing closing bracket for index " + i)];
                 }
 
                 parenCount--;
@@ -131,11 +133,11 @@ function getAllParenthesis(strInput) {
             isTrigo = (i >= 3 && TRIGO_REGEX.test(strInput.substring(i - 3, i)));
             // Change start index based on whether it's a trigonometric function
             startIndex = i - (isTrigo ? 3 : 0);
-            wrappers.push(new WrapperToken(strInput.substring(startIndex, j + 1), startIndex));
+            parentTokens.push(new WrapperToken(strInput.substring(startIndex, j + 1), startIndex));
             i += j - i;
             break;
         }
     }
 
-    return wrappers;
+    return [parentTokens, null];
 }
