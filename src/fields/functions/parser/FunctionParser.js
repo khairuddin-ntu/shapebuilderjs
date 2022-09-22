@@ -94,25 +94,28 @@ function getAllParenthesis(strInput) {
         for (let j = i + 1; j < strInput.length; j++) {
             endChar = strInput[j];
 
-            // Increment parenthesis counter & go to next position
-            // if there are inner parenthesis
-            if (endChar === "(") {
-                parenCount++;
+            // Go to next position if character is not a closing round bracket
+            if (endChar !== ")") {
+                // Return error if it's the last character
+                // Closing bracket for given opening bracket not found
+                if (j === strInput.length - 1) {
+                    return SnackbarError("Missing closing bracket for index " + i);
+                }
+
+                // Increment parenthesis counter if there are inner parenthesis
+                if (endChar === "(") parenCount++;
                 continue;
             }
 
-            // Go to next position if character is not a closing round bracket
-            if (endChar !== ")") continue;
-
-            // Return error if last character is not a closing bracket
-            // Closing bracket for given opening bracket not found
-            if (j === strInput.length - 1) {
-                return SnackbarError("Missing closing bracket for index " + i);
-            }
-
             // Decrement parenthesis counter & go to next position
-            // if closing round bracket belongs to inner parenthesis
+            // if closing bracket belongs to inner parenthesis
             if (parenCount > 0) {
+                // Return error if last character is a closing bracket
+                // but does not belong to given opening bracket
+                if (j === strInput.length - 1) {
+                    return SnackbarError("Missing closing bracket for index " + i);
+                }
+
                 parenCount--;
                 continue;
             }
