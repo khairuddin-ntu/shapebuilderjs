@@ -2,7 +2,7 @@ import Token, { WrapperToken } from './Token';
 import { SnackbarError } from "../../../common/SnackbarMessage";
 import { isEmptyOrBlank } from "../../../common/StringUtils";
 
-const TRIGO_REGEX = /(sin|cos|tan)\(.+\)/g;
+const TRIGO_REGEX = /(sin|cos|tan)/;
 const PAREN_REGEX = /\(.+\)/g;
 const NUMBER_REGEX = /\d+(\.\d+)?/g;
 const PI_REGEX = /pi/g;
@@ -72,6 +72,8 @@ function getAllParenthesis(strInput) {
 
     let parenCount;
     let startChar, endChar;
+    let isTrigo;
+    let startIndex;
     for (let i = 0; i < strInput.length; i++) {
         startChar = strInput[i];
 
@@ -121,7 +123,11 @@ function getAllParenthesis(strInput) {
             }
 
             // Bracket pair found
-            wrappers.push(new WrapperToken(strInput.substring(i, j + 1), i));
+            // Check if previous 3 characters represent a trigonometric function
+            isTrigo = (i >= 3 && TRIGO_REGEX.test(strInput.substring(i - 3, i)));
+            // Change start index based on whether it's a trigonometric function
+            startIndex = i - (isTrigo ? 3 : 0);
+            wrappers.push(new WrapperToken(strInput.substring(startIndex, j + 1), startIndex));
             i += j - i;
             break;
         }
