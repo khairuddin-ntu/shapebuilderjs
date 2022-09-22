@@ -70,13 +70,16 @@ function getTokens(parameters, strInput) {
 function getAllParenthesis(strInput) {
     const stringParts = [];
     let parenCount;
-    let endChar;
+    let startChar, endChar;
     for (let i = 0; i < strInput.length; i++) {
-        if (strInput[i] !== "(") {
+        startChar = strInput[i];
+        // Check if closing bracket found before finding a opening bracket
+        if (startChar === ")") {
             return SnackbarError("Extra closing bracket at index " + i);
         }
 
-        if (strInput[i] !== "(") continue;
+        // Check if character is an opening bracket
+        if (startChar !== "(") continue;
 
         parenCount = 0;
         for (let j = i + 1; j < strInput.length; j++) {
