@@ -73,32 +73,44 @@ function getAllParenthesis(strInput) {
     let startChar, endChar;
     for (let i = 0; i < strInput.length; i++) {
         startChar = strInput[i];
-        // Check if closing bracket found before finding a opening bracket
+
+        // Return error if character is a closing bracket
+        // Must find opening bracket before finding closing bracket
         if (startChar === ")") {
             return SnackbarError("Extra closing bracket at index " + i);
         }
 
-        // Check if character is an opening bracket
+        // Go to next position if character is not an opening bracket
         if (startChar !== "(") continue;
+
+        // Return error if last 2 characters are opening brackets
+        // Must have at least 1 character & 1 closing bracket after opening bracket
+        if (i >= strInput.length - 2) {
+            return SnackbarError("Missing closing bracket for index " + i);
+        }
 
         parenCount = 0;
         for (let j = i + 1; j < strInput.length; j++) {
             endChar = strInput[j];
-            // Return error if this is the last character & it's not a closing bracket
-            if (j === strInput.length - 1 && endChar !== ")") {
-                return SnackbarError("Missing closing bracket for index " + i);
-            }
 
-            // Check if there are inner parenthesis
+            // Increment parenthesis counter & go to next position
+            // if there are inner parenthesis
             if (endChar === "(") {
                 parenCount++;
                 continue;
             }
 
-            // Check if character is closing round bracket
+            // Go to next position if character is not a closing round bracket
             if (endChar !== ")") continue;
 
-            // Check if closing round bracket belongs to an inner parenthesis
+            // Return error if last character is not a closing bracket
+            // Closing bracket for given opening bracket not found
+            if (j === strInput.length - 1) {
+                return SnackbarError("Missing closing bracket for index " + i);
+            }
+
+            // Decrement parenthesis counter & go to next position
+            // if closing round bracket belongs to inner parenthesis
             if (parenCount > 0) {
                 parenCount--;
                 continue;
