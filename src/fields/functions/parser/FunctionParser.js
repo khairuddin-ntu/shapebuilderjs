@@ -13,7 +13,6 @@ export default function parseFunctionInput(parameters, strInput) {
 
     let [tokens, tokenError] = getTokens(parameters, strInput);
     console.log(tokens);
-    console.log("parseFunctionInput: Remaining characters = \"" + remainingChars + "\"");
     if (tokenError) {
         return [null, tokenError];
     }
@@ -62,6 +61,7 @@ function getTokens(parameters, strInput) {
         remainingChars = remainingChars.replace(paramRegex, getLeafNode);
     }
 
+    console.log("parseFunctionInput: Remaining characters = \"" + remainingChars + "\"");
     remainingChars = remainingChars.trim()
     if (!isEmptyOrBlank(remainingChars)) {
         return [tokens, new SnackbarError("Invalid input: " + remainingChars[0])];
