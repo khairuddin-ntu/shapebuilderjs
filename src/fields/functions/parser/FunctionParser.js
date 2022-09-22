@@ -68,7 +68,8 @@ function getTokens(parameters, strInput) {
 }
 
 function getAllParenthesis(strInput) {
-    const stringParts = [];
+    const wrappers = [];
+
     let parenCount;
     let startChar, endChar;
     for (let i = 0; i < strInput.length; i++) {
@@ -117,9 +118,11 @@ function getAllParenthesis(strInput) {
             }
 
             // Bracket pair found
-            stringParts.push(strInput.substring(i, j + 1));
+            wrappers.push(new WrapperToken(strInput.substring(i, j + 1), i));
             i += j - i;
             break;
         }
     }
+
+    return wrappers;
 }
