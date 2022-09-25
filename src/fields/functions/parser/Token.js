@@ -10,13 +10,13 @@ class Token {
 
 export class ValueToken extends Token { }
 
-export class NegationToken extends Token {
+export class ArithmeticToken extends Token { }
+
+export class NegationToken extends ArithmeticToken {
     constructor(index) {
         super("-", index);
     }
 }
-
-export class ArithmeticToken extends Token { }
 
 export class WrapperToken extends ValueToken {
     childTokens = [];
