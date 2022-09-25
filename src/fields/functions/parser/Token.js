@@ -12,7 +12,7 @@ export class ValueToken extends Token { }
 
 export class ArithmeticToken extends Token { }
 
-export class WrapperToken extends Token {
+export class WrapperToken extends ValueToken {
     childTokens = [];
     prefixLength;
     suffixLength = 1;
