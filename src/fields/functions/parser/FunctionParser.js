@@ -1,4 +1,4 @@
-import { ArithmeticToken, ValueToken, WrapperToken } from './Token';
+import { ArithmeticToken, NegationToken, ValueToken, WrapperToken } from './Token';
 import { isEmptyOrBlank } from "../../../common/StringUtils";
 
 const TRIGO_REGEX = /(sin|cos|tan)/;
@@ -10,10 +10,11 @@ export default function parseFunctionInput(parameters, strInput) {
     console.log("parseFunctionInput: Input = " + strInput);
 
     let [tokens, tokenError] = getTokens(parameters, strInput);
+    if (tokenError) return [null, tokenError];
+
+    let validationError = validateGrammar(tokens);
     console.log(tokens);
-    if (tokenError) {
-        return [null, tokenError];
-    }
+    if (validationError) return [null, validationError];
 
     return [null, "Parse input not completed"];
 };
@@ -142,4 +143,66 @@ function getAllParentTokens(strInput) {
     }
 
     return [parentTokens, null];
+}
+
+function validateGrammar(tokens) {
+    let prevToken, token, nextToken;
+    let childError;
+    for (let i = 0; i < tokens.length; i++) {
+        prevToken = i < 1 ? null : tokens[i - 1];
+        token = tokens[i];
+        nextToken = i > tokens.length - 2 ? null : tokens[i + 1];
+
+        if (token instanceof ArithmeticToken) {
+            // Check if token is the first character
+            if (i === 0) {
+                // Return error if first token is an arithmetic operator that is not a "-"
+                if (token.input !== "-") {
+                    return "Missing prefix value for operator \"" + token.input + "\"";
+                }
+
+                // Return error if next token is not a value
+                if (!(nextToken instanceof ValueToken)) {
+                    return "Missing prefix value for operator \"" + token.input + "\"";
+                }
+
+                // Replace with negation token
+                tokens[i] = new NegationToken(token.index);
+                continue;
+            }
+
+            // Return error if token is the last token
+            if (i === tokens.length - 1) {
+                return "Missing suffix value for operator \"" + token.input + "\"";
+            }
+
+            // Replace with negation token if between arithmetic & value token
+            if (token.input === "-"
+                && prevToken instanceof ArithmeticToken
+                && nextToken instanceof ValueToken) {
+                tokens[i] = new NegationToken(token.index);
+                continue;
+            }
+
+            // Return error if previous token is not a value
+            if (!(prevToken instanceof ValueToken)) {
+                return "Invalid tokens between \"" + token.input + "\"";
+            }
+
+            // Return error if next token is not a value
+            if (!(nextToken instanceof ValueToken)) {
+                // Continue if next token is "-". May be a negation token
+                if (nextToken instanceof ArithmeticToken && nextToken.input === "-") {
+                    continue;
+                }
+
+                return "Invalid tokens between \"" + token.input + "\"";
+            }
+        }
+
+        if (token instanceof WrapperToken) {
+            childError = validateGrammar(token.childTokens);
+            if (childError) return childError;
+        }
+    }
 }
