@@ -1,5 +1,4 @@
 import { ArithmeticToken, ValueToken, WrapperToken } from './Token';
-import { SnackbarError } from "../../../common/SnackbarMessage";
 import { isEmptyOrBlank } from "../../../common/StringUtils";
 
 const TRIGO_REGEX = /(sin|cos|tan)/;
@@ -16,7 +15,7 @@ export default function parseFunctionInput(parameters, strInput) {
         return [null, tokenError];
     }
 
-    return [null, new SnackbarError("Parse input not completed")];
+    return [null, "Parse input not completed"];
 };
 
 function getTokens(parameters, strInput) {
@@ -69,7 +68,7 @@ function getTokens(parameters, strInput) {
     console.log("parseFunctionInput: Remaining characters = \"" + remainingChars + "\"");
     remainingChars = remainingChars.trim()
     if (!isEmptyOrBlank(remainingChars)) {
-        return [tokens, new SnackbarError("Invalid input: " + remainingChars[0])];
+        return [tokens, "Invalid input: " + remainingChars[0]];
     }
 
     // Get remaining characters after parsing
@@ -89,7 +88,7 @@ function getAllParentTokens(strInput) {
         // Return error if character is a closing bracket
         // Must find opening bracket before finding closing bracket
         if (startChar === ")") {
-            return [parentTokens, new SnackbarError("Extra closing bracket at index " + i)];
+            return [parentTokens, "Extra closing bracket at index " + i];
         }
 
         // Go to next position if character is not an opening bracket
@@ -98,7 +97,7 @@ function getAllParentTokens(strInput) {
         // Return error if last 2 characters are opening brackets
         // Must have at least 1 character & 1 closing bracket after opening bracket
         if (i >= strInput.length - 2) {
-            return [parentTokens, new SnackbarError("Missing closing bracket for index " + i)];
+            return [parentTokens, "Missing closing bracket for index " + i];
         }
 
         parenCount = 0;
@@ -110,7 +109,7 @@ function getAllParentTokens(strInput) {
                 // Return error if it's the last character
                 // Closing bracket for given opening bracket not found
                 if (j === strInput.length - 1) {
-                    return [parentTokens, new SnackbarError("Missing closing bracket for index " + i)];
+                    return [parentTokens, "Missing closing bracket for index " + i];
                 }
 
                 // Increment parenthesis counter if there are inner parenthesis
@@ -124,7 +123,7 @@ function getAllParentTokens(strInput) {
                 // Return error if last character is a closing bracket
                 // but does not belong to given opening bracket
                 if (j === strInput.length - 1) {
-                    return [parentTokens, new SnackbarError("Missing closing bracket for index " + i)];
+                    return [parentTokens, "Missing closing bracket for index " + i];
                 }
 
                 parenCount--;

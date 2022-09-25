@@ -42,9 +42,9 @@ export default function Fields(props) {
                 return;
             }
 
-            const [func, error] = parseFunctionInput(params, funcInput);
-            if (error) {
-                setSnackbarMessage(error);
+            const [func, errorMessage] = parseFunctionInput(params, funcInput);
+            if (errorMessage) {
+                setSnackbarMessage(new SnackbarError(errorMessage));
                 return;
             }
 
