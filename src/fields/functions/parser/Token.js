@@ -1,4 +1,4 @@
-export default class Token {
+class Token {
     input;
     index;
 
@@ -7,6 +7,10 @@ export default class Token {
         this.index = index;
     }
 }
+
+export class ValueToken extends Token { }
+
+export class ArithmeticToken extends Token { }
 
 export class WrapperToken extends Token {
     childTokens = [];

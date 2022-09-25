@@ -1,4 +1,4 @@
-import Token, { WrapperToken } from './Token';
+import { ArithmeticToken, ValueToken, WrapperToken } from './Token';
 import { SnackbarError } from "../../../common/SnackbarMessage";
 import { isEmptyOrBlank } from "../../../common/StringUtils";
 
@@ -24,7 +24,7 @@ function getTokens(parameters, strInput) {
     let remainingChars = strInput;
 
     const getLeafNode = (match, offset) => {
-        tokens.push(new Token(match, offset));
+        tokens.push(new ValueToken(match, offset));
         return " ".repeat(match.length);
     };
 
@@ -56,7 +56,10 @@ function getTokens(parameters, strInput) {
     remainingChars = remainingChars.replace(PI_REGEX, getLeafNode);
 
     // Get all basic mathematical operations
-    remainingChars = remainingChars.replace(MATH_OPERATOR_REGEX, getLeafNode);
+    remainingChars = remainingChars.replace(MATH_OPERATOR_REGEX, (match, offset) => {
+        tokens.push(new ArithmeticToken(match, offset));
+        return " ".repeat(match.length);
+    });
 
     // Get all instances of params
     for (const paramRegex of parameters.map((param) => new RegExp(param.name))) {
