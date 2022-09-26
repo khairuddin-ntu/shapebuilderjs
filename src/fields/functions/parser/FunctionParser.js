@@ -193,8 +193,8 @@ function validateGrammar(tokens) {
             if (token.input === "-"
                 && prevToken instanceof ArithmeticToken
                 && nextToken instanceof ValueToken) {
-                tokens[i] = new WrapperToken("(0-" + nextToken.input + ")", token.index);
-                tokens.splice(i + 1, 1);
+                nextToken.isNegated = true;
+                tokens.splice(i, 1);
                 max -= 1;
                 continue;
             }
