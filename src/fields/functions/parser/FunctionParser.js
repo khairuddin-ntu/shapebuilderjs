@@ -192,7 +192,7 @@ function validateGrammar(tokens) {
 
             // Return error if previous token is not a value
             if (!(prevToken instanceof ValueToken)) {
-                return "Invalid tokens between \"" + token.input + "\"";
+                return "Invalid token before \"" + token.input + "\"";
             }
 
             // Return error if next token is not a value
@@ -202,7 +202,7 @@ function validateGrammar(tokens) {
                     continue;
                 }
 
-                return "Invalid tokens between \"" + token.input + "\"";
+                return "Invalid token after \"" + token.input + "\"";
             }
         }
     }
