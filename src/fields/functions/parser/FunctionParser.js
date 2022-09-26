@@ -5,6 +5,7 @@ const TRIGO_REGEX = /(sin|cos|tan)/;
 const NUMBER_REGEX = /\d+(\.\d+)?/g;
 const PI_REGEX = /pi/g;
 const MATH_OPERATOR_REGEX = /[+\-*/]/g;
+const WHITESPACE_REGEX = /\s+/g;
 
 export default function parseFunctionInput(parameters, strInput) {
     console.log("parseFunctionInput: Input = " + strInput);
@@ -72,7 +73,7 @@ function getTokens(parameters, strInput) {
     console.log("parseFunctionInput: Remaining characters = \"" + remainingChars + "\"");
     remainingChars = remainingChars.trim()
     if (!isEmptyOrBlank(remainingChars)) {
-        return [tokens, "Invalid input: " + remainingChars[0]];
+        return [tokens, "Invalid input: " + remainingChars.split(WHITESPACE_REGEX)[0]];
     }
 
     // Get remaining characters after parsing
