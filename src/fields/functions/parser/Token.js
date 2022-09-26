@@ -19,9 +19,11 @@ export class FixedValueToken extends ValueToken {
         super(input, index);
 
         if (input === "pi") {
-            value = Math.PI;
+            this.value = Math.PI;
+        } else if (input === "-pi") {
+            this.value = -Math.PI;
         } else {
-            value = parseFloat(input);
+            this.value = parseFloat(input);
         }
     }
 }
