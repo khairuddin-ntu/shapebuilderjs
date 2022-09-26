@@ -156,8 +156,8 @@ function validateGrammar(tokens) {
             continue;
         }
 
-        prevToken = i < 1 ? null : tokens[i - 1];
-        nextToken = i > tokens.length - 2 ? null : tokens[i + 1];
+        prevToken = i > 0 ? tokens[i - 1] : null;
+        nextToken = i < tokens.length - 1 ? tokens[i + 1] : null;
 
         if (token instanceof ArithmeticToken) {
             // Check if token is the first character
