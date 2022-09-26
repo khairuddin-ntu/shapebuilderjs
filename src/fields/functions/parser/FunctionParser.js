@@ -23,8 +23,8 @@ function getTokens(parameters, strInput) {
     const tokens = [];
     let remainingChars = strInput;
 
-    const getLeafNode = (match, offset) => {
-        tokens.push(new ValueToken(match, offset));
+    const getFixedValueToken = (match, offset) => {
+        tokens.push(new FixedValueToken(match, offset));
         return " ".repeat(match.length);
     };
 
@@ -49,11 +49,11 @@ function getTokens(parameters, strInput) {
 
     // Get all numbers
     remainingChars = remainingChars.replace(
-        NUMBER_REGEX, (match, _p1, offset) => getLeafNode(match, offset)
+        NUMBER_REGEX, (match, _p1, offset) => getFixedValueToken(match, offset)
     );
 
     // Get all instances of pi
-    remainingChars = remainingChars.replace(PI_REGEX, getLeafNode);
+    remainingChars = remainingChars.replace(PI_REGEX, getFixedValueToken);
 
     // Get all basic mathematical operations
     remainingChars = remainingChars.replace(MATH_OPERATOR_REGEX, (match, offset) => {
@@ -63,7 +63,10 @@ function getTokens(parameters, strInput) {
 
     // Get all instances of params
     for (const paramRegex of parameters.map((param) => new RegExp(param.name))) {
-        remainingChars = remainingChars.replace(paramRegex, getLeafNode);
+        remainingChars = remainingChars.replace(paramRegex, (match, offset) => {
+            tokens.push(new ValueToken(match, offset));
+            return " ".repeat(match.length);
+        });
     }
 
     console.log("parseFunctionInput: Remaining characters = \"" + remainingChars + "\"");

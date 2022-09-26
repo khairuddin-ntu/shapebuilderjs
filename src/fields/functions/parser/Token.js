@@ -10,11 +10,17 @@ class Token {
 
 export class ValueToken extends Token { }
 
-export class ArithmeticToken extends Token { }
+export class FixedValueToken extends ValueToken {
+    value;
 
-export class NegationToken extends ArithmeticToken {
-    constructor(index) {
-        super("-", index);
+    constructor(input, index) {
+        super(input, index);
+        
+        if (input === "pi") {
+            value = Math.PI;
+        } else {
+            value = parseFloat(input);
+        }
     }
 }
 
@@ -34,5 +40,13 @@ export class WrapperToken extends ValueToken {
 
     addChildTokens(tokens) {
         this.childTokens.push(...tokens);
+    }
+}
+
+export class ArithmeticToken extends Token { }
+
+export class NegationToken extends ArithmeticToken {
+    constructor(index) {
+        super("-", index);
     }
 }
