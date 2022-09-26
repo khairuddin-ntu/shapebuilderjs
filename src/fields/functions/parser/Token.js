@@ -8,7 +8,18 @@ class Token {
     }
 }
 
-export class ValueToken extends Token { }
+export class ValueToken extends Token {
+    isNegated;
+
+    constructor(input, index, isNegated = false) {
+        super(input, index);
+        this.isNegated = isNegated;
+    }
+
+    get nonNegatedInput() {
+        return this.isNegated ? this.input.substring(1) : this.input;
+    }
+}
 
 export class ParamToken extends ValueToken { }
 
@@ -18,10 +29,11 @@ export class FixedValueToken extends ValueToken {
     constructor(input, index) {
         super(input, index);
 
-        if (input === "pi") {
+        if (input.endsWith("pi")) {
             this.value = Math.PI;
-        } else if (input === "-pi") {
-            this.value = -Math.PI;
+            if (this.isNegated) {
+                this.value = -this.value;
+            }
         } else {
             this.value = parseFloat(input);
         }
@@ -48,9 +60,3 @@ export class WrapperToken extends ValueToken {
 }
 
 export class ArithmeticToken extends Token { }
-
-export class NegationToken extends ArithmeticToken {
-    constructor(index) {
-        super("-", index);
-    }
-}

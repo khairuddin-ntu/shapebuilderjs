@@ -1,4 +1,4 @@
-import { ArithmeticToken, FixedValueToken, NegationToken, ParamToken, ValueToken, WrapperToken } from './Token';
+import { ArithmeticToken, FixedValueToken, ParamToken, ValueToken, WrapperToken } from './Token';
 import { isEmptyOrBlank } from "../../../common/StringUtils";
 
 const TRIGO_REGEX = /(sin|cos|tan)/;
@@ -152,7 +152,8 @@ function getAllParentTokens(strInput) {
 function validateGrammar(tokens) {
     let prevToken, token, nextToken;
     let childError;
-    for (let i = 0; i < tokens.length; i++) {
+    let max = tokens.length;
+    for (let i = 0; i < max; i++) {
         token = tokens[i];
         if (token instanceof WrapperToken) {
             childError = validateGrammar(token.childTokens);
@@ -176,8 +177,10 @@ function validateGrammar(tokens) {
                     return "Missing prefix value for operator \"" + token.input + "\"";
                 }
 
-                // Replace with negation token
-                tokens[i] = new NegationToken(token.index);
+                // Negate value token
+                nextToken.isNegated = true;
+                tokens.splice(i, 1);
+                max -= 1;
                 continue;
             }
 
@@ -190,7 +193,9 @@ function validateGrammar(tokens) {
             if (token.input === "-"
                 && prevToken instanceof ArithmeticToken
                 && nextToken instanceof ValueToken) {
-                tokens[i] = new NegationToken(token.index);
+                tokens[i] = new WrapperToken("(0-" + nextToken.input + ")", token.index);
+                tokens.splice(i + 1, 1);
+                max -= 1;
                 continue;
             }
 
