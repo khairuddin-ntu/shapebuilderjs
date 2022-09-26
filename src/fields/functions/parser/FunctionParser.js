@@ -1,4 +1,4 @@
-import { ArithmeticToken, NegationToken, ValueToken, WrapperToken } from './Token';
+import { ArithmeticToken, FixedValueToken, NegationToken, ParamToken, ValueToken, WrapperToken } from './Token';
 import { isEmptyOrBlank } from "../../../common/StringUtils";
 
 const TRIGO_REGEX = /(sin|cos|tan)/;
@@ -64,7 +64,7 @@ function getTokens(parameters, strInput) {
     // Get all instances of params
     for (const paramRegex of parameters.map((param) => new RegExp(param.name))) {
         remainingChars = remainingChars.replace(paramRegex, (match, offset) => {
-            tokens.push(new ValueToken(match, offset));
+            tokens.push(new ParamToken(match, offset));
             return " ".repeat(match.length);
         });
     }

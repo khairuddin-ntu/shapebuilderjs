@@ -10,12 +10,14 @@ class Token {
 
 export class ValueToken extends Token { }
 
+export class ParamToken extends ValueToken { }
+
 export class FixedValueToken extends ValueToken {
     value;
 
     constructor(input, index) {
         super(input, index);
-        
+
         if (input === "pi") {
             value = Math.PI;
         } else {
