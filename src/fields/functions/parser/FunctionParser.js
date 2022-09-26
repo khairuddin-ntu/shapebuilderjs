@@ -149,8 +149,14 @@ function validateGrammar(tokens) {
     let prevToken, token, nextToken;
     let childError;
     for (let i = 0; i < tokens.length; i++) {
-        prevToken = i < 1 ? null : tokens[i - 1];
         token = tokens[i];
+        if (token instanceof WrapperToken) {
+            childError = validateGrammar(token.childTokens);
+            if (childError) return childError;
+            continue;
+        }
+
+        prevToken = i < 1 ? null : tokens[i - 1];
         nextToken = i > tokens.length - 2 ? null : tokens[i + 1];
 
         if (token instanceof ArithmeticToken) {
@@ -198,11 +204,6 @@ function validateGrammar(tokens) {
 
                 return "Invalid tokens between \"" + token.input + "\"";
             }
-        }
-
-        if (token instanceof WrapperToken) {
-            childError = validateGrammar(token.childTokens);
-            if (childError) return childError;
         }
     }
 }
