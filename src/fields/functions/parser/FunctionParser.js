@@ -165,33 +165,10 @@ function validateGrammar(tokens) {
         nextToken = i < tokens.length - 1 ? tokens[i + 1] : null;
 
         if (token instanceof ArithmeticToken) {
-            // Check if token is the first character
-            if (i === 0) {
-                // Return error if first token is an arithmetic operator that is not a "-"
-                if (token.input !== "-") {
-                    return "Missing prefix value for operator \"" + token.input + "\"";
-                }
-
-                // Return error if next token is not a value
-                if (!(nextToken instanceof ValueToken)) {
-                    return "Missing prefix value for operator \"" + token.input + "\"";
-                }
-
-                // Negate value token
-                nextToken.isNegated = true;
-                tokens.splice(i, 1);
-                max -= 1;
-                continue;
-            }
-
-            // Return error if token is the last token
-            if (i === tokens.length - 1) {
-                return "Missing suffix value for operator \"" + token.input + "\"";
-            }
-
-            // Replace with negation token if between arithmetic & value token
+            // Remove token & negate next value if token is a minus operator
+            // where only the next token is a value token
             if (token.input === "-"
-                && prevToken instanceof ArithmeticToken
+                && !(prevToken instanceof ValueToken)
                 && nextToken instanceof ValueToken) {
                 nextToken.isNegated = true;
                 tokens.splice(i, 1);
@@ -199,19 +176,19 @@ function validateGrammar(tokens) {
                 continue;
             }
 
-            // Return error if previous token is not a value
-            if (!(prevToken instanceof ValueToken)) {
-                return "Invalid token before \"" + token.input + "\"";
-            }
-
             // Return error if next token is not a value
             if (!(nextToken instanceof ValueToken)) {
-                // Continue if next token is "-". May be a negation token
+                // Continue if next token is "-". May be a value negation
                 if (nextToken instanceof ArithmeticToken && nextToken.input === "-") {
                     continue;
                 }
 
                 return "Invalid token after \"" + token.input + "\"";
+            }
+
+            // Return error if previous token is not a value
+            if (!(prevToken instanceof ValueToken)) {
+                return "Invalid token before \"" + token.input + "\"";
             }
         }
     }
