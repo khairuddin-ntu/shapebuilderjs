@@ -158,12 +158,17 @@ function validateGrammar(tokens) {
         if (token instanceof WrapperToken) {
             childError = validateGrammar(token.childTokens);
             if (childError) return childError;
-            continue;
         }
 
         prevToken = i > 0 ? tokens[i - 1] : null;
-        nextToken = i < tokens.length - 1 ? tokens[i + 1] : null;
+        if (token instanceof ValueToken && prevToken instanceof ValueToken) {
+            tokens.splice(i, 0, new ArithmeticToken("*", token.index));
+            i += 1;
+            max += 1;
+            continue;
+        }
 
+        nextToken = i < tokens.length - 1 ? tokens[i + 1] : null;
         if (token instanceof ArithmeticToken) {
             // Remove token & negate next value if token is a minus operator
             // where only the next token is a value token
