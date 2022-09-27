@@ -1,4 +1,4 @@
-import { ArithmeticToken, FixedValueToken, ParamToken, ValueToken, WrapperToken } from './Token';
+import { ArithmeticToken, FixedValueToken, ParamToken, ValueToken, WrapperToken } from '../../../common/Token';
 import { isEmptyOrBlank } from "../../../common/StringUtils";
 
 const TRIGO_REGEX = /(sin|cos|tan)/;

@@ -59,4 +59,26 @@ export class WrapperToken extends ValueToken {
     }
 }
 
-export class ArithmeticToken extends Token { }
+export class ArithmeticToken extends Token {
+    // Precendence values taken from Javascript documentation
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence#table
+    precedence;
+
+    constructor(input, index) {
+        super(input, index);
+
+        switch (input) {
+            case "*":
+            case "/":
+                this.precedence = 12;
+                break;
+            case "+":
+            case "-":
+                this.precedence = 11;
+                break;
+            default:
+                this.precedence = -1;
+                break;
+        }
+    }
+}
