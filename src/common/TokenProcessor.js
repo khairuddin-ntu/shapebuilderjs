@@ -1,4 +1,5 @@
-import { FixedValueToken, ParamToken, WrapperToken } from './Token';
+import { PRECENDENCE_ADD_SUB, PRECENDENCE_MUL_DIV } from './Constants';
+import { ArithmeticToken, FixedValueToken, ParamToken, WrapperToken } from './Token';
 
 // Order of precedence:
 // 1) Parenthesis, trigonometric function
@@ -25,4 +26,34 @@ export function calculateValue(tokens, parameters) {
 
         return token;
     });
+
+    let token;
+    let i, max = tokens.length;
+    // Process multiplications & divisions
+    for (i = 0; i < max; i++) {
+        token = tokens[i];
+
+        if (!(token instanceof ArithmeticToken && token.precedence === PRECENDENCE_MUL_DIV)) {
+            continue;
+        }
+
+        tokens[i - 1] = token.processArithmetic(tokens[i - 1], tokens[i + 1]);
+        tokens.splice(i, 2);
+        max -= 2;
+    }
+
+    // Process additions & subtractions
+    for (i = 0; i < max; i++) {
+        token = tokens[i];
+
+        if (!(token instanceof ArithmeticToken && token.precedence === PRECENDENCE_ADD_SUB)) {
+            continue;
+        }
+
+        tokens[i - 1] = token.processArithmetic(tokens[i - 1], tokens[i + 1]);
+        tokens.splice(i, 2);
+        max -= 2;
+    }
+
+    return tokens[0];
 }
