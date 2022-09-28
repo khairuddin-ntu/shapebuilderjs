@@ -27,13 +27,27 @@ export function calculateValue(tokens, parameters) {
         return token;
     });
 
+    // Process multiplications & divisions
+    processArithmetic(tokens, PRECENDENCE_MUL_DIV);
+
+    // Process additions & subtractions
+    processArithmetic(tokens, PRECENDENCE_ADD_SUB);
+
+    return tokens[0];
+}
+
+function processValueToken(token, parameters) {
+
+}
+
+function processArithmetic(tokens, precedenceValue) {
     let token;
     let i, max = tokens.length;
     // Process multiplications & divisions
     for (i = 0; i < max; i++) {
         token = tokens[i];
 
-        if (!(token instanceof ArithmeticToken && token.precedence === PRECENDENCE_MUL_DIV)) {
+        if (!(token instanceof ArithmeticToken && token.precedence === precedenceValue)) {
             continue;
         }
 
@@ -41,19 +55,4 @@ export function calculateValue(tokens, parameters) {
         tokens.splice(i, 2);
         max -= 2;
     }
-
-    // Process additions & subtractions
-    for (i = 0; i < max; i++) {
-        token = tokens[i];
-
-        if (!(token instanceof ArithmeticToken && token.precedence === PRECENDENCE_ADD_SUB)) {
-            continue;
-        }
-
-        tokens[i - 1] = token.processArithmetic(tokens[i - 1], tokens[i + 1]);
-        tokens.splice(i, 2);
-        max -= 2;
-    }
-
-    return tokens[0];
 }
