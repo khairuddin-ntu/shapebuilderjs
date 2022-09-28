@@ -36,10 +36,6 @@ export function calculateValue(tokens, parameters) {
     return tokens[0];
 }
 
-function processValueToken(token, parameters) {
-
-}
-
 function processArithmetic(tokens, precedenceValue) {
     let token;
     let i, max = tokens.length;
