@@ -57,6 +57,19 @@ export class WrapperToken extends ValueToken {
     addChildTokens(tokens) {
         this.childTokens.push(...tokens);
     }
+
+    processChildrenValue(value) {
+        switch (this.input.substring(0, this.prefixLength - 1)) {
+            case "sin":
+                return Math.sin(value);
+            case "cos":
+                return Math.cos(value);
+            case "tan":
+                return Math.tan(value);
+            default:
+                return value;
+        }
+    }
 }
 
 export class ArithmeticToken extends Token {
