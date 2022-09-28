@@ -96,4 +96,17 @@ export class ArithmeticToken extends Token {
                 break;
         }
     }
+
+    processArithmetic(prevValue, nextValue) {
+        switch (input) {
+            case "+":
+                return prevValue + nextValue;
+            case "-":
+                return prevValue - nextValue;
+            case "/":
+                return prevValue / nextValue;
+            default:
+                return prevValue * nextValue;
+        }
+    }
 }
