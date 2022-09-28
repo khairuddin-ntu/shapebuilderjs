@@ -1,3 +1,5 @@
+import { PRECENDENCE_MUL_DIV, PRECENDENCE_ADD_SUB } from '../common/Constants';
+
 class Token {
     input;
     index;
@@ -83,11 +85,11 @@ export class ArithmeticToken extends Token {
         switch (input) {
             case "*":
             case "/":
-                this.precedence = 12;
+                this.precedence = PRECENDENCE_MUL_DIV;
                 break;
             case "+":
             case "-":
-                this.precedence = 11;
+                this.precedence = PRECENDENCE_ADD_SUB;
                 break;
             default:
                 this.precedence = -1;
