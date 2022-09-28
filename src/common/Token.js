@@ -94,7 +94,7 @@ export class ArithmeticToken extends Token {
     }
 
     processArithmetic(prevValue, nextValue) {
-        switch (input) {
+        switch (this.input) {
             case "+":
                 return prevValue + nextValue;
             case "-":
