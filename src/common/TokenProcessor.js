@@ -49,6 +49,7 @@ function processArithmetic(tokens, precedenceValue) {
 
         tokens[i - 1] = token.processArithmetic(tokens[i - 1], tokens[i + 1]);
         tokens.splice(i, 2);
+        i -= 1;
         max -= 2;
     }
 }
