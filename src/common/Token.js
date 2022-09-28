@@ -83,16 +83,12 @@ export class ArithmeticToken extends Token {
         super(input, index);
 
         switch (input) {
-            case "*":
-            case "/":
-                this.precedence = PRECENDENCE_MUL_DIV;
-                break;
             case "+":
             case "-":
                 this.precedence = PRECENDENCE_ADD_SUB;
                 break;
             default:
-                this.precedence = -1;
+                this.precedence = PRECENDENCE_MUL_DIV;
                 break;
         }
     }
