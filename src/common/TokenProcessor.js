@@ -8,9 +8,9 @@ import { ArithmeticToken, FixedValueToken, ParamToken, WrapperToken } from './To
 export function calculateValue(tokens, parameters) {
     // Convert value tokens to numeric values
     let param;
-    tokens.map((token) => {
+    tokens = tokens.map((token) => {
         if (token instanceof WrapperToken) {
-            return token.processChildrenValue(calculateValue(token.childInput, parameters));
+            return token.processChildrenValue(calculateValue(token.childTokens, parameters));
         }
 
         if (token instanceof FixedValueToken) {
