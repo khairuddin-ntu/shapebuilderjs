@@ -16,7 +16,7 @@ import './Fields.css';
 export default function Fields(props) {
     const [snackbarMessage, setSnackbarMessage] = useState();
     // Parameter states
-    const parameters = useRef([new Parameter("u"), new Parameter("v")]);
+    const [parameters, setParameters] = useState([new Parameter("u"), new Parameter("v")]);
     const parameterErrors = useRef([null, null, null]);
     // Functions state
     const functionInputs = useRef(["", "", ""]);
@@ -30,8 +30,6 @@ export default function Fields(props) {
             return;
         }
 
-        const params = parameters.current;
-
         const functions = [];
         let functionName;
         for (const [i, funcInput] of functionInputs.current.entries()) {
@@ -42,7 +40,7 @@ export default function Fields(props) {
                 return;
             }
 
-            const [func, errorMessage] = parseFunctionInput(params, funcInput);
+            const [func, errorMessage] = parseFunctionInput(parameters, funcInput);
             if (errorMessage) {
                 setSnackbarMessage(new SnackbarError(errorMessage));
                 return;
@@ -56,7 +54,7 @@ export default function Fields(props) {
             functions.push(func);
         }
 
-        props.setRenderParams({ functions: functions, parameters: params });
+        props.setRenderParams({ functions: functions, parameters: parameters });
     };
 
     return (
@@ -75,6 +73,7 @@ export default function Fields(props) {
                 className="field__section"
                 sectionName="Parameters"
                 parameters={parameters}
+                setParameters={setParameters}
                 parameterErrors={parameterErrors}
             />
             <Box id="actions-section">
