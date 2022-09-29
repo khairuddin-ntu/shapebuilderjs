@@ -11,12 +11,7 @@ class Token {
 }
 
 export class ValueToken extends Token {
-    isNegated;
-
-    constructor(input, index, isNegated = false) {
-        super(input, index);
-        this.isNegated = isNegated;
-    }
+    isNegated = false;
 
     get nonNegatedInput() {
         return this.isNegated ? this.input.substring(1) : this.input;
@@ -26,19 +21,23 @@ export class ValueToken extends Token {
 export class ParamToken extends ValueToken { }
 
 export class FixedValueToken extends ValueToken {
-    value;
+    #absoluteValue;
 
     constructor(input, index) {
         super(input, index);
 
         if (input.endsWith("pi")) {
-            this.value = Math.PI;
+            this.#absoluteValue = Math.PI;
             if (this.isNegated) {
-                this.value = -this.value;
+                this.#absoluteValue = -this.#absoluteValue;
             }
         } else {
-            this.value = parseFloat(input);
+            this.#absoluteValue = parseFloat(input);
         }
+    }
+
+    get value() {
+        return this.#absoluteValue * (this.isNegated ? -1 : 1);
     }
 }
 
@@ -61,13 +60,14 @@ export class WrapperToken extends ValueToken {
     }
 
     processChildrenValue(value) {
+        const negationValue = this.isNegated ? -1 : 1;
         switch (this.input.substring(0, this.prefixLength - 1)) {
             case "sin":
-                return Math.sin(value);
+                return Math.sin(value) * negationValue;
             case "cos":
-                return Math.cos(value);
+                return Math.cos(value) * negationValue;
             case "tan":
-                return Math.tan(value);
+                return Math.tan(value) * negationValue;
             default:
                 return value;
         }

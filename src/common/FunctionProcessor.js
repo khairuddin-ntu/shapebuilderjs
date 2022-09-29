@@ -20,7 +20,7 @@ export function calculateValue(tokens, parameters) {
         if (token instanceof ParamToken) {
             param = parameters.find((parameter) => parameter.name === token.input);
             if (param) {
-                return param.value;
+                return param.value * (token.isNegated ? -1 : 1);
             }
         }
 
