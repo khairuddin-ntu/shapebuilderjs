@@ -3,16 +3,21 @@ import Box from '@mui/material/Box';
 import Parameter from './common/Parameter';
 import Scene from './render/Scene';
 import Fields from './fields/Fields';
+import parseFunctionInput from './fields/functions/parser/FunctionParser';
 import Operators from './operators/Operators';
 
 import './App.css';
+import { DEFAULT_FUNCTIONS } from './common/Constants';
 
 export default function App() {
+    const params = [new Parameter("u"), new Parameter("v")];
     const [renderParams, setRenderParams] = useState({
-        xEquation: (u, v) => 2.5 * Math.cos(-Math.PI / 2 + u * Math.PI) * Math.cos(-Math.PI + v * 2 * Math.PI),
-        yEquation: (u, v) => 2.5 * Math.cos(-Math.PI / 2 + u * Math.PI) * Math.sin(-Math.PI + v * 2 * Math.PI),
-        zEquation: (u, v) => 2.5 * Math.sin(-Math.PI / 2 + u * Math.PI),
-        parameters: [new Parameter("u"), new Parameter("v")]
+        functions: [
+            parseFunctionInput(params, DEFAULT_FUNCTIONS[0])[0],
+            parseFunctionInput(params, DEFAULT_FUNCTIONS[1])[0],
+            parseFunctionInput(params, DEFAULT_FUNCTIONS[2])[0],
+        ],
+        parameters: params
     });
 
     return (

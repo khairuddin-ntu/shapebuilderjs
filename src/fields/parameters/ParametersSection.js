@@ -9,14 +9,13 @@ export default function ParametersSection(props) {
     const [canAddParam, setCanAddParam] = useState(true);
 
     const parameters = props.parameters;
+    const setParameters = props.setParameters;
 
     const addParameter = () => {
-        const params = parameters.current;
-
-        const paramNames = params.map((param) => param.name);
+        const paramNames = parameters.map((param) => param.name);
         if (!paramNames.includes("v")) {
-            params.push(new Parameter("v"));
-            params.sort(
+            const newParams = [...parameters, new Parameter("v")];
+            newParams.sort(
                 (paramA, paramB) => {
                     if (paramA.name < paramB.name) {
                         return -1;
@@ -29,8 +28,9 @@ export default function ParametersSection(props) {
                     return 0;
                 }
             );
+            setParameters(newParams);
         } else {
-            params.push(new Parameter("w"));
+            setParameters([...parameters, new Parameter("w")]);
         }
 
         if (paramNames.length === 2) {
@@ -39,9 +39,7 @@ export default function ParametersSection(props) {
     };
 
     const deleteParameter = (key) => {
-        console.log("Deleting parameter at index", key);
-        const params = parameters.current;
-        params.splice(key, 1);
+        setParameters(parameters.slice(0, key).concat(parameters.slice(key + 1)));
         setCanAddParam(true);
     };
 
@@ -52,7 +50,7 @@ export default function ParametersSection(props) {
             direction="column"
             spacing={2}
         >
-            {parameters.current.map((parameter, i) =>
+            {parameters.map((parameter, i) =>
                 <ParameterField
                     key={i}
                     index={i}

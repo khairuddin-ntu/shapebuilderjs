@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { FileLoader } from 'three';
 import ParametricGeometry from './geometries/ParametricGeometry';
 import TextGeometry from './geometries/TextGeometry';
+import * as FunctionProcessor from '../common/FunctionProcessor';
 
 const SHAPE_2D_MATERIAL = new THREE.LineBasicMaterial({ color: 0x00ff00 });
 const SHAPE_3D_MATERIAL = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
@@ -24,13 +25,13 @@ export default class ShapeRenderer {
         });
     }
 
-    renderShape({ xEquation, yEquation, zEquation, parameters }) {
+    renderShape({ functions, parameters }) {
         switch (parameters.length) {
             case 1:
-                this.#render2dShape(xEquation, yEquation, zEquation, parameters[0]);
+                this.#renderLine(functions, parameters[0]);
                 return;
             case 2:
-                this.#render3dShape(xEquation, yEquation, zEquation, parameters[0], parameters[1]);
+                this.#render3d(functions, parameters);
                 return;
             default:
                 console.log("renderShape: Invalid parameter count [" + parameters.length + "]. Not rendering shape");
@@ -157,7 +158,7 @@ export default class ShapeRenderer {
         axesGroup.add(mesh);
     }
 
-    #render2dShape(xEquation, yEquation, zEquation, uParameter) {
+    #renderLine(functions, uParameter) {
         this.#removeExistingShape();
 
         this.#shape = new THREE.Group();
@@ -165,11 +166,13 @@ export default class ShapeRenderer {
         let prevVector, currentVector;
         let points, geometry, line;
 
+        const params = [{ name: uParameter.name, value: -1 }];
         for (let u = uParameter.start; u <= uParameter.end; u += uParameter.range / uParameter.resolution) {
+            params[0].value = u;
             currentVector = new THREE.Vector3(
-                xEquation(u),
-                yEquation(u),
-                zEquation(u)
+                FunctionProcessor.calculateValue(functions[0], params),
+                FunctionProcessor.calculateValue(functions[1], params),
+                FunctionProcessor.calculateValue(functions[2], params)
             );
 
             if (prevVector != null) {
@@ -186,21 +189,22 @@ export default class ShapeRenderer {
         this.#shapeGroup.add(this.#shape);
     }
 
-    #render3dShape(xEquation, yEquation, zEquation, uParameter, vParameter) {
+    #render3d(functions, parameters) {
         this.#removeExistingShape();
 
+        const params = parameters.map((param) => ({ name: param.name, value: -1 }));
         const geometry = new ParametricGeometry(
             (u, v, target) => {
-                u = uParameter.start + (uParameter.range * u);
-                v = vParameter.start + (vParameter.range * v);
+                params[0].value = parameters[0].start + (parameters[0].range * u);
+                params[1].value = parameters[1].start + (parameters[1].range * v);
 
                 target.set(
-                    xEquation(u, v),
-                    yEquation(u, v),
-                    zEquation(u, v)
+                    FunctionProcessor.calculateValue(functions[0], params),
+                    FunctionProcessor.calculateValue(functions[1], params),
+                    FunctionProcessor.calculateValue(functions[2], params),
                 );
             },
-            uParameter, vParameter
+            ...parameters
         );
         this.#shape = new THREE.Mesh(geometry, SHAPE_3D_MATERIAL);
         this.#shapeGroup.add(this.#shape);
