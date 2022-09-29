@@ -8,8 +8,6 @@ const MATH_OPERATOR_REGEX = /[+\-*/]/g;
 const WHITESPACE_REGEX = /\s+/g;
 
 export default function parseFunctionInput(parameters, strInput) {
-    console.log("parseFunctionInput: Input = " + strInput);
-
     let [tokens, tokenError] = getTokens(parameters, strInput);
     if (tokenError) return [null, tokenError];
 
@@ -69,7 +67,6 @@ function getTokens(parameters, strInput) {
         });
     }
 
-    console.log("parseFunctionInput: Remaining characters = \"" + remainingChars + "\"");
     remainingChars = remainingChars.trim()
     if (!isEmptyOrBlank(remainingChars)) {
         return [tokens, "Invalid input: " + remainingChars.split(WHITESPACE_REGEX)[0]];
