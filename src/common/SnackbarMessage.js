@@ -13,3 +13,9 @@ export class SnackbarError extends SnackbarMessage {
         super("error", message);
     }
 }
+
+export class SnackbarSuccess extends SnackbarMessage {
+    constructor(message) {
+        super("success", message);
+    }
+}

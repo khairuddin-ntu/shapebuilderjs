@@ -7,7 +7,7 @@ import FunctionsSection from './functions/FunctionsSection';
 import parseFunctionInput from './functions/parser/FunctionParser';
 import ParametersSection from './parameters/ParametersSection';
 import Parameter from '../common/Parameter';
-import { SnackbarError } from '../common/SnackbarMessage';
+import { SnackbarError, SnackbarSuccess } from '../common/SnackbarMessage';
 import { FUNCTION_NAMES } from '../common/Constants';
 import { isEmptyOrBlank } from '../common/StringUtils';
 
@@ -54,6 +54,7 @@ export default function Fields(props) {
             functions.push(func);
         }
 
+        setSnackbarMessage(new SnackbarSuccess("Successfully rendered shape"));
         props.setRenderParams({ functions: functions, parameters: parameters });
     };
 
