@@ -14,10 +14,9 @@ export default function parseFunctionInput(parameters, strInput) {
     if (tokenError) return [null, tokenError];
 
     let validationError = validateGrammar(tokens);
-    console.log(tokens);
     if (validationError) return [null, validationError];
 
-    return [null, "Parse input not completed"];
+    return [tokens, null];
 };
 
 function getTokens(parameters, strInput) {
