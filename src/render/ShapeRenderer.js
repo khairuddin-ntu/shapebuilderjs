@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import { FileLoader } from 'three';
 import ParametricGeometry from './geometries/ParametricGeometry';
 import TextGeometry from './geometries/TextGeometry';
 import * as FunctionProcessor from '../common/FunctionProcessor';
@@ -77,7 +76,7 @@ export default class ShapeRenderer {
     }
 
     #loadFont(onComplete) {
-        new FileLoader().load(
+        new THREE.FileLoader().load(
             "./fonts/nunito_regular.json",
             (fileData) => {
                 this.#fontData = JSON.parse(fileData);
@@ -92,6 +91,7 @@ export default class ShapeRenderer {
         this.#drawAxis(axesGroup, "x");
         this.#drawAxis(axesGroup, "y");
         this.#drawAxis(axesGroup, "z");
+
         this.#shapeGroup.add(axesGroup);
     }
 
@@ -129,7 +129,6 @@ export default class ShapeRenderer {
             default:
                 break;
         }
-
         axesGroup.add(mesh);
 
         // Create text
@@ -175,7 +174,7 @@ export default class ShapeRenderer {
                 FunctionProcessor.calculateValue(functions[2], params)
             );
 
-            if (prevVector != null) {
+            if (prevVector) {
                 // Generate line segment from previous point to current point
                 points = [prevVector, currentVector];
                 geometry = new THREE.BufferGeometry().setFromPoints(points);
@@ -211,7 +210,7 @@ export default class ShapeRenderer {
     }
 
     #removeExistingShape() {
-        if (this.#shape != null) {
+        if (this.#shape) {
             this.#shape.removeFromParent();
         }
     }

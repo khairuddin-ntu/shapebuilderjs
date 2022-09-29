@@ -1,4 +1,4 @@
-import { PRECENDENCE_MUL_DIV, PRECENDENCE_ADD_SUB } from '../common/Constants';
+import { PRECENDENCE_MUL_DIV, PRECENDENCE_ADD_SUB } from './Constants';
 
 class Token {
     input;

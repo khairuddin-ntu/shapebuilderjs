@@ -3,9 +3,9 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import CloseRounded from '@mui/icons-material/CloseRounded';
-import { SnackbarError } from '../../common/SnackbarMessage';
 import ParameterInput from './ParameterInput';
 import ResolutionInput from './ResolutionInput';
+import { SnackbarError } from '../../common/SnackbarMessage';
 
 const MIN_RESOLUTION = 3, MAX_RESOLUTION = 2048;
 const REGEX_PARAMETER = /^[-]?\d+$/;

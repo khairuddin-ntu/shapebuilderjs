@@ -14,7 +14,7 @@ export default function Scene(props) {
 
     useEffect(() => {
         const currentRenderer = renderer.current;
-        if (currentRenderer == null) {
+        if (!currentRenderer) {
             return;
         }
 

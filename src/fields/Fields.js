@@ -4,10 +4,10 @@ import Button from '@mui/material/Button';
 import MuiAlert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import FunctionsSection from './functions/FunctionsSection';
-import ParametersSection from './parameters/ParametersSection';
 import parseFunctionInput from './functions/parser/FunctionParser';
-import Parameter from './../common/Parameter';
-import { SnackbarError } from './../common/SnackbarMessage';
+import ParametersSection from './parameters/ParametersSection';
+import Parameter from '../common/Parameter';
+import { SnackbarError } from '../common/SnackbarMessage';
 import { FUNCTION_NAMES } from '../common/Constants';
 import { isEmptyOrBlank } from '../common/StringUtils';
 
@@ -47,7 +47,7 @@ export default function Fields(props) {
             }
 
             if (!func) {
-                setSnackbarMessage(new SnackbarError("Unknown error while parsing function", functionName));
+                setSnackbarMessage(new SnackbarError("Unknown error while parsing function " + functionName));
                 return;
             }
 

@@ -2,8 +2,8 @@ import { useState } from 'react';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import AddRounded from '@mui/icons-material/AddRounded';
-import Parameter from './../../common/Parameter';
 import ParameterField from './ParameterField';
+import Parameter from '../../common/Parameter';
 
 export default function ParametersSection(props) {
     const [canAddParam, setCanAddParam] = useState(true);
@@ -12,8 +12,7 @@ export default function ParametersSection(props) {
     const setParameters = props.setParameters;
 
     const addParameter = () => {
-        const paramNames = parameters.map((param) => param.name);
-        if (!paramNames.includes("v")) {
+        if (!parameters.some((param) => param.name === "v")) {
             const newParams = [...parameters, new Parameter("v")];
             newParams.sort(
                 (paramA, paramB) => {
@@ -33,7 +32,7 @@ export default function ParametersSection(props) {
             setParameters([...parameters, new Parameter("w")]);
         }
 
-        if (paramNames.length === 2) {
+        if (parameters.length === 2) {
             setCanAddParam(false);
         }
     };

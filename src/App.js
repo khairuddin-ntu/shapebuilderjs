@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import Box from '@mui/material/Box';
-import Parameter from './common/Parameter';
 import Scene from './render/Scene';
 import Fields from './fields/Fields';
 import parseFunctionInput from './fields/functions/parser/FunctionParser';
 import Operators from './operators/Operators';
+import Parameter from './common/Parameter';
+import { DEFAULT_FUNCTIONS } from './common/Constants';
 
 import './App.css';
-import { DEFAULT_FUNCTIONS } from './common/Constants';
 
 export default function App() {
     const params = [new Parameter("u"), new Parameter("v")];

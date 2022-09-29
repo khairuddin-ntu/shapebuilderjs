@@ -23,16 +23,16 @@ import {
 export default class TextGeometry extends ExtrudeGeometry {
     constructor(text, parameters = {}) {
         const fontData = parameters.fontData;
-        if (fontData === undefined) {
+        if (!fontData) {
             super(); // generate default extrude geometry
         } else {
             const shapes = generateShapes(text, parameters.size, fontData);
 
             // Set defaults if parameters are not set
-            if (parameters.depth === undefined) parameters.depth = 50;
-            if (parameters.bevelThickness === undefined) parameters.bevelThickness = 10;
-            if (parameters.bevelSize === undefined) parameters.bevelSize = 8;
-            if (parameters.bevelEnabled === undefined) parameters.bevelEnabled = false;
+            if (!parameters.depth) parameters.depth = 50;
+            if (!parameters.bevelThickness) parameters.bevelThickness = 10;
+            if (!parameters.bevelSize) parameters.bevelSize = 8;
+            if (!parameters.bevelEnabled) parameters.bevelEnabled = false;
 
             super(shapes, parameters);
         }
