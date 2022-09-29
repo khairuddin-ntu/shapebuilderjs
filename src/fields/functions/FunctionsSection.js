@@ -1,6 +1,6 @@
 import Stack from '@mui/material/Stack';
 import FunctionField from './FunctionField';
-import { FUNCTION_NAMES } from './../../common/Constants';
+import { DEFAULT_FUNCTIONS, FUNCTION_NAMES } from './../../common/Constants';
 
 export default function FunctionsSection(props) {
     const inputs = props.functionsRef;
@@ -19,6 +19,7 @@ export default function FunctionsSection(props) {
                         index={i}
                         inputsRef={inputs}
                         functionName={name}
+                        defaultValue={DEFAULT_FUNCTIONS[i]}
                     />
                 )
             }

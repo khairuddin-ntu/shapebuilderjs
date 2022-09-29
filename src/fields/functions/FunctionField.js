@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 export default function FunctionField(props) {
     const index = props.index;
     const inputsRef = props.inputsRef;
+    const defaultValue = props.defaultValue;
 
     return (
         <Stack direction="row" alignItems="center">
@@ -14,6 +15,7 @@ export default function FunctionField(props) {
                 variant="outlined"
                 inputProps={{ size: 40 }}
                 onChange={(event) => inputsRef.current[index] = event.target.value}
+                defaultValue={defaultValue}
             />
         </Stack>
     );
