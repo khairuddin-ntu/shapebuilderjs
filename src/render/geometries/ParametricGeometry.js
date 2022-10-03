@@ -21,6 +21,7 @@ export default class ParametricGeometry extends BufferGeometry {
         const normals = [];
         const uvs = [];
 
+        const startTime = Date.now();
         if (params.length === 2) {
             this.#generate2ParamPoints(
                 indices, vertices, normals, uvs,
@@ -32,6 +33,8 @@ export default class ParametricGeometry extends BufferGeometry {
                 func, params[0], params[1], params[2]
             );
         }
+
+        console.log("Time taken to generate points = " + (Date.now() - startTime) + "ms");
 
         // build geometry
         this.setIndex(indices);

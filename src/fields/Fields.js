@@ -32,6 +32,7 @@ export default function Fields(props) {
 
         const functions = [];
         let functionName;
+        const startTime = Date.now();
         for (const [i, funcInput] of functionInputs.current.entries()) {
             functionName = FUNCTION_NAMES[i];
 
@@ -53,6 +54,7 @@ export default function Fields(props) {
 
             functions.push(func);
         }
+        console.log("Time taken to parse functions = " + (Date.now() - startTime) + "ms");
 
         setSnackbarMessage(new SnackbarSuccess("Successfully rendered shape"));
         props.setRenderParams({ functions: functions, parameters: parameters });
