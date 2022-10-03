@@ -12,7 +12,7 @@ import {
 const EPS = 0.00001;
 
 export default class ParametricGeometry extends BufferGeometry {
-    constructor(func, paramU, paramV) {
+    constructor(func, params) {
         super();
 
         // buffers
@@ -21,13 +21,36 @@ export default class ParametricGeometry extends BufferGeometry {
         const normals = [];
         const uvs = [];
 
+        if (params.length === 2) {
+            this.#generate2ParamPoints(
+                indices, vertices, normals, uvs,
+                func, params[0], params[1]
+            );
+        } else {
+            this.#generate3ParamPoints(
+                indices, vertices, normals, uvs,
+                func, params[0], params[1], params[2]
+            );
+        }
+
+        // build geometry
+        this.setIndex(indices);
+        this.setAttribute('position', new Float32BufferAttribute(vertices, 3));
+        this.setAttribute('normal', new Float32BufferAttribute(normals, 3));
+        this.setAttribute('uv', new Float32BufferAttribute(uvs, 2));
+    }
+
+    #generate2ParamPoints(
+        indices, vertices, normals, uvs,
+        func, paramU, paramV
+    ) {
         const normal = new Vector3();
 
         const p0 = new Vector3(), p1 = new Vector3();
         const pu = new Vector3(), pv = new Vector3();
 
         // generate vertices, normals and uvs
-        const sliceCount = paramV.resolution + 1;
+        const vCount = paramV.resolution + 1;
 
         let u, v;
         let a, b, c, d;
@@ -71,10 +94,10 @@ export default class ParametricGeometry extends BufferGeometry {
                     continue
                 }
 
-                a = i * sliceCount + j;
-                b = i * sliceCount + j + 1;
-                c = (i + 1) * sliceCount + j + 1;
-                d = (i + 1) * sliceCount + j;
+                a = i * vCount + j;
+                b = i * vCount + j + 1;
+                c = (i + 1) * vCount + j + 1;
+                d = (i + 1) * vCount + j;
 
                 // Inner face
                 indices.push(a, b, d);
@@ -84,11 +107,12 @@ export default class ParametricGeometry extends BufferGeometry {
                 indices.push(d, c, b);
             }
         }
+    }
 
-        // build geometry
-        this.setIndex(indices);
-        this.setAttribute('position', new Float32BufferAttribute(vertices, 3));
-        this.setAttribute('normal', new Float32BufferAttribute(normals, 3));
-        this.setAttribute('uv', new Float32BufferAttribute(uvs, 2));
+    #generate3ParamPoints(
+        indices, vertices, normals, uvs,
+        func, paramU, paramV, paramW
+    ) {
+        
     }
 }
