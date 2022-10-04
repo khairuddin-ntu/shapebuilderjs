@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Scene from './render/Scene';
 import Fields from './fields/Fields';
 import parseFunctionInput from './fields/functions/parser/FunctionParser';
-import Operators from './operators/Operators';
+import Templates from './operators/Templates';
 import Parameter from './common/Parameter';
 import { DEFAULT_FUNCTIONS } from './common/Constants';
 
@@ -23,7 +23,7 @@ export default function App() {
     return (
         <Box id="app">
             <Scene renderParams={renderParams} />
-            <Operators id="operators" />
+            <Templates id="templates" />
             <Fields setRenderParams={setRenderParams} />
         </Box>
     );

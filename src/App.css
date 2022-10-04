@@ -6,6 +6,6 @@
     place-items: stretch;
 }
 
-#operators {
+#templates {
     grid-row: span 2;
 }

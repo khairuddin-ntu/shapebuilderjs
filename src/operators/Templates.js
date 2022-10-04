@@ -3,10 +3,10 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
-import { FixedValueOperator, ArithmeticOperator, FunctionOperator, WrapperOperator } from './../common/Operator';
+import { FixedValueOperator, ArithmeticOperator, FunctionOperator, WrapperOperator } from '../common/Operator';
 import OperatorItem from './OperatorItem';
 
-import './Operators.css';
+import './Templates.css';
 
 const operatorList = [
     new FixedValueOperator(
@@ -98,7 +98,7 @@ const operatorList = [
     )
 ];
 
-export default function Operators(props) {
+export default function Templates(props) {
     return (
         <Grid
             container
