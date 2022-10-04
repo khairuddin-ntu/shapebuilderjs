@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Scene from './render/Scene';
 import Fields from './fields/Fields';
 import parseFunctionInput from './fields/functions/parser/FunctionParser';
-import Templates from './operators/Templates';
+import Templates from './templates/TemplatesSection';
 import Parameter from './common/Parameter';
 import { DEFAULT_FUNCTIONS } from './common/Constants';
 

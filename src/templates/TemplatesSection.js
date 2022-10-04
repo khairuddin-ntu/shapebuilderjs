@@ -1,9 +1,9 @@
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import './Templates.css';
+import './TemplatesSection.css';
 
-export default function Templates(props) {
+export default function TemplatesSection(props) {
     return (
         <Stack
             id={props.id}
