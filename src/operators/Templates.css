@@ -1,14 +1,3 @@
 ﻿#templates {
     padding: 4%;
 }
-
-.exponent {
-    font-style: italic;
-}
-
-#fraction-divider {
-    border: none;
-    background-color: black;
-    height: 0.2vh;
-    width: 3vw;
-}

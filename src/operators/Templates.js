@@ -7,7 +7,7 @@ export default function Templates(props) {
     return (
         <Stack
             id={props.id}
-            sx={{ borderLeft: 1 }}
+            sx={{ borderRight: 1 }}
         >
             <Typography variant="h4">Templates</Typography>
         </Stack>

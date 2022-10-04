@@ -22,8 +22,8 @@ export default function App() {
 
     return (
         <Box id="app">
-            <Scene renderParams={renderParams} />
             <Templates id="templates" />
+            <Scene renderParams={renderParams} />
             <Fields setRenderParams={setRenderParams} />
         </Box>
     );
