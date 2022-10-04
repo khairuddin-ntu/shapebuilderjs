@@ -206,7 +206,7 @@ export default class ShapeRenderer {
                 (u, v, w, target) => {
                     params[0].value = parameters[0].start + (parameters[0].range * u);
                     params[1].value = parameters[1].start + (parameters[1].range * v);
-                    params[1].value = parameters[2].start + (parameters[2].range * w);
+                    params[2].value = parameters[2].start + (parameters[2].range * w);
 
                     target.set(
                         FunctionProcessor.calculateValue(functions[0], params),
