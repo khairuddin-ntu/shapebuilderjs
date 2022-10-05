@@ -1,4 +1,4 @@
-class Template {
+export default class Template {
     #name;
     #imageFileName;
     #functionInputs;
