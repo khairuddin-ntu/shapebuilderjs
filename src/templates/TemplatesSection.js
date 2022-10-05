@@ -20,6 +20,19 @@ const templates = [
         ]
     ),
     new Template(
+        "Plane",
+        "plane.png",
+        [
+            "3(2u-1)",
+            "0",
+            "3(2v-1)"
+        ],
+        [
+            new Parameter("u", 50),
+            new Parameter("v")
+        ]
+    ),
+    new Template(
         "Sphere",
         "sphere.png",
         [
@@ -56,7 +69,7 @@ export default function TemplatesSection(props) {
         >
             <Typography variant="h4">Templates</Typography>
             {templates.map((template, i) => (
-                <TemplateItem templateItem={template}/>
+                <TemplateItem templateItem={template} />
             ))}
         </Stack>
     );
