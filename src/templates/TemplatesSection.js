@@ -28,8 +28,8 @@ const templates = [
             "3(2v-1)"
         ],
         [
-            new Parameter("u", 50),
-            new Parameter("v")
+            new Parameter("u", 10),
+            new Parameter("v", 10)
         ]
     ),
     new Template(
