@@ -8,6 +8,18 @@ import './TemplatesSection.css';
 
 const templates = [
     new Template(
+        "Sine Wave",
+        "sine_wave.png",
+        [
+            "8(2u-1)",
+            "2sin(10u*pi)",
+            "0"
+        ],
+        [
+            new Parameter("u")
+        ]
+    ),
+    new Template(
         "Sphere",
         "sphere.png",
         [
