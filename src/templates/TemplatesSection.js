@@ -61,6 +61,10 @@ const templates = [
 ];
 
 export default function TemplatesSection(props) {
+    const selectTemplate = (i) => {
+        console.log("selectTemplate: Selected template at index", i);
+    };
+
     return (
         <Stack
             id={props.id}
@@ -69,7 +73,11 @@ export default function TemplatesSection(props) {
         >
             <Typography variant="h4">Templates</Typography>
             {templates.map((template, i) => (
-                <TemplateItem templateItem={template} />
+                <TemplateItem
+                    key={i}
+                    templateItem={template}
+                    onClick={() => selectTemplate(i)}
+                />
             ))}
         </Stack>
     );

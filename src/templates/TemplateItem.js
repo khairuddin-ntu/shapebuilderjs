@@ -16,6 +16,7 @@ export default function TemplateItem(props) {
             }}
             alignItems="center"
             spacing={2}
+            onClick={props.onClick}
         >
             <img
                 src={`./img/${templateItem.imageFileName}`}
