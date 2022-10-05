@@ -4,6 +4,13 @@ export default class Template {
     #functionInputs;
     #parameters;
 
+    constructor(name, imageFileName, functionInputs, parameters) {
+        this.#name = name;
+        this.#imageFileName = imageFileName;
+        this.#functionInputs = functionInputs;
+        this.#parameters = parameters;
+    }
+
     get name() {
         return this.#name;
     }
