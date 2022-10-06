@@ -25,16 +25,10 @@ export default class ShapeRenderer {
     }
 
     renderShape({ functions, parameters }) {
-        switch (parameters.length) {
-            case 1:
-                this.#renderLine(functions, parameters[0]);
-                return;
-            case 2:
-                this.#render3d(functions, parameters);
-                return;
-            default:
-                console.log("renderShape: Invalid parameter count [" + parameters.length + "]. Not rendering shape");
-                return;
+        if (parameters.length === 1) {
+            this.#renderLine(functions, parameters[0]);
+        } else {
+            this.#render3d(functions, parameters);
         }
     }
 
@@ -192,19 +186,37 @@ export default class ShapeRenderer {
         this.#removeExistingShape();
 
         const params = parameters.map((param) => ({ name: param.name, value: -1 }));
-        const geometry = new ParametricGeometry(
-            (u, v, target) => {
-                params[0].value = parameters[0].start + (parameters[0].range * u);
-                params[1].value = parameters[1].start + (parameters[1].range * v);
 
-                target.set(
-                    FunctionProcessor.calculateValue(functions[0], params),
-                    FunctionProcessor.calculateValue(functions[1], params),
-                    FunctionProcessor.calculateValue(functions[2], params),
-                );
-            },
-            ...parameters
-        );
+        let geometry;
+        if (parameters.length === 2) {
+            geometry = new ParametricGeometry(
+                (u, v, target) => {
+                    params[0].value = parameters[0].start + (parameters[0].range * u);
+                    params[1].value = parameters[1].start + (parameters[1].range * v);
+
+                    target.set(
+                        FunctionProcessor.calculateValue(functions[0], params),
+                        FunctionProcessor.calculateValue(functions[1], params),
+                        FunctionProcessor.calculateValue(functions[2], params),
+                    );
+                }, parameters
+            );
+        } else {
+            geometry = new ParametricGeometry(
+                (u, v, w, target) => {
+                    params[0].value = parameters[0].start + (parameters[0].range * u);
+                    params[1].value = parameters[1].start + (parameters[1].range * v);
+                    params[2].value = parameters[2].start + (parameters[2].range * w);
+
+                    target.set(
+                        FunctionProcessor.calculateValue(functions[0], params),
+                        FunctionProcessor.calculateValue(functions[1], params),
+                        FunctionProcessor.calculateValue(functions[2], params),
+                    );
+                }, parameters
+            );
+        }
+
         this.#shape = new THREE.Mesh(geometry, SHAPE_3D_MATERIAL);
         this.#shapeGroup.add(this.#shape);
     }
