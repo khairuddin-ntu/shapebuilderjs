@@ -2,7 +2,7 @@ export default class Parameter {
     name;
     start = 0;
     end = 1;
-    resolution = 100;
+    resolution = 50;
 
     constructor(paramName) {
         this.name = paramName;
