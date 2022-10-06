@@ -16,7 +16,7 @@ const templates = [
             "0"
         ],
         [
-            new Parameter("u")
+            new Parameter("u", 100)
         ]
     ),
     new Template(
@@ -41,8 +41,8 @@ const templates = [
             "2.5sin(-pi/2+u*pi)"
         ],
         [
-            new Parameter("u", 70),
-            new Parameter("v", 70)
+            new Parameter("u"),
+            new Parameter("v")
         ]
     ),
     new Template(
@@ -54,8 +54,8 @@ const templates = [
             "(0.7u*cos(-4u*pi+pi/2)+1+v)sin(5v*pi+pi)"
         ],
         [
-            new Parameter("u", 50),
-            new Parameter("v")
+            new Parameter("u"),
+            new Parameter("v", 100)
         ]
     ),
 ];
