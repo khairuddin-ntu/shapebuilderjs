@@ -163,7 +163,7 @@ export default class ParametricGeometry extends BufferGeometry {
 
                     // cross product of tangent vectors returns surface normal
                     normal.crossVectors(pu, pv).normalize();
-                    normals.push(normal.x, normal.y, normal.z);
+                    normals.push(normal.x * (2 * w - 1), normal.y * (2 * w - 1), normal.z * (2 * w - 1));
 
                     // uv
                     uvs.push(u, v);
@@ -223,7 +223,7 @@ export default class ParametricGeometry extends BufferGeometry {
 
                     // cross product of tangent vectors returns surface normal
                     normal.crossVectors(pu, pv).normalize();
-                    normals.push(normal.x, normal.y, normal.z);
+                    normals.push(normal.x * (-2 * v + 1), normal.y * (-2 * v + 1), normal.z * (-2 * v + 1));
 
                     // uv
                     uvs.push(u, w);
@@ -283,7 +283,7 @@ export default class ParametricGeometry extends BufferGeometry {
 
                     // cross product of tangent vectors returns surface normal
                     normal.crossVectors(pu, pv).normalize();
-                    normals.push(normal.x, normal.y, normal.z);
+                    normals.push(normal.x * (2 * u - 1), normal.y * (2 * u - 1), normal.z * (2 * u - 1));
 
                     // uv
                     uvs.push(v, w);
