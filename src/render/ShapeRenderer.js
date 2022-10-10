@@ -117,8 +117,8 @@ export default class ShapeRenderer {
                 mesh.translateY(5);
                 break;
             case "z":
-                mesh.translateZ(-5);
-                mesh.rotateX(Math.PI * 3 / 2);
+                mesh.translateZ(5);
+                mesh.rotateX(Math.PI / 2);
                 break;
             default:
                 break;
@@ -142,8 +142,9 @@ export default class ShapeRenderer {
                 mesh.translateY(6);
                 break;
             case "z":
+                mesh.translateX(-0.15);
                 mesh.translateY(-0.15);
-                mesh.translateZ(-6);
+                mesh.translateZ(6);
                 break;
             default:
                 break;
