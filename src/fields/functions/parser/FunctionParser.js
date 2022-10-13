@@ -95,12 +95,6 @@ function getAllParentTokens(strInput) {
         // Go to next position if character is not an opening bracket
         if (startChar !== "(") continue;
 
-        // Return error if last 2 characters are opening brackets
-        // Must have at least 1 character & 1 closing bracket after opening bracket
-        if (i >= strInput.length - 2) {
-            return [parentTokens, "Missing closing bracket for index " + i];
-        }
-
         parenCount = 0;
         for (let j = i + 1; j < strInput.length; j++) {
             endChar = strInput[j];
@@ -132,7 +126,13 @@ function getAllParentTokens(strInput) {
             }
 
             // Bracket pair found
-            // Check if previous 3 characters represent a trigonometric function
+            // Check if closing bracket is immediately after opening bracket
+            if (j === i + 1) {
+                // Return error. Bracket cannot be empty
+                return [parentTokens, "Bracket at index " + i + " cannot be empty"];
+            }
+
+            // Flag to indicate if wrapper represent a trigonometric function
             isTrigo = (i >= 3 && TRIGO_REGEX.test(strInput.substring(i - 3, i)));
             // Change start index based on whether it's a trigonometric function
             startIndex = i - (isTrigo ? 3 : 0);
