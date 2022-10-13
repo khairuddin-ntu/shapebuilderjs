@@ -4,7 +4,10 @@ import TextGeometry from './geometries/TextGeometry';
 import * as FunctionProcessor from '../common/FunctionProcessor';
 
 const SHAPE_2D_MATERIAL = new THREE.LineBasicMaterial({ color: 0x00ff00 });
-const SHAPE_3D_MATERIAL = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
+const SHAPE_3D_MATERIAL = new THREE.MeshStandardMaterial({
+    color: 0x00ff00,
+    side: THREE.DoubleSide
+});
 const AXES_MATERIAL = new THREE.MeshMatcapMaterial({ color: 0xffff00 });
 const TEXT_MATERIAL = new THREE.MeshMatcapMaterial({ color: 0x000000 });
 
