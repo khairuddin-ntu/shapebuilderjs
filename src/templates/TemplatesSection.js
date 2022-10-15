@@ -33,7 +33,7 @@ const templates = [
         ]
     ),
     new Template(
-        "Sphere",
+        "Sphere (Surface)",
         "sphere.png",
         [
             "2.5cos(-pi/2+u*pi)cos(-pi+2v*pi)",
@@ -46,16 +46,17 @@ const templates = [
         ]
     ),
     new Template(
-        "Parametric Sweeping",
-        "parametric_sweeping.png",
+        "Cube (Solid)",
+        "cube.png",
         [
-            "(0.7u*cos(-4u*pi+pi/2)+1+v)cos(5v*pi+pi)",
-            "0.7u*sin(-4u*pi+pi/2)+4v",
-            "(0.7u*cos(-4u*pi+pi/2)+1+v)sin(5v*pi+pi)"
+            "1.5(2u-1)",
+            "1.5(2w-1)",
+            "1.5(2v-1)"
         ],
         [
-            new Parameter("u"),
-            new Parameter("v", 100)
+            new Parameter("u", 3),
+            new Parameter("v", 3),
+            new Parameter("w", 3)
         ]
     ),
 ];
