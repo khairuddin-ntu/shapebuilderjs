@@ -13,7 +13,7 @@ export default function ResolutionInput(props) {
 
     return (
         <React.Fragment>
-            <Typography className="input-label">Increment =</Typography>
+            <Typography className="input-label">Resolution =</Typography>
             <TextField
                 size="small"
                 variant="outlined"
