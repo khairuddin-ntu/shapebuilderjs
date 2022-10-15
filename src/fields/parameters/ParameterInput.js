@@ -7,7 +7,7 @@ export default function ParameterInput(props) {
     const onUpdate = (event) => {
         const strInput = event.target.value;
         const inputLength = strInput.length;
-        setSize(inputLength > 1 ? inputLength - 1 : 1);
+        setSize(Math.max(1, inputLength - 1));
         props.onChange(strInput);
     };
 
