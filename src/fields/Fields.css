@@ -27,6 +27,7 @@
 
 .input-label {
     padding: 0 0.3vw 0 0.3vw;
+    white-space: nowrap;
 }
 
 .field__section {
