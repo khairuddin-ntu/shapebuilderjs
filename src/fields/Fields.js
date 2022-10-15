@@ -68,13 +68,11 @@ export default function Fields(props) {
             <FunctionsSection
                 id="functions-section"
                 className="field__section"
-                sectionName="Functions"
                 functionsRef={functionInputs}
             />
             <ParametersSection
                 id="parameters-section"
                 className="field__section"
-                sectionName="Parameters"
                 parameters={parameters}
                 setParameters={setParameters}
                 parameterErrors={parameterErrors}

@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import AddRounded from '@mui/icons-material/AddRounded';
 import ParameterField from './ParameterField';
 import Parameter from '../../common/Parameter';
+import { Typography } from '@mui/material';
 
 export default function ParametersSection(props) {
     const [canAddParam, setCanAddParam] = useState(true);
@@ -43,23 +45,24 @@ export default function ParametersSection(props) {
     };
 
     return (
-        <Stack
-            id={props.id}
-            className={props.className}
-            direction="column"
-            spacing={2}
-        >
-            {parameters.map((parameter, i) =>
-                <ParameterField
-                    key={i}
-                    index={i}
-                    parameter={parameter}
-                    deletable={i !== 0}
-                    deleteParameter={deleteParameter}
-                    parameterErrors={props.parameterErrors}
-                />
-            )}
-            {canAddParam ? <Button startIcon={<AddRounded />} onClick={addParameter}>Add parameter</Button> : null}
-        </Stack>
+        <Box id={props.id}>
+            <Typography variant="h6">Parameters</Typography>
+            <Stack
+                className={props.className}
+                spacing={2}
+            >
+                {parameters.map((parameter, i) =>
+                    <ParameterField
+                        key={i}
+                        index={i}
+                        parameter={parameter}
+                        deletable={i === parameters.length - 1}
+                        deleteParameter={deleteParameter}
+                        parameterErrors={props.parameterErrors}
+                    />
+                )}
+                {canAddParam ? <Button startIcon={<AddRounded />} onClick={addParameter}>Add parameter</Button> : null}
+            </Stack>
+        </Box>
     );
 }

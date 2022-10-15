@@ -47,12 +47,12 @@ export default class ParametricGeometry extends BufferGeometry {
         indices, vertices, normals, uvs,
         func, paramU, paramV
     ) {
+        // Buffers to avoid repeatedly creating Vector3 objects
         const normal = new Vector3();
 
         const p0 = new Vector3(), p1 = new Vector3();
         const pu = new Vector3(), pv = new Vector3();
 
-        // generate vertices, normals and uvs
         const vCount = paramV.resolution + 1;
 
         let u, v;
@@ -63,12 +63,12 @@ export default class ParametricGeometry extends BufferGeometry {
             for (let j = 0; j <= paramV.resolution; j++) {
                 v = j / paramV.resolution;
 
-                // vertex
+                // Calculate vertex
                 func(u, v, p0);
                 vertices.push(p0.x, p0.y, p0.z);
 
-                // normal
-                // approximate tangent vectors via finite differences
+                // Calculate normal
+                // Approximate tangent vectors via finite differences
                 if (u - EPS >= 0) {
                     func(u - EPS, v, p1);
                     pu.subVectors(p0, p1);
@@ -85,14 +85,14 @@ export default class ParametricGeometry extends BufferGeometry {
                     pv.subVectors(p1, p0);
                 }
 
-                // cross product of tangent vectors returns surface normal
+                // Cross product of tangent vectors returns surface normal
                 normal.crossVectors(pu, pv).normalize();
                 normals.push(normal.x, normal.y, normal.z);
 
-                // uv
+                // Defines how texture should be mapped to surface
                 uvs.push(u, v);
 
-                // generate indices
+                // Generate indices
                 if (i === paramU.resolution || j === paramV.resolution) {
                     continue
                 }
@@ -102,8 +102,9 @@ export default class ParametricGeometry extends BufferGeometry {
                 c = (i + 1) * vCount + j + 1;
                 d = (i + 1) * vCount + j;
 
-                // Inner face
+                // Triangle 1
                 indices.push(a, b, d);
+                // Triangle 2
                 indices.push(b, c, d);
             }
         }
