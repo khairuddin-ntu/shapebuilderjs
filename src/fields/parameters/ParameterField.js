@@ -107,12 +107,14 @@ export default function ParameterField(props) {
                 onChange={updateResolution}
                 hasError={resolutionHasError}
             />
-            {props.deletable ?
-                <IconButton color="error" onClick={() => props.deleteParameter(props.index)}>
-                    <DeleteRounded />
-                </IconButton>
-                : null
-            }
+            {/* Used visibility property to ensure equal spacing among all parameter fields */}
+            <IconButton
+                color="error"
+                onClick={() => props.deleteParameter(props.index)}
+                sx={{ visibility: props.deletable ? "visible" : "hidden" }}
+            >
+                <DeleteRounded />
+            </IconButton>
         </Stack>
     );
 }
