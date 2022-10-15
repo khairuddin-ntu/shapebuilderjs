@@ -19,7 +19,9 @@ export default function ParameterField(props) {
 
     const updateMin = (strMin) => {
         if (!REGEX_PARAMETER.test(strMin)) {
-            props.parameterErrors.current[props.index] = new SnackbarError("Minimum value for parameter " + parameter.name + " contains invalid characters");
+            props.parameterErrors.current[props.index] = new SnackbarError(
+                "Parameter " + parameter.name + ": Minimum value contains invalid characters"
+            );
             setMinHasError(true);
             return;
         }
@@ -27,7 +29,7 @@ export default function ParameterField(props) {
         const paramMin = +strMin;
         if (paramMin >= parameter.end) {
             props.parameterErrors.current[props.index] = new SnackbarError(
-                "Minimum value for parameter " + parameter.name + " cannot be the same or larger than maximum value"
+                "Parameter " + parameter.name + ": Minimum value cannot be the same or larger than maximum value"
             );
             setMinHasError(true);
             return;
@@ -40,7 +42,9 @@ export default function ParameterField(props) {
 
     const updateMax = (strMax) => {
         if (!REGEX_PARAMETER.test(strMax)) {
-            props.parameterErrors.current[props.index] = new SnackbarError("Maximum value for parameter " + parameter.name + " contains invalid characters");
+            props.parameterErrors.current[props.index] = new SnackbarError(
+                "Parameter " + parameter.name + ": Maximum value contains invalid characters"
+            );
             setMaxHasError(true);
             return;
         }
@@ -48,7 +52,7 @@ export default function ParameterField(props) {
         const paramMax = +strMax;
         if (paramMax <= parameter.start) {
             props.parameterErrors.current[props.index] = new SnackbarError(
-                "Maximum value for parameter " + parameter.name + " cannot be the same or smaller than maximum value"
+                "Parameter " + parameter.name + ": Maximum value cannot be the same or smaller than maximum value"
             );
             setMinHasError(true);
             return;
@@ -63,7 +67,9 @@ export default function ParameterField(props) {
         // Check if resolution only contains digits
         if (!REGEX_RESOLUTION.test(strResolution)) {
             setResolutionHasError(true);
-            props.parameterErrors.current[props.index] = new SnackbarError("Resolution must only contain digits");
+            props.parameterErrors.current[props.index] = new SnackbarError(
+                "Parameter " + parameter.name + ": Resolution must only contain digits"
+            );
             return;
         }
 
@@ -71,14 +77,18 @@ export default function ParameterField(props) {
         // Check if resolution is less than minimum allowed resolution
         if (resolution < MIN_RESOLUTION) {
             setResolutionHasError(true);
-            props.parameterErrors.current[props.index] = new SnackbarError("Resolution cannot be less than " + MIN_RESOLUTION);
+            props.parameterErrors.current[props.index] = new SnackbarError(
+                "Parameter " + parameter.name + ": Resolution cannot be less than " + MIN_RESOLUTION
+            );
             return;
         }
 
         // Check if resolution is more than maximum allowed resolution
         if (resolution > MAX_RESOLUTION) {
             setResolutionHasError(true);
-            props.parameterErrors.current[props.index] = new SnackbarError("Resolution cannot be more than " + MAX_RESOLUTION);
+            props.parameterErrors.current[props.index] = new SnackbarError(
+                "Parameter " + parameter.name + ": Resolution cannot be more than " + MAX_RESOLUTION
+            );
             return;
         }
 
