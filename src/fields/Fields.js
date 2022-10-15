@@ -91,6 +91,7 @@ export default function Fields(props) {
                         open
                         autoHideDuration={6000}
                         onClose={() => setSnackbarMessage(null)}
+                        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
                     >
                         <MuiAlert elevation={6} variant="filled" severity={snackbarMessage.type}>
                             {snackbarMessage.message}
