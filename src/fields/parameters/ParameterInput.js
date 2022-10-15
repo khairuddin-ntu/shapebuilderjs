@@ -8,7 +8,7 @@ export default function ParameterInput(props) {
         const strInput = event.target.value;
         const inputLength = strInput.length;
         setSize(inputLength > 1 ? inputLength - 1 : 1);
-        props.onChange(event.target.value);
+        props.onChange(strInput);
     };
 
     return (
