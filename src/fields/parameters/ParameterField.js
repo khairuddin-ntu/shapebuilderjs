@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import CloseRounded from '@mui/icons-material/CloseRounded';
+import DeleteRounded from '@mui/icons-material/DeleteRounded';
 import ParameterInput from './ParameterInput';
 import ResolutionInput from './ResolutionInput';
 import { SnackbarError } from '../../common/SnackbarMessage';
@@ -109,7 +109,7 @@ export default function ParameterField(props) {
             />
             {props.deletable ?
                 <IconButton color="error" onClick={() => props.deleteParameter(props.index)}>
-                    <CloseRounded />
+                    <DeleteRounded />
                 </IconButton>
                 : null
             }
