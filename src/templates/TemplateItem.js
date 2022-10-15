@@ -21,8 +21,8 @@ export default function TemplateItem(props) {
             <img
                 src={`./img/${templateItem.imageFileName}`}
                 loading="lazy"
-                width="200"
-                height="200"
+                width="150"
+                height="150"
             />
             <Typography>{templateItem.name}</Typography>
         </Stack>
