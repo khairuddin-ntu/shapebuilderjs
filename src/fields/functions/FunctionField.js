@@ -13,7 +13,7 @@ export default function FunctionField(props) {
             <TextField
                 className="function-input"
                 variant="outlined"
-                inputProps={{ size: 40 }}
+                inputProps={{ size: 35 }}
                 onChange={(event) => inputsRef.current[index] = event.target.value}
                 defaultValue={defaultValue}
             />
