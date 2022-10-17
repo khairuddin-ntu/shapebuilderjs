@@ -19,7 +19,8 @@ export default function Fields(props) {
     const [parameters, setParameters] = useState([new Parameter("u"), new Parameter("v")]);
     const parameterErrors = useRef([null, null, null]);
     // Functions state
-    const functionInputs = useRef(["", "", ""]);
+    const functionInputs = props.functions;
+    const setFunctions = props.setFunctions;
 
     const generateShape = () => {
         setSnackbarMessage(null);
@@ -33,7 +34,7 @@ export default function Fields(props) {
         const functions = [];
         let functionName;
         const startTime = Date.now();
-        for (const [i, funcInput] of functionInputs.current.entries()) {
+        for (const [i, funcInput] of functionInputs.entries()) {
             functionName = FUNCTION_NAMES[i];
 
             if (isEmptyOrBlank(funcInput)) {
@@ -68,7 +69,8 @@ export default function Fields(props) {
             <FunctionsSection
                 id="functions-section"
                 className="field__section"
-                functionsRef={functionInputs}
+                functions={functionInputs}
+                setFunctions={setFunctions}
             />
             <ParametersSection
                 id="parameters-section"

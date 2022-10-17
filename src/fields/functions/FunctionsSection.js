@@ -2,10 +2,16 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import FunctionField from './FunctionField';
-import { DEFAULT_FUNCTIONS, FUNCTION_NAMES } from '../../common/Constants';
+import { FUNCTION_NAMES } from '../../common/Constants';
 
 export default function FunctionsSection(props) {
-    const inputs = props.functionsRef;
+    const functions = props.functions;
+
+    const setFunction = (i, funcInput) => {
+        const newFunctions = [...functions];
+        newFunctions[i] = funcInput;
+        props.setFunctions(newFunctions);
+    };
 
     return (
         <Box id={props.id}>
@@ -16,13 +22,12 @@ export default function FunctionsSection(props) {
                 spacing={2}
             >
                 {
-                    FUNCTION_NAMES.map((name, i) =>
+                    functions.map((funcInput, i) =>
                         <FunctionField
                             key={i}
-                            index={i}
-                            inputsRef={inputs}
-                            functionName={name}
-                            defaultValue={DEFAULT_FUNCTIONS[i]}
+                            functionName={FUNCTION_NAMES[i]}
+                            funcInput={funcInput}
+                            setFunction={(funcInput) => setFunction(i, funcInput)}
                         />
                     )
                 }

@@ -20,6 +20,14 @@ export default function App() {
         parameters: params
     });
 
+    const [functions, setFunctions] = useState(
+        [
+            "2.5cos(-pi/2+u*pi)cos(-pi+2v*pi)",
+            "2.5cos(-pi/2+u*pi)sin(-pi+2v*pi)",
+            "2.5sin(-pi/2+u*pi)"
+        ]
+    );
+
     const applyTemplate = (templateItem) => {
         console.log(templateItem);
     };
@@ -28,7 +36,11 @@ export default function App() {
         <Box id="app">
             <Templates id="templates" applyTemplate={applyTemplate} />
             <Scene renderParams={renderParams} />
-            <Fields setRenderParams={setRenderParams} />
+            <Fields
+            functions={functions}
+            setFunctions={setFunctions}
+            setRenderParams={setRenderParams}
+            />
         </Box>
     );
 }
