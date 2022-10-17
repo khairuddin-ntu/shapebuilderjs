@@ -20,9 +20,13 @@ export default function App() {
         parameters: params
     });
 
+    const applyTemplate = (templateItem) => {
+        console.log(templateItem);
+    };
+
     return (
         <Box id="app">
-            <Templates id="templates" />
+            <Templates id="templates" applyTemplate={applyTemplate} />
             <Scene renderParams={renderParams} />
             <Fields setRenderParams={setRenderParams} />
         </Box>

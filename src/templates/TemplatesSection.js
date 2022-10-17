@@ -62,9 +62,7 @@ const templates = [
 ];
 
 export default function TemplatesSection(props) {
-    const selectTemplate = (i) => {
-        console.log("selectTemplate: Selected template at index", i);
-    };
+    const selectTemplate = (i) => props.applyTemplate(templates[i]);
 
     return (
         <Stack
