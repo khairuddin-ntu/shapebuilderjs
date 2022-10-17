@@ -6,7 +6,6 @@ import Snackbar from '@mui/material/Snackbar';
 import FunctionsSection from './functions/FunctionsSection';
 import parseFunctionInput from './functions/parser/FunctionParser';
 import ParametersSection from './parameters/ParametersSection';
-import Parameter from '../common/Parameter';
 import { SnackbarError, SnackbarSuccess } from '../common/SnackbarMessage';
 import { FUNCTION_NAMES } from '../common/Constants';
 import { isEmptyOrBlank } from '../common/StringUtils';
@@ -16,7 +15,8 @@ import './Fields.css';
 export default function Fields(props) {
     const [snackbarMessage, setSnackbarMessage] = useState();
     // Parameter states
-    const [parameters, setParameters] = useState([new Parameter("u"), new Parameter("v")]);
+    const parameters = props.parameters;
+    const setParameters = props.setParameters;
     const parameterErrors = useRef([null, null, null]);
     // Functions state
     const functionInputs = props.functions;

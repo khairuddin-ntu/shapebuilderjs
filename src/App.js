@@ -5,21 +5,10 @@ import Fields from './fields/Fields';
 import parseFunctionInput from './fields/functions/parser/FunctionParser';
 import Templates from './templates/TemplatesSection';
 import Parameter from './common/Parameter';
-import { DEFAULT_FUNCTIONS } from './common/Constants';
 
 import './App.css';
 
 export default function App() {
-    const params = [new Parameter("u"), new Parameter("v")];
-    const [renderParams, setRenderParams] = useState({
-        functions: [
-            parseFunctionInput(params, DEFAULT_FUNCTIONS[0])[0],
-            parseFunctionInput(params, DEFAULT_FUNCTIONS[1])[0],
-            parseFunctionInput(params, DEFAULT_FUNCTIONS[2])[0],
-        ],
-        parameters: params
-    });
-
     const [functions, setFunctions] = useState(
         [
             "2.5cos(-pi/2+u*pi)cos(-pi+2v*pi)",
@@ -28,8 +17,22 @@ export default function App() {
         ]
     );
 
+    const [parameters, setParameters] = useState(
+        [new Parameter("u"), new Parameter("v")]
+    );
+
+    const [renderParams, setRenderParams] = useState({
+        functions: [
+            parseFunctionInput(parameters, functions[0])[0],
+            parseFunctionInput(parameters, functions[1])[0],
+            parseFunctionInput(parameters, functions[2])[0],
+        ],
+        parameters: parameters
+    });
+
     const applyTemplate = (templateItem) => {
         console.log(templateItem);
+        setFunctions(templateItem.functionInputs);
     };
 
     return (
@@ -37,9 +40,11 @@ export default function App() {
             <Templates id="templates" applyTemplate={applyTemplate} />
             <Scene renderParams={renderParams} />
             <Fields
-            functions={functions}
-            setFunctions={setFunctions}
-            setRenderParams={setRenderParams}
+                functions={functions}
+                setFunctions={setFunctions}
+                parameters={parameters}
+                setParameters={setParameters}
+                setRenderParams={setRenderParams}
             />
         </Box>
     );
