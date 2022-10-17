@@ -13,7 +13,7 @@ export default function ParameterInput(props) {
 
     return (
         <TextField
-            defaultValue={props.defaultValue}
+            value={props.value}
             error={props.hasError}
             size="small"
             variant="outlined"

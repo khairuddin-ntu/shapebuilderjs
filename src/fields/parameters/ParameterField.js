@@ -101,19 +101,19 @@ export default function ParameterField(props) {
         <Stack direction="row" alignItems="center">
             <Typography className="input-label">{parameter.name} = [</Typography>
             <ParameterInput
-                defaultValue={parameter.start}
+                value={parameter.start}
                 onChange={updateMin}
                 hasError={minHasError}
             />
             <Typography className="input-label">,</Typography>
             <ParameterInput
-                defaultValue={parameter.end}
+                value={parameter.end}
                 onChange={updateMax}
                 hasError={maxHasError}
             />
             <Typography className="input-label">],</Typography>
             <ResolutionInput
-                defaultValue={parameter.resolution}
+                value={parameter.resolution}
                 onChange={updateResolution}
                 hasError={resolutionHasError}
             />

@@ -17,7 +17,7 @@ export default function ResolutionInput(props) {
             <TextField
                 size="small"
                 variant="outlined"
-                defaultValue={props.defaultValue}
+                value={props.value}
                 error={props.hasError}
                 inputProps={{ size: size }}
                 onChange={onUpdate}
