@@ -12,8 +12,4 @@ export default class Parameter {
     get range() {
         return this.end - this.start;
     }
-    
-    clone() {
-        return new Parameter(this.name, this.resolution);
-    }
 }
