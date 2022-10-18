@@ -1,5 +1,7 @@
 import { useRef, useState } from 'react';
 import Box from '@mui/material/Box';
+import MuiAlert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 import Scene from './render/Scene';
 import Fields from './fields/Fields';
 import parseFunctionInput from './fields/functions/parser/FunctionParser';
@@ -9,6 +11,8 @@ import Parameter from './common/Parameter';
 import './App.css';
 
 export default function App() {
+    const [snackbarMessage, setSnackbarMessage] = useState();
+
     const [functions, setFunctions] = useState(
         [
             "2.5cos(-pi/2+u*pi)cos(-pi+2v*pi)",
@@ -49,7 +53,21 @@ export default function App() {
                 setParameters={setParameters}
                 parameterErrors={parameterErrors}
                 setRenderParams={setRenderParams}
+                setSnackbarMessage={setSnackbarMessage}
             />
+            {
+                snackbarMessage &&
+                <Snackbar
+                    open
+                    autoHideDuration={6000}
+                    onClose={() => setSnackbarMessage(null)}
+                    anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                >
+                    <MuiAlert elevation={6} variant="filled" severity={snackbarMessage.type}>
+                        {snackbarMessage.message}
+                    </MuiAlert>
+                </Snackbar>
+            }
         </Box>
     );
 }

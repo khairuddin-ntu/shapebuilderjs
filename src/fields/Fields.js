@@ -1,8 +1,5 @@
-import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import MuiAlert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
 import FunctionsSection from './functions/FunctionsSection';
 import parseFunctionInput from './functions/parser/FunctionParser';
 import ParametersSection from './parameters/ParametersSection';
@@ -13,7 +10,7 @@ import { isEmptyOrBlank } from '../common/StringUtils';
 import './Fields.css';
 
 export default function Fields(props) {
-    const [snackbarMessage, setSnackbarMessage] = useState();
+    const setSnackbarMessage = props.setSnackbarMessage;
     // Parameter states
     const parameters = props.parameters;
     const setParameters = props.setParameters;
@@ -87,20 +84,6 @@ export default function Fields(props) {
                     Generate shape
                 </Button>
             </Box>
-            {
-                snackbarMessage ?
-                    <Snackbar
-                        open
-                        autoHideDuration={6000}
-                        onClose={() => setSnackbarMessage(null)}
-                        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-                    >
-                        <MuiAlert elevation={6} variant="filled" severity={snackbarMessage.type}>
-                            {snackbarMessage.message}
-                        </MuiAlert>
-                    </Snackbar>
-                    : null
-            }
         </Box>
     );
 }
