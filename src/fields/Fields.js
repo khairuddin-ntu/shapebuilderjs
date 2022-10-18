@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import MuiAlert from '@mui/material/Alert';
@@ -17,7 +17,7 @@ export default function Fields(props) {
     // Parameter states
     const parameters = props.parameters;
     const setParameters = props.setParameters;
-    const parameterErrors = useRef([null, null, null]);
+    const parameterErrors = props.parameterErrors;
     // Functions state
     const functionInputs = props.functions;
     const setFunctions = props.setFunctions;

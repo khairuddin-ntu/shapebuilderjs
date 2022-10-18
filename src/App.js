@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Box from '@mui/material/Box';
 import Scene from './render/Scene';
 import Fields from './fields/Fields';
@@ -20,6 +20,8 @@ export default function App() {
     const [parameters, setParameters] = useState(
         [new Parameter("u"), new Parameter("v")]
     );
+
+    const parameterErrors = useRef([null, null, null]);
 
     const [renderParams, setRenderParams] = useState({
         functions: [
@@ -45,6 +47,7 @@ export default function App() {
                 setFunctions={setFunctions}
                 parameters={parameters}
                 setParameters={setParameters}
+                parameterErrors={parameterErrors}
                 setRenderParams={setRenderParams}
             />
         </Box>
