@@ -1,8 +1,11 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 
 export default function ResolutionInput(props) {
+    const value = props.value;
+    const hasError = props.hasError;
+
     const [size, setSize] = useState(2);
 
     const onUpdate = (event) => {
@@ -17,8 +20,8 @@ export default function ResolutionInput(props) {
             <TextField
                 size="small"
                 variant="outlined"
-                defaultValue={props.defaultValue}
-                error={props.hasError}
+                value={value}
+                error={hasError}
                 inputProps={{ size: size }}
                 onChange={onUpdate}
             />

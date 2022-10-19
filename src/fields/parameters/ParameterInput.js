@@ -2,6 +2,9 @@ import { useState } from 'react';
 import TextField from '@mui/material/TextField';
 
 export default function ParameterInput(props) {
+    const value = props.value;
+    const hasError = props.hasError;
+
     const [size, setSize] = useState(1);
 
     const onUpdate = (event) => {
@@ -13,8 +16,8 @@ export default function ParameterInput(props) {
 
     return (
         <TextField
-            defaultValue={props.defaultValue}
-            error={props.hasError}
+            value={value}
+            error={hasError}
             size="small"
             variant="outlined"
             onChange={onUpdate}

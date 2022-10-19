@@ -4,8 +4,9 @@ export default class Parameter {
     end = 1;
     resolution = 50;
 
-    constructor(paramName) {
+    constructor(paramName, resolution = 100) {
         this.name = paramName;
+        this.resolution = resolution;
     }
 
     get range() {
