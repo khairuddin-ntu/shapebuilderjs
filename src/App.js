@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Box from '@mui/material/Box';
 import MuiAlert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
@@ -10,13 +10,14 @@ import Parameter from './common/Parameter';
 import { FUNCTION_NAMES } from './common/Constants';
 import { isEmptyOrBlank } from './common/StringUtils';
 import { SnackbarError, SnackbarSuccess } from './common/SnackbarMessage';
+import { useStateWithCallback } from './common/ReactUtils';
 
 import './App.css';
 
 export default function App() {
     const [snackbarMessage, setSnackbarMessage] = useState();
 
-    const [functionInputs, setFunctions] = useState(
+    const [functionInputs, setFunctions] = useStateWithCallback(
         [
             "2.5cos(-pi/2+u*pi)cos(-pi+2v*pi)",
             "2.5cos(-pi/2+u*pi)sin(-pi+2v*pi)",
@@ -24,7 +25,7 @@ export default function App() {
         ]
     );
 
-    const [parameters, setParameters] = useState(
+    const [parameters, setParameters] = useStateWithCallback(
         [new Parameter("u"), new Parameter("v")]
     );
 
@@ -39,7 +40,12 @@ export default function App() {
         parameters: parameters
     });
 
-    const generateShape = () => {
+    const [runGenerateShape, setRunGenerateShape] = useState(false);
+    useEffect(() => {
+        if (!runGenerateShape) {
+            return;
+        }
+
         setSnackbarMessage(null);
 
         for (const paramError of parameterErrors.current) {
@@ -76,12 +82,15 @@ export default function App() {
 
         setSnackbarMessage(new SnackbarSuccess("Successfully rendered shape"));
         setRenderParams({ functions: functions, parameters: parameters });
-    };
+
+        setRunGenerateShape(false);
+    }, [functionInputs, parameters, runGenerateShape]);
 
     const applyTemplate = (templateItem) => {
+        parameterErrors.current = [null, null, null];
         setFunctions(templateItem.functionInputs);
         setParameters(templateItem.parameters);
-        parameterErrors.current = [null, null, null];
+        setRunGenerateShape(true);
     };
 
     return (
@@ -94,7 +103,7 @@ export default function App() {
                 parameters={parameters}
                 setParameters={setParameters}
                 parameterErrors={parameterErrors}
-                generateShape={generateShape}
+                generateShape={() => setRunGenerateShape(true)}
             />
             {
                 snackbarMessage &&
