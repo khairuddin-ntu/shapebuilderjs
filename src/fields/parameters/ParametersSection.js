@@ -56,7 +56,7 @@ export default function ParametersSection(props) {
                         key={i}
                         index={i}
                         parameter={parameter}
-                        deletable={i === parameters.length - 1}
+                        deletable={i != 0 && i === parameters.length - 1}
                         deleteParameter={deleteParameter}
                         parameterErrors={props.parameterErrors}
                     />
