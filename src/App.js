@@ -79,9 +79,9 @@ export default function App() {
     };
 
     const applyTemplate = (templateItem) => {
-        console.log(templateItem);
         setFunctions(templateItem.functionInputs);
         setParameters(templateItem.parameters);
+        parameterErrors.current = [null, null, null];
     };
 
     return (

@@ -6,14 +6,12 @@ export default function ResolutionInput(props) {
     const value = props.value;
     const hasError = props.hasError;
 
-    const [input, setInput] = useState(value);
     const [size, setSize] = useState(2);
 
     const onUpdate = (event) => {
         const strInput = event.target.value;
         setSize(Math.max(2, strInput.length - 1));
         props.onChange(strInput);
-        setInput(strInput);
     };
 
     return (
@@ -22,7 +20,7 @@ export default function ResolutionInput(props) {
             <TextField
                 size="small"
                 variant="outlined"
-                value={input}
+                value={value}
                 error={hasError}
                 inputProps={{ size: size }}
                 onChange={onUpdate}
