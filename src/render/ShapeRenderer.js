@@ -159,31 +159,20 @@ export default class ShapeRenderer {
     #renderLine(functions, uParameter) {
         this.#removeExistingShape();
 
-        this.#shape = new THREE.Group();
-
-        let prevVector, currentVector;
-        let points, geometry, line;
-
         const params = [{ name: uParameter.name, value: -1 }];
+
+        let points = [];
         for (let u = uParameter.start; u <= uParameter.end; u += uParameter.range / uParameter.resolution) {
             params[0].value = u;
-            currentVector = new THREE.Vector3(
+            points.push(new THREE.Vector3(
                 FunctionProcessor.calculateValue(functions[0], params),
                 FunctionProcessor.calculateValue(functions[1], params),
                 FunctionProcessor.calculateValue(functions[2], params)
-            );
-
-            if (prevVector) {
-                // Generate line segment from previous point to current point
-                points = [prevVector, currentVector];
-                geometry = new THREE.BufferGeometry().setFromPoints(points);
-                line = new THREE.Line(geometry, SHAPE_2D_MATERIAL);
-                this.#shape.add(line);
-            }
-
-            prevVector = currentVector;
+            ));
         }
 
+        const geometry = new THREE.BufferGeometry().setFromPoints(points);
+        this.#shape = new THREE.Line(geometry, SHAPE_2D_MATERIAL);
         this.#shapeGroup.add(this.#shape);
     }
 
