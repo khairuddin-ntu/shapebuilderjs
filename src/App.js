@@ -6,30 +6,22 @@ import Scene from './render/Scene';
 import Fields from './fields/Fields';
 import Templates from './templates/TemplatesSection';
 import * as RenderJob from "./render/RenderJob";
-import Parameter from './common/Parameter';
 import { SnackbarError, SnackbarSuccess } from './common/SnackbarMessage';
 import ShapeGenError from "./common/ShapeGenError";
 
 import './App.css';
+import { TEMPLATES } from './common/Constants';
 
 export default function App() {
     const [snackbarMessage, setSnackbarMessage] = useState();
     const [functionInputs, setFunctions] = useState();
     const [parameters, setParameters] = useState();
     const [renderData, setRenderData] = useState();
-    const [runGenerateShape, setRunGenerateShape] = useState(false);
+    const [runGenerateShape, setRunGenerateShape] = useState();
 
-    const parameterErrors = useRef([null, null, null]);
+    const parameterErrors = useRef();
 
-    useEffect(() => {
-        setFunctions([
-            "2.5cos(-pi/2+u*pi)cos(-pi+2v*pi)",
-            "2.5cos(-pi/2+u*pi)sin(-pi+2v*pi)",
-            "2.5sin(-pi/2+u*pi)"
-        ]);
-        setParameters([new Parameter("u"), new Parameter("v")]);
-        setRunGenerateShape(true);
-    }, []);
+    useEffect(() => applyTemplate(TEMPLATES[2]), []);
 
     useEffect(() => {
         if (!runGenerateShape) {
