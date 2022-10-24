@@ -6,46 +6,47 @@ import Scene from './render/Scene';
 import Fields from './fields/Fields';
 import parseFunctionInput from './fields/functions/parser/FunctionParser';
 import Templates from './templates/TemplatesSection';
+import * as RenderJob from "./render/RenderJob";
 import Parameter from './common/Parameter';
 import { FUNCTION_NAMES } from './common/Constants';
 import { isEmptyOrBlank } from './common/StringUtils';
 import { SnackbarError, SnackbarSuccess } from './common/SnackbarMessage';
-import { useStateWithCallback } from './common/ReactUtils';
 
 import './App.css';
 
 export default function App() {
     const [snackbarMessage, setSnackbarMessage] = useState();
-
-    const [functionInputs, setFunctions] = useStateWithCallback(
-        [
-            "2.5cos(-pi/2+u*pi)cos(-pi+2v*pi)",
-            "2.5cos(-pi/2+u*pi)sin(-pi+2v*pi)",
-            "2.5sin(-pi/2+u*pi)"
-        ]
-    );
-
-    const [parameters, setParameters] = useStateWithCallback(
-        [new Parameter("u"), new Parameter("v")]
-    );
+    const [functionInputs, setFunctions] = useState();
+    const [parameters, setParameters] = useState();
+    const [renderData, setRenderData] = useState();
+    const [runGenerateShape, setRunGenerateShape] = useState(false);
 
     const parameterErrors = useRef([null, null, null]);
 
-    const [renderParams, setRenderParams] = useState({
-        functions: [
-            parseFunctionInput(parameters, functionInputs[0])[0],
-            parseFunctionInput(parameters, functionInputs[1])[0],
-            parseFunctionInput(parameters, functionInputs[2])[0],
-        ],
-        parameters: parameters
-    });
+    useEffect(() => {
+        const functionInputs = [
+            "2.5cos(-pi/2+u*pi)cos(-pi+2v*pi)",
+            "2.5cos(-pi/2+u*pi)sin(-pi+2v*pi)",
+            "2.5sin(-pi/2+u*pi)"
+        ];
+        const parameters = [new Parameter("u"), new Parameter("v")];
 
-    const [runGenerateShape, setRunGenerateShape] = useState(false);
+        setFunctions(functionInputs);
+        setParameters(parameters);
+
+        RenderJob.generateRenderData(
+            [
+                parseFunctionInput(parameters, functionInputs[0])[0],
+                parseFunctionInput(parameters, functionInputs[1])[0],
+                parseFunctionInput(parameters, functionInputs[2])[0],
+            ], parameters
+        ).then(setRenderData);
+    }, []);
+
     useEffect(() => {
         if (!runGenerateShape) {
             return;
         }
-
         setSnackbarMessage(null);
 
         for (const paramError of parameterErrors.current) {
@@ -79,11 +80,12 @@ export default function App() {
             functions.push(func);
         }
         console.log("Time taken to parse functions = " + (Date.now() - startTime) + "ms");
-
-        setSnackbarMessage(new SnackbarSuccess("Successfully rendered shape"));
-        setRenderParams({ functions: functions, parameters: parameters });
-
         setRunGenerateShape(false);
+
+        RenderJob.generateRenderData(functions, parameters).then((renderData) => {
+            setRenderData(renderData);
+            setSnackbarMessage(new SnackbarSuccess("Successfully rendered shape"));
+        });
     }, [functionInputs, parameters, runGenerateShape]);
 
     const applyTemplate = (templateItem) => {
@@ -96,7 +98,7 @@ export default function App() {
     return (
         <Box id="app">
             <Templates id="templates" applyTemplate={applyTemplate} />
-            <Scene renderParams={renderParams} />
+            <Scene renderData={renderData} />
             <Fields
                 functions={functionInputs}
                 setFunctions={setFunctions}

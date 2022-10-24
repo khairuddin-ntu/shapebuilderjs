@@ -6,10 +6,6 @@ export class RenderData2D {
     addPoint(point) {
         this.#points.push(point);
     }
-
-    clear() {
-        this.#points = [];
-    }
 }
 
 export class RenderData3D {
@@ -40,12 +36,5 @@ export class RenderData3D {
 
     addUV(u, v) {
         this.#uvs.push(u, v);
-    }
-
-    clear() {
-        this.#indices = [];
-        this.#vertices = [];
-        this.#normals = [];
-        this.#uvs = [];
     }
 }
