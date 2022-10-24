@@ -38,6 +38,8 @@ export default function App() {
         if (!runGenerateShape) {
             return;
         }
+
+        setRunGenerateShape(false);
         setSnackbarMessage(null);
 
         for (const paramError of parameterErrors.current) {
@@ -45,8 +47,6 @@ export default function App() {
             setSnackbarMessage(paramError);
             return;
         }
-
-        setRunGenerateShape(false);
 
         RenderJob.generateRenderData(functionInputs, parameters)
             .then(
