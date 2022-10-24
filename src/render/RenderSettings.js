@@ -18,6 +18,14 @@ export class RenderSettings3D {
     #normals = [];
     #uvs = [];
 
+    get indices() { return this.#indices; }
+
+    get vertices() { return this.#vertices; }
+
+    get normals() { return this.#normals; }
+
+    get uvs() { return this.#uvs; }
+
     addIndices(...indices) {
         this.#indices.push(...indices);
     }
