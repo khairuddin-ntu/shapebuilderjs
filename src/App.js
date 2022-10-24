@@ -49,17 +49,19 @@ export default function App() {
         setRunGenerateShape(false);
 
         RenderJob.generateRenderData(functionInputs, parameters)
-        .catch((err) => {
-            if (!(err instanceof ShapeGenError)) {
-                throw err;
-            }
+            .then(
+                (renderData) => {
+                    setRenderData(renderData);
+                    setSnackbarMessage(new SnackbarSuccess("Successfully rendered shape"));
+                },
+                (err) => {
+                    if (!(err instanceof ShapeGenError)) {
+                        throw err;
+                    }
 
-            setSnackbarMessage(new SnackbarError(err.message));
-        })
-        .then((renderData) => {
-            setRenderData(renderData);
-            setSnackbarMessage(new SnackbarSuccess("Successfully rendered shape"));
-        });
+                    setSnackbarMessage(new SnackbarError(err.message));
+                }
+            );
     }, [functionInputs, parameters, runGenerateShape]);
 
     const applyTemplate = (templateItem) => {
