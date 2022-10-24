@@ -1,4 +1,4 @@
-export class RenderSettings2D {
+export class RenderData2D {
     #points = [];
 
     get points() { return this.#points; }
@@ -12,7 +12,7 @@ export class RenderSettings2D {
     }
 }
 
-export class RenderSettings3D {
+export class RenderData3D {
     #indices = [];
     #vertices = [];
     #normals = [];
