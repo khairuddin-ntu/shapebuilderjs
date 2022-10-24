@@ -33,14 +33,7 @@ export default function App() {
 
         setFunctions(functionInputs);
         setParameters(parameters);
-
-        RenderJob.generateRenderData(
-            [
-                parseFunctionInput(parameters, functionInputs[0])[0],
-                parseFunctionInput(parameters, functionInputs[1])[0],
-                parseFunctionInput(parameters, functionInputs[2])[0],
-            ], parameters
-        ).then(setRenderData);
+        setRunGenerateShape(true);
     }, []);
 
     useEffect(() => {
