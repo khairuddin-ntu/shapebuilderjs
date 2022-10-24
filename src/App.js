@@ -4,13 +4,11 @@ import MuiAlert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import Scene from './render/Scene';
 import Fields from './fields/Fields';
-import parseFunctionInput from './fields/functions/parser/FunctionParser';
 import Templates from './templates/TemplatesSection';
 import * as RenderJob from "./render/RenderJob";
 import Parameter from './common/Parameter';
-import { FUNCTION_NAMES } from './common/Constants';
-import { isEmptyOrBlank } from './common/StringUtils';
 import { SnackbarError, SnackbarSuccess } from './common/SnackbarMessage';
+import ShapeGenError from "./common/ShapeGenError";
 
 import './App.css';
 
@@ -48,34 +46,17 @@ export default function App() {
             return;
         }
 
-        const functions = [];
-        let functionName;
-        const startTime = Date.now();
-        for (const [i, funcInput] of functionInputs.entries()) {
-            functionName = FUNCTION_NAMES[i];
-
-            if (isEmptyOrBlank(funcInput)) {
-                setSnackbarMessage(new SnackbarError("Function " + functionName + " cannot be blank"));
-                return;
-            }
-
-            const [func, errorMessage] = parseFunctionInput(parameters, funcInput);
-            if (errorMessage) {
-                setSnackbarMessage(new SnackbarError(errorMessage));
-                return;
-            }
-
-            if (!func) {
-                setSnackbarMessage(new SnackbarError("Unknown error while parsing function " + functionName));
-                return;
-            }
-
-            functions.push(func);
-        }
-        console.log("Time taken to parse functions = " + (Date.now() - startTime) + "ms");
         setRunGenerateShape(false);
 
-        RenderJob.generateRenderData(functions, parameters).then((renderData) => {
+        RenderJob.generateRenderData(functionInputs, parameters)
+        .catch((err) => {
+            if (!(err instanceof ShapeGenError)) {
+                throw err;
+            }
+
+            setSnackbarMessage(new SnackbarError(err.message));
+        })
+        .then((renderData) => {
             setRenderData(renderData);
             setSnackbarMessage(new SnackbarSuccess("Successfully rendered shape"));
         });

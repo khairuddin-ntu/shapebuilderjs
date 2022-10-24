@@ -1,10 +1,38 @@
 import { Vector3 } from "three";
+import parseFunctionInput from "../fields/functions/parser/FunctionParser";
 import * as FunctionProcessor from "../common/FunctionProcessor";
 import { RenderData2D, RenderData3D } from "../common/RenderData";
+import { FUNCTION_NAMES } from "../common/Constants";
+import { isEmptyOrBlank } from "../common/StringUtils";
+import ShapeGenError from "../common/ShapeGenError";
 
 const EPS = 0.00001;
 
-export async function generateRenderData(functions, parameters) {
+export async function generateRenderData(functionInputs, parameters) {
+    const functions = [];
+
+    let functionName;
+    const startTime = Date.now();
+    for (const [i, funcInput] of functionInputs.entries()) {
+        functionName = FUNCTION_NAMES[i];
+
+        if (isEmptyOrBlank(funcInput)) {
+            throw new ShapeGenError(`Function ${functionName} cannot be blank`);
+        }
+
+        const [func, errorMessage] = parseFunctionInput(parameters, funcInput);
+        if (errorMessage) {
+            throw new ShapeGenError(errorMessage);
+        }
+
+        if (!func) {
+            throw new ShapeGenError(`Unknown error while parsing function ${functionName}`);
+        }
+
+        functions.push(func);
+    }
+    console.log("Time taken to parse functions = " + (Date.now() - startTime) + "ms");
+
     if (parameters.length === 1) {
         return generate2dShapeData(functions, parameters[0]);
     } else {
@@ -34,35 +62,40 @@ function generate3dShapeData(functions, parameters) {
     const params = parameters.map((param) => ({ name: param.name, value: -1 }));
 
     const startTime = Date.now();
-    if (parameters.length === 2) {
-        generate2ParamPoints(
-            renderData,
-            (u, v, target) => {
-                params[0].value = parameters[0].start + (parameters[0].range * u);
-                params[1].value = parameters[1].start + (parameters[1].range * v);
+    switch (parameters.length) {
+        case 2:
+            generate2ParamPoints(
+                renderData,
+                (u, v, target) => {
+                    params[0].value = parameters[0].start + (parameters[0].range * u);
+                    params[1].value = parameters[1].start + (parameters[1].range * v);
 
-                target.set(
-                    FunctionProcessor.calculateValue(functions[0], params),
-                    FunctionProcessor.calculateValue(functions[1], params),
-                    FunctionProcessor.calculateValue(functions[2], params),
-                );
-            }, parameters[0], parameters[1]
-        );
-    } else {
-        generate3ParamPoints(
-            renderData,
-            (u, v, w, target) => {
-                params[0].value = parameters[0].start + (parameters[0].range * u);
-                params[1].value = parameters[1].start + (parameters[1].range * v);
-                params[2].value = parameters[2].start + (parameters[2].range * w);
+                    target.set(
+                        FunctionProcessor.calculateValue(functions[0], params),
+                        FunctionProcessor.calculateValue(functions[1], params),
+                        FunctionProcessor.calculateValue(functions[2], params),
+                    );
+                }, parameters[0], parameters[1]
+            );
+            break;
+        case 3:
+            generate3ParamPoints(
+                renderData,
+                (u, v, w, target) => {
+                    params[0].value = parameters[0].start + (parameters[0].range * u);
+                    params[1].value = parameters[1].start + (parameters[1].range * v);
+                    params[2].value = parameters[2].start + (parameters[2].range * w);
 
-                target.set(
-                    FunctionProcessor.calculateValue(functions[0], params),
-                    FunctionProcessor.calculateValue(functions[1], params),
-                    FunctionProcessor.calculateValue(functions[2], params),
-                );
-            }, parameters[0], parameters[1], parameters[2]
-        );
+                    target.set(
+                        FunctionProcessor.calculateValue(functions[0], params),
+                        FunctionProcessor.calculateValue(functions[1], params),
+                        FunctionProcessor.calculateValue(functions[2], params),
+                    );
+                }, parameters[0], parameters[1], parameters[2]
+            );
+            break;
+        default:
+            throw new ShapeGenError(`Unknown number of parameters. ${parameters.length} parameters found`);
     }
     console.log("Time taken to generate points = " + (Date.now() - startTime) + "ms");
 
