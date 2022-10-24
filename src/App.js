@@ -22,15 +22,12 @@ export default function App() {
     const parameterErrors = useRef([null, null, null]);
 
     useEffect(() => {
-        const functionInputs = [
+        setFunctions([
             "2.5cos(-pi/2+u*pi)cos(-pi+2v*pi)",
             "2.5cos(-pi/2+u*pi)sin(-pi+2v*pi)",
             "2.5sin(-pi/2+u*pi)"
-        ];
-        const parameters = [new Parameter("u"), new Parameter("v")];
-
-        setFunctions(functionInputs);
-        setParameters(parameters);
+        ]);
+        setParameters([new Parameter("u"), new Parameter("v")]);
         setRunGenerateShape(true);
     }, []);
 
