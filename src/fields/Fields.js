@@ -21,19 +21,23 @@ export default function Fields(props) {
             id="fields"
             sx={{ borderTop: 1 }}
         >
-            <FunctionsSection
-                id="functions-section"
-                className="field__section"
-                functions={functionInputs}
-                setFunctions={setFunctions}
-            />
-            <ParametersSection
-                id="parameters-section"
-                className="field__section"
-                parameters={parameters}
-                setParameters={setParameters}
-                parameterErrors={parameterErrors}
-            />
+            {functionInputs &&
+                <FunctionsSection
+                    id="functions-section"
+                    className="field__section"
+                    functions={functionInputs}
+                    setFunctions={setFunctions}
+                />
+            }
+            {parameters &&
+                <ParametersSection
+                    id="parameters-section"
+                    className="field__section"
+                    parameters={parameters}
+                    setParameters={setParameters}
+                    parameterErrors={parameterErrors}
+                />
+            }
             <Box id="actions-section">
                 <Button
                     variant="contained"

@@ -1,7 +1,6 @@
 import * as THREE from 'three';
-import ParametricGeometry from './geometries/ParametricGeometry';
 import TextGeometry from './geometries/TextGeometry';
-import * as FunctionProcessor from '../common/FunctionProcessor';
+import { TYPE_2D_RENDER, TYPE_3D_RENDER } from '../common/Constants';
 
 const SHAPE_2D_MATERIAL = new THREE.LineBasicMaterial({ color: 0x00ff00 });
 const SHAPE_3D_MATERIAL = new THREE.MeshStandardMaterial({
@@ -27,11 +26,17 @@ export default class ShapeRenderer {
         });
     }
 
-    renderShape({ functions, parameters }) {
-        if (parameters.length === 1) {
-            this.#renderLine(functions, parameters[0]);
-        } else {
-            this.#render3d(functions, parameters);
+    renderShape(settings) {
+        switch (settings.type) {
+            case TYPE_2D_RENDER:
+                this.#renderLine(settings);
+                break;
+            case TYPE_3D_RENDER:
+                this.#render3d(settings);
+                break;
+            default:
+                console.error("Invalid render data type");
+                break;
         }
     }
 
@@ -155,71 +160,22 @@ export default class ShapeRenderer {
         axesGroup.add(mesh);
     }
 
-    #renderLine(functions, uParameter) {
+    #renderLine(settings) {
         this.#removeExistingShape();
 
-        this.#shape = new THREE.Group();
-
-        let prevVector, currentVector;
-        let points, geometry, line;
-
-        const params = [{ name: uParameter.name, value: -1 }];
-        for (let u = uParameter.start; u <= uParameter.end; u += uParameter.range / uParameter.resolution) {
-            params[0].value = u;
-            currentVector = new THREE.Vector3(
-                FunctionProcessor.calculateValue(functions[0], params),
-                FunctionProcessor.calculateValue(functions[1], params),
-                FunctionProcessor.calculateValue(functions[2], params)
-            );
-
-            if (prevVector) {
-                // Generate line segment from previous point to current point
-                points = [prevVector, currentVector];
-                geometry = new THREE.BufferGeometry().setFromPoints(points);
-                line = new THREE.Line(geometry, SHAPE_2D_MATERIAL);
-                this.#shape.add(line);
-            }
-
-            prevVector = currentVector;
-        }
-
+        const geometry = new THREE.BufferGeometry().setFromPoints(settings.points);
+        this.#shape = new THREE.Line(geometry, SHAPE_2D_MATERIAL);
         this.#shapeGroup.add(this.#shape);
     }
 
-    #render3d(functions, parameters) {
+    #render3d(settings) {
         this.#removeExistingShape();
 
-        const params = parameters.map((param) => ({ name: param.name, value: -1 }));
-
-        let geometry;
-        if (parameters.length === 2) {
-            geometry = new ParametricGeometry(
-                (u, v, target) => {
-                    params[0].value = parameters[0].start + (parameters[0].range * u);
-                    params[1].value = parameters[1].start + (parameters[1].range * v);
-
-                    target.set(
-                        FunctionProcessor.calculateValue(functions[0], params),
-                        FunctionProcessor.calculateValue(functions[1], params),
-                        FunctionProcessor.calculateValue(functions[2], params),
-                    );
-                }, parameters
-            );
-        } else {
-            geometry = new ParametricGeometry(
-                (u, v, w, target) => {
-                    params[0].value = parameters[0].start + (parameters[0].range * u);
-                    params[1].value = parameters[1].start + (parameters[1].range * v);
-                    params[2].value = parameters[2].start + (parameters[2].range * w);
-
-                    target.set(
-                        FunctionProcessor.calculateValue(functions[0], params),
-                        FunctionProcessor.calculateValue(functions[1], params),
-                        FunctionProcessor.calculateValue(functions[2], params),
-                    );
-                }, parameters
-            );
-        }
+        let geometry = new THREE.BufferGeometry();
+        geometry.setIndex(settings.indices);
+        geometry.setAttribute('position', new THREE.Float32BufferAttribute(settings.vertices, 3));
+        geometry.setAttribute('normal', new THREE.Float32BufferAttribute(settings.normals, 3));
+        geometry.setAttribute('uv', new THREE.Float32BufferAttribute(settings.uvs, 2));
 
         this.#shape = new THREE.Mesh(geometry, SHAPE_3D_MATERIAL);
         this.#shapeGroup.add(this.#shape);

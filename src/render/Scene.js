@@ -7,6 +7,7 @@ export default function Scene(props) {
     let currentMouseX;
     let currentMouseY;
     let isDragging = false;
+
     const renderer = useRef();
     const canvasRef = useRef();
 
@@ -14,12 +15,12 @@ export default function Scene(props) {
 
     useEffect(() => {
         const currentRenderer = renderer.current;
-        if (!currentRenderer) {
+        if (!currentRenderer || !props.renderData) {
             return;
         }
 
-        currentRenderer.renderShape(props.renderParams);
-    }, [props.renderParams]);
+        currentRenderer.renderShape(props.renderData);
+    }, [props.renderData]);
 
     const startDrag = (event) => {
         currentMouseX = event.clientX;
