@@ -1,8 +1,7 @@
 import { Vector3 } from "three";
 import parseFunctionInput from "../fields/functions/parser/FunctionParser";
 import * as FunctionProcessor from "../common/FunctionProcessor";
-import { RenderData2D, RenderData3D } from "../common/RenderData";
-import { FUNCTION_NAMES } from "../common/Constants";
+import { TYPE_2D_RENDER, TYPE_3D_RENDER, FUNCTION_NAMES } from "../common/Constants";
 import { isEmptyOrBlank } from "../common/StringUtils";
 import ShapeGenError from "../common/ShapeGenError";
 
@@ -41,7 +40,7 @@ export async function generateRenderData(functionInputs, parameters) {
 }
 
 function generate2dShapeData(functions, parameter) {
-    const renderData = new RenderData2D();
+    const renderData = { type: TYPE_2D_RENDER, points: [] };
 
     const params = [{ name: parameter.name, value: -1 }];
     for (let u = parameter.start; u <= parameter.end; u += parameter.range / parameter.resolution) {
@@ -57,7 +56,7 @@ function generate2dShapeData(functions, parameter) {
 }
 
 function generate3dShapeData(functions, parameters) {
-    const renderData = new RenderData3D();
+    const renderData = { type: TYPE_3D_RENDER, indices: [], vertices: [], normals: [], uvs: [] };
 
     const params = parameters.map((param) => ({ name: param.name, value: -1 }));
 

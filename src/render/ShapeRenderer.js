@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import TextGeometry from './geometries/TextGeometry';
-import { RenderData2D, RenderData3D } from '../common/RenderData';
+import { TYPE_2D_RENDER, TYPE_3D_RENDER } from '../common/Constants';
 
 const SHAPE_2D_MATERIAL = new THREE.LineBasicMaterial({ color: 0x00ff00 });
 const SHAPE_3D_MATERIAL = new THREE.MeshStandardMaterial({
@@ -27,13 +27,16 @@ export default class ShapeRenderer {
     }
 
     renderShape(settings) {
-        if (settings instanceof RenderData2D) {
-            this.#renderLine(settings);
-            return;
-        }
-
-        if (settings instanceof RenderData3D) {
-            this.#render3d(settings);
+        switch (settings.type) {
+            case TYPE_2D_RENDER:
+                this.#renderLine(settings);
+                break;
+            case TYPE_3D_RENDER:
+                this.#render3d(settings);
+                break;
+            default:
+                console.error("Invalid render data type");
+                break;
         }
     }
 
