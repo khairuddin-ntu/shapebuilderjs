@@ -5,9 +5,7 @@ import Snackbar from '@mui/material/Snackbar';
 import Scene from './render/Scene';
 import Fields from './fields/Fields';
 import Templates from './templates/TemplatesSection';
-import * as RenderJob from "./render/RenderJob";
 import { SnackbarError, SnackbarSuccess } from './common/SnackbarMessage';
-import ShapeGenError from "./common/ShapeGenError";
 
 import './App.css';
 import { TEMPLATES } from './common/Constants';
@@ -21,7 +19,9 @@ export default function App() {
 
     const parameterErrors = useRef();
 
-    useEffect(() => applyTemplate(TEMPLATES[2]), []);
+    useEffect(() => {
+        applyTemplate(TEMPLATES[2]);
+    }, []);
 
     useEffect(() => {
         if (!runGenerateShape) {
@@ -37,20 +37,25 @@ export default function App() {
             return;
         }
 
-        RenderJob.generateRenderData(functionInputs, parameters)
-            .then(
-                (renderData) => {
-                    setRenderData(renderData);
-                    setSnackbarMessage(new SnackbarSuccess("Successfully rendered shape"));
-                },
-                (err) => {
-                    if (!(err instanceof ShapeGenError)) {
-                        throw err;
-                    }
+        const renderWorker = new Worker(new URL("./render/RenderJob.js", import.meta.url));
+        renderWorker.onmessage = (event) => {
+            const renderData = event.data;
+            console.log(renderData);
+            setRenderData(renderData);
+            setSnackbarMessage(new SnackbarSuccess("Successfully rendered shape"));
+            renderWorker.terminate();
+        };
 
-                    setSnackbarMessage(new SnackbarError(err.message));
-                }
-            );
+        renderWorker.onerror = (err) => {
+            console.error(err);
+            setSnackbarMessage(new SnackbarError("Error occured while generating render data"));
+            renderWorker.terminate();
+        };
+
+        renderWorker.postMessage({
+            functionInputs: functionInputs,
+            parameters: parameters.map((param) => param.asObject())
+        });
     }, [functionInputs, parameters, runGenerateShape]);
 
     const applyTemplate = (templateItem) => {

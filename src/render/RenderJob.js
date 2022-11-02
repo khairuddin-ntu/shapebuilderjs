@@ -7,7 +7,7 @@ import ShapeGenError from "../common/ShapeGenError";
 
 const EPS = 0.00001;
 
-export async function generateRenderData(functionInputs, parameters) {
+function generateRenderData(functionInputs, parameters) {
     const functions = [];
 
     let functionName;
@@ -33,9 +33,9 @@ export async function generateRenderData(functionInputs, parameters) {
     console.log("Time taken to parse functions = " + (Date.now() - startTime) + "ms");
 
     if (parameters.length === 1) {
-        return generate2dShapeData(functions, parameters[0]);
+        postMessage(generate2dShapeData(functions, parameters[0]));
     } else {
-        return generate3dShapeData(functions, parameters);
+        postMessage(generate3dShapeData(functions, parameters));
     }
 }
 
@@ -351,3 +351,8 @@ function generate3ParamPoints(renderData, func, paramU, paramV, paramW) {
         totalCount += (vCount * wCount);
     }
 }
+
+onmessage = (event) => {
+    const {functionInputs, parameters} = event.data;
+    generateRenderData(functionInputs, parameters);
+};
