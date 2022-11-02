@@ -10,6 +10,8 @@ import { SnackbarError, SnackbarSuccess } from './common/SnackbarMessage';
 import './App.css';
 import { TEMPLATES } from './common/Constants';
 
+const renderWorker = new Worker(new URL("./render/RenderJob.js", import.meta.url));
+
 export default function App() {
     const [snackbarMessage, setSnackbarMessage] = useState();
     const [functionInputs, setFunctions] = useState();
@@ -20,6 +22,18 @@ export default function App() {
     const parameterErrors = useRef();
 
     useEffect(() => {
+        renderWorker.onmessage = (event) => {
+            const renderData = event.data;
+            console.log(renderData);
+            setRenderData(renderData);
+            setSnackbarMessage(new SnackbarSuccess("Successfully rendered shape"));
+        };
+
+        renderWorker.onerror = (err) => {
+            console.error(err);
+            setSnackbarMessage(new SnackbarError("Error occured while generating render data"));
+        };
+
         applyTemplate(TEMPLATES[2]);
     }, []);
 
@@ -36,21 +50,6 @@ export default function App() {
             setSnackbarMessage(paramError);
             return;
         }
-
-        const renderWorker = new Worker(new URL("./render/RenderJob.js", import.meta.url));
-        renderWorker.onmessage = (event) => {
-            const renderData = event.data;
-            console.log(renderData);
-            setRenderData(renderData);
-            setSnackbarMessage(new SnackbarSuccess("Successfully rendered shape"));
-            renderWorker.terminate();
-        };
-
-        renderWorker.onerror = (err) => {
-            console.error(err);
-            setSnackbarMessage(new SnackbarError("Error occured while generating render data"));
-            renderWorker.terminate();
-        };
 
         renderWorker.postMessage({
             functionInputs: functionInputs,
