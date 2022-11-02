@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/shapebuilderjs/static/css/main.3efe23e3.css",
-    "main.js": "/shapebuilderjs/static/js/main.4de8b798.js",
-    "static/js/723.ecc6c6b4.chunk.js": "/shapebuilderjs/static/js/723.ecc6c6b4.chunk.js",
-    "static/js/934.cec5b412.chunk.js": "/shapebuilderjs/static/js/934.cec5b412.chunk.js",
-    "index.html": "/shapebuilderjs/index.html",
-    "main.3efe23e3.css.map": "/shapebuilderjs/static/css/main.3efe23e3.css.map",
-    "main.4de8b798.js.map": "/shapebuilderjs/static/js/main.4de8b798.js.map",
-    "723.ecc6c6b4.chunk.js.map": "/shapebuilderjs/static/js/723.ecc6c6b4.chunk.js.map",
-    "934.cec5b412.chunk.js.map": "/shapebuilderjs/static/js/934.cec5b412.chunk.js.map"
+    "main.css": "/ShapeBuilderJS/static/css/main.3efe23e3.css",
+    "main.js": "/ShapeBuilderJS/static/js/main.879c24d8.js",
+    "static/js/723.1e1486ff.chunk.js": "/ShapeBuilderJS/static/js/723.1e1486ff.chunk.js",
+    "static/js/934.cec5b412.chunk.js": "/ShapeBuilderJS/static/js/934.cec5b412.chunk.js",
+    "index.html": "/ShapeBuilderJS/index.html",
+    "main.3efe23e3.css.map": "/ShapeBuilderJS/static/css/main.3efe23e3.css.map",
+    "main.879c24d8.js.map": "/ShapeBuilderJS/static/js/main.879c24d8.js.map",
+    "723.1e1486ff.chunk.js.map": "/ShapeBuilderJS/static/js/723.1e1486ff.chunk.js.map",
+    "934.cec5b412.chunk.js.map": "/ShapeBuilderJS/static/js/934.cec5b412.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.3efe23e3.css",
-    "static/js/main.4de8b798.js"
+    "static/js/main.879c24d8.js"
   ]
 }
