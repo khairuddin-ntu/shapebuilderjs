@@ -12,4 +12,11 @@ export default class Parameter {
     get range() {
         return this.end - this.start;
     }
+
+    asObject() {
+        return {
+            name: this.name, start: this.start, end: this.end, resolution: this.resolution,
+            get range() { return this.end - this.start }
+        }
+    }
 }
