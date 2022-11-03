@@ -23,6 +23,7 @@ export default function TemplateItem(props) {
                 loading="lazy"
                 width="150"
                 height="150"
+                alt={templateItem.imageFileName.slice(0, -4)}
             />
             <Typography>{templateItem.name}</Typography>
         </Stack>
