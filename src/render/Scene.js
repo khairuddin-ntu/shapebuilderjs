@@ -53,10 +53,10 @@ export default function Scene(props) {
         <canvas
             id="canvas"
             ref={canvasRef}
-            onMouseDown={startDrag}
-            onMouseMove={onDrag}
-            onMouseUp={endDrag}
-            onMouseOut={endDrag}
+            onPointerDown={startDrag}
+            onPointerMove={onDrag}
+            onPointerUp={endDrag}
+            onPointerOut={endDrag}
             onWheel={changeShapeZoom}
         />
     );
