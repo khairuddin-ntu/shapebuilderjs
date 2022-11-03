@@ -1,7 +1,7 @@
 {
   "name": "shapebuilderjs",
   "version": "0.1.0",
-  "homepage": "https://khairuddin-ntu.github.io/shapebuilderjs",
+  "homepage": ".",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.0",
