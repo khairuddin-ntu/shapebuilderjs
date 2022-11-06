@@ -1,6 +1,7 @@
 {
   "name": "shapebuilderjs",
   "version": "0.1.0",
+  "//": "Change homepage to 'https://khairuddin-ntu.github.io/shapebuilder' before publishing",
   "homepage": ".",
   "private": true,
   "dependencies": {
