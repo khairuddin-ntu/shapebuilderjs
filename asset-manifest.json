@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "./static/css/main.3efe23e3.css",
-    "main.js": "./static/js/main.5e1ef7e3.js",
-    "static/js/723.1c64d63f.chunk.js": "./static/js/723.1c64d63f.chunk.js",
-    "static/js/934.cec5b412.chunk.js": "./static/js/934.cec5b412.chunk.js",
-    "index.html": "./index.html",
-    "main.3efe23e3.css.map": "./static/css/main.3efe23e3.css.map",
-    "main.5e1ef7e3.js.map": "./static/js/main.5e1ef7e3.js.map",
-    "723.1c64d63f.chunk.js.map": "./static/js/723.1c64d63f.chunk.js.map",
-    "934.cec5b412.chunk.js.map": "./static/js/934.cec5b412.chunk.js.map"
+    "main.css": "/shapebuilderjs/static/css/main.3efe23e3.css",
+    "main.js": "/shapebuilderjs/static/js/main.53946f79.js",
+    "static/js/723.ecc6c6b4.chunk.js": "/shapebuilderjs/static/js/723.ecc6c6b4.chunk.js",
+    "static/js/934.cec5b412.chunk.js": "/shapebuilderjs/static/js/934.cec5b412.chunk.js",
+    "index.html": "/shapebuilderjs/index.html",
+    "main.3efe23e3.css.map": "/shapebuilderjs/static/css/main.3efe23e3.css.map",
+    "main.53946f79.js.map": "/shapebuilderjs/static/js/main.53946f79.js.map",
+    "723.ecc6c6b4.chunk.js.map": "/shapebuilderjs/static/js/723.ecc6c6b4.chunk.js.map",
+    "934.cec5b412.chunk.js.map": "/shapebuilderjs/static/js/934.cec5b412.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.3efe23e3.css",
-    "static/js/main.5e1ef7e3.js"
+    "static/js/main.53946f79.js"
   ]
 }
