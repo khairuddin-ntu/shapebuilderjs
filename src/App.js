@@ -71,7 +71,10 @@ export default function App() {
     return (
         <Box id="app">
             <Templates id="templates" applyTemplate={applyTemplate} />
-            <Scene renderData={renderData} />
+            <Scene
+                renderData={renderData}
+                isShapeLoading={isShapeLoading}
+            />
             <Fields
                 functions={functionInputs}
                 setFunctions={setFunctions}
