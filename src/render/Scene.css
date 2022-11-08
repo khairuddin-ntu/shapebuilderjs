@@ -8,12 +8,8 @@
     height: 100%;
 }
 
-#loading__bg {
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
 #loading__progress {
     position: relative;
-    left: 45%;
-    top: 36%;
+    left: 2%;
+    top: 79%;
 }

@@ -65,12 +65,10 @@ export default function Scene(props) {
             />
             {
                 isShapeLoading &&
-                <Box id="loading__bg">
-                    <CircularProgress
-                        id="loading__progress"
-                        size="10rem"
-                    />
-                </Box>
+                <CircularProgress
+                    id="loading__progress"
+                    size="6rem"
+                />
             }
         </Box>
     );
