@@ -27,6 +27,10 @@ export default function Scene(props) {
     }, [props.renderData]);
 
     const startDrag = (event) => {
+        if (isShapeLoading) {
+            return;
+        }
+
         currentMouseX = event.clientX;
         currentMouseY = event.clientY;
 
