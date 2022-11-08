@@ -18,6 +18,7 @@ export default function App() {
     const [parameters, setParameters] = useState();
     const [renderData, setRenderData] = useState();
     const [runGenerateShape, setRunGenerateShape] = useState();
+    const [isShapeLoading, setShapeLoading] = useState(false);
 
     const parameterErrors = useRef();
 
@@ -26,11 +27,13 @@ export default function App() {
             const renderData = event.data;
             console.log(renderData);
             setRenderData(renderData);
+            setShapeLoading(false);
             setSnackbarMessage(new SnackbarSuccess("Successfully rendered shape"));
         };
 
         renderWorker.onerror = (err) => {
             console.error(err);
+            setShapeLoading(false);
             setSnackbarMessage(new SnackbarError("Error occured while generating render data"));
         };
 
@@ -43,7 +46,6 @@ export default function App() {
         }
 
         setRunGenerateShape(false);
-        setSnackbarMessage(null);
 
         for (const paramError of parameterErrors.current) {
             if (!paramError) continue;
@@ -51,6 +53,8 @@ export default function App() {
             return;
         }
 
+        setShapeLoading(true);
+        setSnackbarMessage(null);
         renderWorker.postMessage({
             functionInputs: functionInputs,
             parameters: parameters.map((param) => param.asObject())
@@ -67,7 +71,10 @@ export default function App() {
     return (
         <Box id="app">
             <Templates id="templates" applyTemplate={applyTemplate} />
-            <Scene renderData={renderData} />
+            <Scene
+                renderData={renderData}
+                isShapeLoading={isShapeLoading}
+            />
             <Fields
                 functions={functionInputs}
                 setFunctions={setFunctions}
@@ -75,6 +82,7 @@ export default function App() {
                 setParameters={setParameters}
                 parameterErrors={parameterErrors}
                 generateShape={() => setRunGenerateShape(true)}
+                isShapeLoading={isShapeLoading}
             />
             {
                 snackbarMessage &&
