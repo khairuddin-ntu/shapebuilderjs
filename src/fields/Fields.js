@@ -13,6 +13,8 @@ export default function Fields(props) {
     // Functions state
     const functionInputs = props.functions;
     const setFunctions = props.setFunctions;
+    // Button state
+    const isShapeLoading = props.isShapeLoading;
 
     const generateShape = props.generateShape;
 
@@ -42,6 +44,7 @@ export default function Fields(props) {
                 <Button
                     variant="contained"
                     onClick={generateShape}
+                    disabled={isShapeLoading}
                 >
                     Generate shape
                 </Button>

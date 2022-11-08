@@ -79,6 +79,7 @@ export default function App() {
                 setParameters={setParameters}
                 parameterErrors={parameterErrors}
                 generateShape={() => setRunGenerateShape(true)}
+                isShapeLoading={isShapeLoading}
             />
             {
                 snackbarMessage &&
