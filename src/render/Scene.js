@@ -1,6 +1,4 @@
 import React, { useRef, useEffect } from 'react';
-import Box from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
 import ShapeRenderer from './ShapeRenderer';
 
 import './Scene.css';
@@ -58,22 +56,13 @@ export default function Scene(props) {
     const changeShapeZoom = (event) => renderer.current.zoomBy(event.deltaY);
 
     return (
-        <Box id="scene">
-            <canvas
-                ref={canvasRef}
-                onPointerDown={startDrag}
-                onPointerMove={onDrag}
-                onPointerUp={endDrag}
-                onPointerOut={endDrag}
-                onWheel={changeShapeZoom}
-            />
-            {
-                isShapeLoading &&
-                <CircularProgress
-                    id="loading__progress"
-                    size="6rem"
-                />
-            }
-        </Box>
+        <canvas
+            ref={canvasRef}
+            onPointerDown={startDrag}
+            onPointerMove={onDrag}
+            onPointerUp={endDrag}
+            onPointerOut={endDrag}
+            onWheel={changeShapeZoom}
+        />
     );
 }

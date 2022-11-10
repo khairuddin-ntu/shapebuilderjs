@@ -1,4 +1,6 @@
 import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
+import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import FunctionsSection from './functions/FunctionsSection';
 import ParametersSection from './parameters/ParametersSection';
@@ -13,7 +15,7 @@ export default function Fields(props) {
     // Functions state
     const functionInputs = props.functions;
     const setFunctions = props.setFunctions;
-    // Button state
+    // Loading state
     const isShapeLoading = props.isShapeLoading;
 
     const generateShape = props.generateShape;
@@ -40,7 +42,15 @@ export default function Fields(props) {
                     parameterErrors={parameterErrors}
                 />
             }
-            <Box id="actions-section">
+            <Stack
+                id="actions-section"
+                direction="row"
+                spacing={3}
+                alignItems="center"
+            >
+                {isShapeLoading &&
+                    <CircularProgress />
+                }
                 <Button
                     variant="contained"
                     onClick={generateShape}
@@ -48,7 +58,7 @@ export default function Fields(props) {
                 >
                     Generate shape
                 </Button>
-            </Box>
+            </Stack>
         </Box>
     );
 }
