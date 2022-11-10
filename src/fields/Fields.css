@@ -21,8 +21,9 @@
 
 #actions-section {
     grid-area: actions;
-    place-self: center end;
+    place-self: end;
     margin-right: 1vw;
+    margin-bottom: 0.5vw;
 }
 
 .input-label {
