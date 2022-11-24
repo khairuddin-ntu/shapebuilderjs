@@ -16,18 +16,18 @@ function generateRenderData(functionInputs, parameters) {
         functionName = FUNCTION_NAMES[i];
 
         if (isEmptyOrBlank(funcInput)) {
-            postMessage([null, new ShapeGenError(`Function ${functionName} cannot be blank`)]);
+            postMessage([null, new ShapeGenError(`Function ${functionName}: Function cannot be blank`)]);
             return;
         }
 
         const [func, errorMessage] = parseFunctionInput(parameters, funcInput);
         if (errorMessage) {
-            postMessage([null, new ShapeGenError(errorMessage)]);
+            postMessage([null, new ShapeGenError(`Function ${functionName}: ${errorMessage}`)]);
             return;
         }
 
         if (!func) {
-            postMessage([null, new ShapeGenError(`Unknown error while parsing function ${functionName}`)]);
+            postMessage([null, new ShapeGenError(`Function ${functionName}: Unknown error while parsing function`)]);
             return;
         }
 
