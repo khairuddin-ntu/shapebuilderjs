@@ -16,16 +16,19 @@ function generateRenderData(functionInputs, parameters) {
         functionName = FUNCTION_NAMES[i];
 
         if (isEmptyOrBlank(funcInput)) {
-            throw new ShapeGenError(`Function ${functionName} cannot be blank`);
+            postMessage([null, new ShapeGenError(`Function ${functionName} cannot be blank`)]);
+            return;
         }
 
         const [func, errorMessage] = parseFunctionInput(parameters, funcInput);
         if (errorMessage) {
-            throw new ShapeGenError(errorMessage);
+            postMessage([null, new ShapeGenError(errorMessage)]);
+            return;
         }
 
         if (!func) {
-            throw new ShapeGenError(`Unknown error while parsing function ${functionName}`);
+            postMessage([null, new ShapeGenError(`Unknown error while parsing function ${functionName}`)]);
+            return;
         }
 
         functions.push(func);
@@ -52,7 +55,7 @@ function generate2dShapeData(functions, parameter) {
         ));
     }
 
-    return renderData;
+    return [renderData, null];
 }
 
 function generate3dShapeData(functions, parameters) {
@@ -94,11 +97,11 @@ function generate3dShapeData(functions, parameters) {
             );
             break;
         default:
-            throw new ShapeGenError(`Unknown number of parameters. ${parameters.length} parameters found`);
+            return [null, new ShapeGenError(`Unknown number of parameters. ${parameters.length} parameters found`)];
     }
     console.log("Time taken to generate points = " + (Date.now() - startTime) + "ms");
 
-    return renderData;
+    return [renderData, null];
 }
 
 function generate2ParamPoints(renderData, func, paramU, paramV) {

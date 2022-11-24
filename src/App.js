@@ -24,17 +24,27 @@ export default function App() {
 
     useEffect(() => {
         renderWorker.onmessage = (event) => {
-            const renderData = event.data;
-            console.log(renderData);
-            setRenderData(renderData);
+            const [renderData, err] = event.data;
             setShapeLoading(false);
+
+            if (err) {
+                setSnackbarMessage(new SnackbarError(err.message));
+                return;
+            }
+
+            if (!renderData) {
+                setSnackbarMessage(new SnackbarError("Unknown error occured while generating render data"));
+                return;
+            }
+
+            setRenderData(renderData);
             setSnackbarMessage(new SnackbarSuccess("Successfully rendered shape"));
         };
 
         renderWorker.onerror = (err) => {
             console.error(err);
             setShapeLoading(false);
-            setSnackbarMessage(new SnackbarError("Error occured while generating render data"));
+            setSnackbarMessage(new SnackbarError("Unknown error occured while generating render data"));
         };
 
         applyTemplate(TEMPLATES[2]);
