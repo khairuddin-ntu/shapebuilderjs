@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/shapebuilderjs/static/css/main.3efe23e3.css",
-    "main.js": "/shapebuilderjs/static/js/main.53946f79.js",
+    "main.css": "/shapebuilderjs/static/css/main.aea445ec.css",
+    "main.js": "/shapebuilderjs/static/js/main.e459961b.js",
     "static/js/723.ecc6c6b4.chunk.js": "/shapebuilderjs/static/js/723.ecc6c6b4.chunk.js",
     "static/js/934.cec5b412.chunk.js": "/shapebuilderjs/static/js/934.cec5b412.chunk.js",
     "index.html": "/shapebuilderjs/index.html",
-    "main.3efe23e3.css.map": "/shapebuilderjs/static/css/main.3efe23e3.css.map",
-    "main.53946f79.js.map": "/shapebuilderjs/static/js/main.53946f79.js.map",
+    "main.aea445ec.css.map": "/shapebuilderjs/static/css/main.aea445ec.css.map",
+    "main.e459961b.js.map": "/shapebuilderjs/static/js/main.e459961b.js.map",
     "723.ecc6c6b4.chunk.js.map": "/shapebuilderjs/static/js/723.ecc6c6b4.chunk.js.map",
     "934.cec5b412.chunk.js.map": "/shapebuilderjs/static/js/934.cec5b412.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.3efe23e3.css",
-    "static/js/main.53946f79.js"
+    "static/css/main.aea445ec.css",
+    "static/js/main.e459961b.js"
   ]
 }
